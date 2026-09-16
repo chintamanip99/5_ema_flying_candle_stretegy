@@ -1,0 +1,155 @@
+================================================================================
+🚀 FLYING CANDLE STRATEGY - LONG ONLY
+================================================================================
+🔵 🔵 🔵 PAPER TRADING MODE - SIMULATION ONLY 🔵 🔵 🔵
+   No real money will be used
+   All orders are simulated
+================================================================================
+💰 Account Balance: ₹100,000.00
+📦 Lot Size: 65 shares per lot
+🎯 SL: 2.0% | Target: 10.0%
+⚖️  Risk:Reward Ratio: 1:1
+⏰ Timeframe: 1 minute
+📊 Instrument: NSE:NIFTY26SEP23150CE
+================================================================================
+
+🟢 FLYING CANDLE STRATEGY (LONG POSITIONS):
+   Step 1 - Flying Candle: GREEN candle completely BELOW EMA5 (high < EMA5)
+   Step 2 - Entry: When current price breaks the alert candle's HIGH
+   Entry Price: Alert candle HIGH (breakout level)
+   Stop Loss: Entry - 2.0%
+   Target: Entry + 10.0%
+   Position Sizing: Full ₹100,000.00 capital with lot size 65
+================================================================================
+
+================================================================================
+🔵 PAPER TRADING MODE - No real money involved
+   This is a simulation for testing the strategy
+
+Start PAPER TRADING simulation? (yes/no):  yes
+
+🔵 Starting paper trading simulation...
+   Monitoring for FLYING CANDLE patterns only...
+   All trades will be simulated
+   Trading instrument: NSE:NIFTY26SEP23150CE
+
+================================================================================
+📊 FLYING CANDLE STRATEGY - LONG ONLY
+================================================================================
+🔵 🔵 🔵 PAPER TRADING MODE ENABLED 🔵 🔵 🔵
+   No real orders will be placed
+   All trades are simulated for testing
+   Balance updates are virtual only
+================================================================================
+🔧 STRATEGY RULES (BULLISH ONLY - LONG POSITIONS):
+   Step 1 - Flying Candle: GREEN candle completely BELOW EMA5 (high < EMA5)
+   Step 2 - Breakout: When current price breaks the alert candle's HIGH
+   Entry Price: Alert candle HIGH (breakout level)
+   Stop Loss: Entry - 2.0%
+   Target: Entry + 10.0%
+   Risk:Reward = 1:1 (Both 2.0%)
+   Position Sizing: Full ₹100,000.00 capital utilization with lot size 65
+================================================================================
+
+📈 Instrument: NSE:NIFTY26SEP23150CE
+   Lot Size: 65 shares per lot
+================================================================================
+
+🔌 Connecting to Fyers WebSocket...
+✅ WebSocket connection opened
+📋 Subscribing to: NSE:NIFTY26SEP23150CE
+✅ Subscription request sent
+✅ Subscription confirmed
+Price: 290.90 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 1-minute Candle completed: 11:56:00 | H:290.90 L:290.55 C:290.90
+Price: 291.50 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 1-minute Candle completed: 11:57:00 | H:292.00 L:290.00 C:291.50
+Price: 291.15 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 1-minute Candle completed: 11:58:00 | H:291.50 L:291.15 C:291.15
+Price: 300.30 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 1-minute Candle completed: 12:14:00 | H:304.70 L:300.00 C:300.00
+Price: 303.05 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 1-minute Candle completed: 12:26:00 | H:303.05 L:303.05 C:303.05
+Price: 304.85 | Alert: BULLISH @ 12:28:00 | Break Level: 299.40 | Position: LONG @ 299.40 | Balance: ₹100,000.00 | Active: 1 | [PAPER MODE]
+📊 1-minute Candle completed: 12:42:00 | H:309.55 L:308.00 C:308.80
+Price: 327.00 | Alert: BULLISH @ 13:00:00 | Break Level: 311.00 | Position: LONG @ 299.40 | Balance: ₹100,000.00 | Active: 1 | [PAPER MODE]
+📊 1-minute Candle completed: 13:08:00 | H:332.00 L:323.65 C:332.00
+
+📉 Placing SELL order to exit long position @ ₹329.34...
+🔵 [PAPER TRADING MODE] - Simulating exit order
+📝 [PAPER TRADING] Simulating order: SELL 325 shares of NSE:NIFTY26SEP23150CE @ ₹329.34
+✅ [PAPER TRADING] Order simulated successfully! Order ID: PAPER_20260916_130900_-6104748336021708481
+
+
+📊 TRADE CLOSED - LONG
+   Entry: ₹299.40 | Exit: ₹329.34 (TARGET_HIT (2%))
+   P&L: ₹+9,730.50
+   Return: +10.00%
+   New Balance: ₹119,461.00
+   🔵 [PAPER TRADING] - No actual money changed hands
+
+❌ Error in message processing: list.remove(x): x not in list
+Traceback (most recent call last):
+  File "/var/folders/tt/ksb8v1f959s87234_wq7h4j80000gn/T/ipykernel_53930/1645698449.py", line 473, in onmessage
+    monitor_exit_conditions(current_price, current_time, completed_candle)
+  File "/var/folders/tt/ksb8v1f959s87234_wq7h4j80000gn/T/ipykernel_53930/1645698449.py", line 397, in monitor_exit_conditions
+    active_trades.remove(trade)
+ValueError: list.remove(x): x not in list
+Price: 310.35 | Balance: ₹119,461.00 | Active: 0 | [PAPER MODE]
+📊 1-minute Candle completed: 13:25:00 | H:313.30 L:308.50 C:310.35
+Price: 287.20 | Alert: BULLISH @ 13:34:00 | Break Level: 297.80 | Position: LONG @ 293.15 | Balance: ₹119,461.00 | Active: 1 | [PAPER MODE]
+📊 1-minute Candle completed: 13:40:00 | H:290.00 L:287.20 C:287.20
+
+📉 Placing SELL order to exit long position @ ₹287.287...
+🔵 [PAPER TRADING MODE] - Simulating exit order
+📝 [PAPER TRADING] Simulating order: SELL 325 shares of NSE:NIFTY26SEP23150CE @ ₹287.287
+✅ [PAPER TRADING] Order simulated successfully! Order ID: PAPER_20260916_134101_-6104748336021708481
+
+
+📊 TRADE CLOSED - LONG
+   Entry: ₹293.15 | Exit: ₹287.29 (SL_HIT (2%))
+   P&L: ₹-1,905.47
+   Return: -2.00%
+   New Balance: ₹115,650.05
+   🔵 [PAPER TRADING] - No actual money changed hands
+
+❌ Error in message processing: list.remove(x): x not in list
+Traceback (most recent call last):
+  File "/var/folders/tt/ksb8v1f959s87234_wq7h4j80000gn/T/ipykernel_53930/1645698449.py", line 473, in onmessage
+    monitor_exit_conditions(current_price, current_time, completed_candle)
+  File "/var/folders/tt/ksb8v1f959s87234_wq7h4j80000gn/T/ipykernel_53930/1645698449.py", line 397, in monitor_exit_conditions
+    active_trades.remove(trade)
+ValueError: list.remove(x): x not in list
+Price: 289.00 | Alert: BULLISH @ 13:41:00 | Break Level: 289.00 | Balance: ₹115,650.05 | Active: 0 | [PAPER MODE]
+🎯 BREAKOUT DETECTED!
+   Alert Candle High: 289.00
+   Current Price: 290.50
+   Breakout confirmed! Entering LONG position immediately...
+
+
+🚨 LONG POSITION ENTERED!
+   Alert Candle High (Break Level): 289.00
+   Entry Price: 289.00
+   Stop Loss: 283.22 (-2.00%)
+   Target: 317.90 (+10.00%)
+   Risk: 2% of Entry
+   Reward: 2% of Entry
+   Risk:Reward = 1:1
+
+💰 POSITION SIZING:
+   Lots: 5
+   Shares: 325
+   Capital Required: ₹93,925.00
+   Risk Amount: ₹1878.50 (2% of Entry)
+   Reward Amount: ₹9392.50 (2% of Entry)
+   Capital Utilization: 93.9%
+
+📈 Placing BUY order for 325 shares @ ₹289.0...
+🔵 [PAPER TRADING MODE] - No real money involved
+📝 [PAPER TRADING] Simulating order: BUY 325 shares of NSE:NIFTY26SEP23150CE @ ₹289.0
+✅ [PAPER TRADING] Order simulated successfully! Order ID: PAPER_20260916_134204_-1599771252922731794
+✅ LONG position created successfully!
+Price: 288.85 | Alert: BULLISH @ 13:41:00 | Break Level: 289.00 | Position: LONG @ 289.00 | Balance: ₹115,650.05 | Active: 1 | [PAPER MODE]
+📊 1-minute Candle completed: 13:42:00 | H:290.50 L:288.85 C:288.85
+Price: 292.60 | Alert: BULLISH @ 14:29:00 | Break Level: 296.35 | Position: LONG @ 289.00 | Balance: ₹115,650.05 | Active: 1 | [PAPER MODE]
+Click to add a cell.
