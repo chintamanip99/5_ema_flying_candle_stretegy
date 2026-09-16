@@ -1,0 +1,775 @@
+import pandas as pd
+import datetime
+from datetime import timedelta
+import time
+import math
+import json
+import sys
+import traceback
+from collections import deque
+import threading
+import requests
+import os
+
+# ================= FYERS WEBSOCKET IMPORTS =================
+from fyers_apiv3.FyersWebsocket import data_ws
+from fyers_apiv3 import fyersModel
+
+# ================= FYERS CONFIG =================
+FYERS_CLIENT_ID = "IWVRS44JXD-100"
+FYERS_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIl0sImF0X2hhc2giOiJnQUFBQUFCcXFqYUVEdWZfVHVFaHF2b0VuLWRMR1hJMk04UGxSVGRZWWp4UWE0SGpCS1NkSkIxVnBKclM4MHYxb1g3azRaUVpwMFdVSFRmVkJ1TzItOHN4TURmX3FXWFNNSFgxR3JveGxTcmpfM25zaTdncUJhQT0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiIwMzllMDk0YzZiMTRhNTYwNDcwNDk1NWIyYzAwYmIyYzE2ZjczYTM4MGZiYTY5YzQ3YjFkMWM4OSIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWUMwMzM4MyIsImFwcFR5cGUiOjEwMCwiZXhwIjoxNzg5NjA1MDAwLCJpYXQiOjE3ODk1Mzk5NzIsImlzcyI6ImFwaS5meWVycy5pbiIsIm5iZiI6MTc4OTUzOTk3Miwic3ViIjoiYWNjZXNzX3Rva2VuIn0.IdW6mcZqZrBd4Z5X8ECOAEgI2oxhrSpzowZ90fbonXM"
+# ================= TRADING MODE FLAG =================
+# Set PAPER_TRADING = True for simulation (no real orders)
+# Set PAPER_TRADING = False for real trading with actual money
+PAPER_TRADING = True  # Change to False for real trading
+
+# ================= INSTRUMENT CONFIGURATION =================
+INSTRUMENT_KEY = "NSE:NIFTY26SEP23150CE"  # Hardcoded instrument symbol
+
+# ================= TRADING CONFIG =================
+INITIAL_CAPITAL = 100000  # Fixed 1 lakh capital
+BASE_LOT_SIZE = 65  # Lot size is 10
+MAX_CAPITAL_UTILIZATION = 1.0  # Use 100% of capital
+SL_PERCENT = 0.02  # 2% Stop Loss
+TARGET_PERCENT = 0.1  # 2% Target
+TIMEFRAME = "1"  # 1-minute candles for faster signals
+
+# ================= MARKET HOURS (IST) =================
+MARKET_OPEN_HOUR = 9
+MARKET_OPEN_MINUTE = 20
+MARKET_CLOSE_HOUR = 20
+MARKET_CLOSE_MINUTE = 0
+
+# ================= WEBSOCKET GLOBALS =================
+completed_candles = deque(maxlen=200)  # Store completed candles
+current_candle = None
+alert_candle = None
+position_taken = False
+current_position = None
+entry_price = None
+current_balance = INITIAL_CAPITAL
+active_trades = []
+last_complete_timeframe = None
+fyers_ws = None
+fyers_auth = None  # Fyers auth instance for placing orders
+breakout_triggered = False  # Flag to track if breakout was triggered in current candle
+
+# ================= TIMESTAMP HELPER FUNCTIONS =================
+def timestamp_to_datetime(timestamp_str):
+    """Convert timestamp string to datetime object"""
+    if not timestamp_str:
+        return None
+    try:
+        timestamp_int = int(timestamp_str)
+        return datetime.datetime.fromtimestamp(timestamp_int)
+    except (ValueError, TypeError):
+        return None
+
+def convert_to_ist(utc_datetime):
+    """Convert UTC datetime to IST (UTC+5:30)"""
+    if utc_datetime is None:
+        return None
+    ist_offset = timedelta(hours=5, minutes=30)
+    return utc_datetime + ist_offset
+
+def is_within_market_hours_ist(timestamp_ist):
+    """Check if given IST timestamp is within market hours"""
+    if timestamp_ist is None:
+        return False
+    
+    market_open = datetime.time(MARKET_OPEN_HOUR, MARKET_OPEN_MINUTE)
+    market_close = datetime.time(MARKET_CLOSE_HOUR, MARKET_CLOSE_MINUTE)
+    time_only = timestamp_ist.time()
+    
+    return market_open <= time_only <= market_close
+
+# ================= POSITION SIZING =================
+def calculate_position_size(entry_price):
+    """Calculate number of lots possible with full capital"""
+    capital_per_lot = entry_price * BASE_LOT_SIZE
+    
+    if capital_per_lot > 0:
+        max_lots = math.floor(INITIAL_CAPITAL / capital_per_lot)
+        
+        # Ensure at least 1 lot if possible
+        if max_lots == 0 and INITIAL_CAPITAL >= capital_per_lot:
+            max_lots = 1
+        
+        return max_lots
+    
+    return 0
+
+def place_order(symbol, qty, side, order_type="LIMIT", price=0, product_type="INTRADAY"):
+    """
+    Place an order with Fyers (or simulate if paper trading)
+    
+    Parameters:
+    - symbol: Instrument symbol
+    - qty: Quantity
+    - side: 1 for BUY, -1 for SELL
+    - order_type: "MARKET" or "LIMIT"
+    - price: Price for LIMIT order
+    - product_type: "INTRADAY" or "CNC" or "MARGIN"
+    """
+    global PAPER_TRADING
+    
+    side_str = "BUY" if side == 1 else "SELL"
+    
+    # PAPER TRADING MODE - Simulate order
+    if PAPER_TRADING:
+        print(f"📝 [PAPER TRADING] Simulating order: {side_str} {qty} shares of {symbol} @ ₹{price}")
+        time.sleep(0.3)  # Simulate processing time
+        order_id = f"PAPER_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(str(symbol)+str(qty)+str(side))}"
+        print(f"✅ [PAPER TRADING] Order simulated successfully! Order ID: {order_id}")
+        return order_id
+    
+    # REAL TRADING MODE - Place actual order
+    try:
+        if fyers_auth is None:
+            print("❌ Fyers auth instance not initialized")
+            return None
+        
+        order_data = {
+            "symbol": symbol,
+            "qty": qty,
+            "type": order_type,
+            "side": side_str,
+            "productType": product_type,
+            "limitPrice": price if order_type == "LIMIT" else 0,
+            "stopPrice": 0,
+            "validity": "DAY",
+            "disclosedQty": 0,
+            "offlineOrder": False
+        }
+        
+        print(f"📝 [REAL TRADING] Placing order: {order_data}")
+        response = fyers_auth.place_order(data=order_data)
+        
+        if response.get('s') == 'ok':
+            print(f"✅ [REAL TRADING] Order placed successfully! Order ID: {response.get('id')}")
+            return response.get('id')
+        else:
+            print(f"❌ [REAL TRADING] Order failed: {response}")
+            return None
+            
+    except Exception as e:
+        print(f"❌ Exception in place_order: {e}")
+        traceback.print_exc()
+        return None
+
+# ================= PATTERN DETECTION (BULLISH ONLY) =================
+def check_pattern_on_candle(candle):
+    """
+    Check if a completed candle forms a BULLISH pattern (FLYING CANDLE)
+    Rule: Green candle completely BELOW EMA5 (high < EMA5) - high not touching EMA5
+    """
+    global alert_candle, completed_candles
+    
+    # Need enough history for EMA calculation
+    if len(completed_candles) < 10:
+        return False
+    
+    # Calculate EMA5 from completed candles (excluding the current candle)
+    closes = [c['close'] for c in list(completed_candles)[-11:-1]]
+    if len(closes) < 10:
+        return False
+        
+    df_temp = pd.DataFrame({'Close': closes})
+    ema_5 = df_temp['Close'].ewm(span=5, adjust=False).mean().iloc[-1]
+    
+    # BULLISH PATTERN: Green candle completely BELOW EMA5 (high < EMA5)
+    # High should be strictly less than EMA5 (not touching)
+    if (candle['close'] > candle['open'] and  # Green candle
+        candle['high'] < ema_5):  # Entire candle below EMA (high < EMA) - not touching
+        
+        alert_candle = {
+            'type': 'BULLISH',
+            'timestamp': candle['timestamp'],
+            'open': candle['open'],
+            'high': candle['high'],
+            'low': candle['low'],
+            'close': candle['close'],
+            'ema_5': ema_5
+        }
+        
+        print(f"\n\n🟢 BULLISH FLYING CANDLE DETECTED!")
+        print(f"   Time: {candle['timestamp'].strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"   Green Candle: O={candle['open']:.2f}, C={candle['close']:.2f}")
+        print(f"   High={candle['high']:.2f}, Low={candle['low']:.2f}")
+        print(f"   EMA_5: {ema_5:.2f}")
+        print(f"   Distance below EMA: {ema_5 - candle['high']:.2f}")
+        print(f"   ⏰ Monitoring current price for breakout above {candle['high']:.2f}")
+        return True
+    
+    return False
+
+def monitor_entry_on_price(current_price, current_time):
+    """
+    Check if current price breaks the alert candle's HIGH
+    Rule: When current price > alert candle's HIGH, take long position immediately
+    """
+    global alert_candle, position_taken, current_position, entry_price, active_trades, breakout_triggered
+    
+    if alert_candle is None or position_taken:
+        return False
+    
+    # Check if current price has broken the alert candle's high
+    if current_price > alert_candle['high']:
+        # Prevent multiple entries on same breakout
+        if breakout_triggered:
+            return False
+        
+        print(f"\n🎯 BREAKOUT DETECTED!")
+        print(f"   Alert Candle High: {alert_candle['high']:.2f}")
+        print(f"   Current Price: {current_price:.2f}")
+        print(f"   Breakout confirmed! Entering LONG position immediately...")
+        
+        # ✅ Entry at ALERT candle's HIGH (breakout level)
+        entry_price = alert_candle['high']
+        current_position = 'LONG'
+        position_taken = True
+        breakout_triggered = True
+        
+        # Calculate SL and Target for LONG position using percentage-based approach
+        # Stop Loss: Entry - 2%
+        sl_price = entry_price * (1 - SL_PERCENT)
+        # Target: Entry + 2%
+        target_price = entry_price * (1 + TARGET_PERCENT)
+        
+        print(f"\n\n🚨 LONG POSITION ENTERED!")
+        print(f"   Alert Candle High (Break Level): {alert_candle['high']:.2f}")
+        print(f"   Entry Price: {entry_price:.2f}")
+        print(f"   Stop Loss: {sl_price:.2f} ({(sl_price-entry_price)/entry_price*100:.2f}%)")
+        print(f"   Target: {target_price:.2f} (+{(target_price-entry_price)/entry_price*100:.2f}%)")
+        print(f"   Risk: 2% of Entry")
+        print(f"   Reward: 2% of Entry")
+        print(f"   Risk:Reward = 1:1")
+        
+        # Create and execute LONG trade
+        create_and_execute_trade('LONG', entry_price, sl_price, target_price)
+        return True
+    
+    return False
+
+def create_and_execute_trade(trade_type, entry_price, sl_price, target_price):
+    """Create and execute a LONG trade with proper position sizing"""
+    global current_balance, active_trades, INSTRUMENT_KEY, position_taken, current_position, PAPER_TRADING
+    
+    # Calculate position size using full capital
+    lot_size = calculate_position_size(entry_price)
+    
+    if lot_size < 1:
+        print(f"⚠️  Insufficient capital for trade. Required for 1 lot: ₹{entry_price * BASE_LOT_SIZE:,.2f}")
+        position_taken = False
+        current_position = None
+        return False
+    
+    shares_to_trade = lot_size * BASE_LOT_SIZE
+    capital_required = entry_price * shares_to_trade
+    
+    # Calculate risk and reward in points
+    risk_points = entry_price * SL_PERCENT
+    reward_points = entry_price * TARGET_PERCENT
+    
+    print(f"\n💰 POSITION SIZING:")
+    print(f"   Lots: {lot_size}")
+    print(f"   Shares: {shares_to_trade}")
+    print(f"   Capital Required: ₹{capital_required:,.2f}")
+    print(f"   Risk Amount: ₹{risk_points * shares_to_trade:.2f} (2% of Entry)")
+    print(f"   Reward Amount: ₹{reward_points * shares_to_trade:.2f} (2% of Entry)")
+    print(f"   Capital Utilization: {(capital_required/INITIAL_CAPITAL)*100:.1f}%")
+    
+    # For LONG: First BUY, then SELL to exit
+    if trade_type == 'LONG':
+        print(f"\n📈 Placing BUY order for {shares_to_trade} shares @ ₹{entry_price}...")
+        if PAPER_TRADING:
+            print("🔵 [PAPER TRADING MODE] - No real money involved")
+        
+        order_id = place_order(
+            symbol=INSTRUMENT_KEY,
+            qty=shares_to_trade,
+            side=1,  # 1 for BUY
+            order_type="LIMIT",
+            price=entry_price,
+            product_type="INTRADAY"
+        )
+        
+        if order_id:
+            trade = {
+                'type': trade_type,
+                'entry_price': entry_price,
+                'sl_price': sl_price,
+                'target_price': target_price,
+                'lot_size': lot_size,
+                'shares': shares_to_trade,
+                'capital_used': capital_required,
+                'entry_time': datetime.datetime.now(),
+                'risk_points': risk_points,
+                'reward_points': reward_points,
+                'status': 'ACTIVE',
+                'order_id': order_id,
+                'paper_trading': PAPER_TRADING,
+                'alert_candle_high': alert_candle['high'] if alert_candle else None,
+                'alert_candle_low': alert_candle['low'] if alert_candle else None,
+                'alert_candle_time': alert_candle['timestamp'] if alert_candle else None,
+                'sl_percent': SL_PERCENT * 100,
+                'target_percent': TARGET_PERCENT * 100
+            }
+            
+            active_trades.append(trade)
+            print(f"✅ {trade_type} position created successfully!")
+            return True
+        else:
+            print(f"❌ Failed to place order. Trade not executed.")
+            position_taken = False
+            current_position = None
+            return False
+    
+    return False
+
+def monitor_exit_conditions(current_price, current_time, current_candle_data):
+    """Monitor active trades for exit conditions"""
+    global current_balance, active_trades, current_position, position_taken, alert_candle, PAPER_TRADING
+    
+    for trade in active_trades[:]:
+        if trade['status'] == 'ACTIVE':
+            exit_price = None
+            exit_reason = None
+            
+            # For LONG: Exit when price hits target (higher) or SL (lower)
+            if trade['type'] == 'LONG':
+                # Check if target hit (price went up to target)
+                if current_candle_data['high'] >= trade['target_price']:
+                    exit_price = trade['target_price']
+                    exit_reason = 'TARGET_HIT (2%)'
+                # Check if stop loss hit (price went down to SL)
+                elif current_candle_data['low'] <= trade['sl_price']:
+                    exit_price = trade['sl_price']
+                    exit_reason = 'SL_HIT (2%)'
+            
+            if exit_price is not None:
+                # Place SELL order to exit long position
+                print(f"\n📉 Placing SELL order to exit long position @ ₹{exit_price}...")
+                if PAPER_TRADING:
+                    print("🔵 [PAPER TRADING MODE] - Simulating exit order")
+                
+                order_id = place_order(
+                    symbol=INSTRUMENT_KEY,
+                    qty=trade['shares'],
+                    side=-1,  # -1 for SELL
+                    order_type="LIMIT",
+                    price=exit_price,
+                    product_type="INTRADAY"
+                )
+                
+                if order_id:
+                    # Calculate PnL for LONG (Profit when exit price > entry price)
+                    pnl = (exit_price - trade['entry_price']) * trade['shares']
+                    
+                    # Update balance (virtual for paper trading, real for actual)
+                    current_balance += pnl
+                    
+                    trade['status'] = 'CLOSED'
+                    trade['exit_price'] = exit_price
+                    trade['exit_reason'] = exit_reason
+                    trade['exit_time'] = current_time
+                    trade['PnL'] = pnl
+                    trade['return_percentage'] = (pnl / trade['capital_used']) * 100
+                    trade['exit_order_id'] = order_id
+                    
+                    print(f"\n\n📊 TRADE CLOSED - {trade['type']}")
+                    print(f"   Entry: ₹{trade['entry_price']:.2f} | Exit: ₹{exit_price:.2f} ({exit_reason})")
+                    print(f"   P&L: ₹{pnl:+,.2f}")
+                    print(f"   Return: {(pnl/trade['capital_used'])*100:+.2f}%")
+                    print(f"   New Balance: ₹{current_balance:,.2f}")
+                    
+                    if PAPER_TRADING:
+                        print(f"   🔵 [PAPER TRADING] - No actual money changed hands")
+                    
+                    # Reset position tracking
+                    if trade['type'] == current_position:
+                        current_position = None
+                        position_taken = False
+                        alert_candle = None
+                        breakout_triggered = False
+                    
+                    # Remove closed trade
+                    active_trades.remove(trade)
+                else:
+                    print(f"❌ Failed to place exit order. Manual intervention may be required.")
+                    return False
+    
+    return True
+
+# ================= WEBSOCKET CALLBACKS =================
+def onopen():
+    """WebSocket connection opened callback"""
+    print("✅ WebSocket connection opened")
+    if INSTRUMENT_KEY is None:
+        print("❌ No instrument key set!")
+        return
+    print(f"📋 Subscribing to: {INSTRUMENT_KEY}")
+    try:
+        fyers_ws.subscribe(symbols=[INSTRUMENT_KEY], data_type="SymbolUpdate")
+        print("✅ Subscription request sent")
+    except Exception as e:
+        print(f"❌ Subscription error: {e}")
+
+def onmessage(message):
+    """WebSocket message received callback"""
+    global completed_candles, current_candle, last_complete_timeframe, alert_candle, position_taken, current_position, entry_price, breakout_triggered
+    
+    try:
+        if isinstance(message, dict):
+            msg_type = message.get("type")
+            
+            # Handle subscription confirmation
+            if msg_type == "sub":
+                if message.get("s") == "ok":
+                    print(f"✅ Subscription confirmed")
+                else:
+                    print(f"❌ Subscription failed: {message.get('message')}")
+                return
+            
+            # Handle live market data
+            elif msg_type == "sf" or "ltp" in message:
+                symbol = message.get("symbol", INSTRUMENT_KEY)
+                ltp = message.get("ltp", 0)
+                
+                if ltp == 0:
+                    return
+                
+                current_price = float(ltp)
+                current_time = datetime.datetime.now()
+                
+                # Calculate current timeframe (1-minute interval)
+                current_timeframe = current_time.replace(second=0, microsecond=0)
+                
+                # Check if we've moved to a new timeframe
+                if last_complete_timeframe is None or current_timeframe != last_complete_timeframe:
+                    # Reset breakout trigger for new candle
+                    breakout_triggered = False
+                    
+                    # The previous timeframe is complete, process it
+                    if current_candle is not None:
+                        # Add the completed candle to history
+                        completed_candle = {
+                            'timestamp': current_candle['timestamp'],
+                            'open': current_candle['open'],
+                            'high': current_candle['high'],
+                            'low': current_candle['low'],
+                            'close': current_candle['close'],
+                            'volume': current_candle['volume']
+                        }
+                        completed_candles.append(completed_candle)
+                        
+                        print(f"\n📊 {TIMEFRAME}-minute Candle completed: {completed_candle['timestamp'].strftime('%H:%M:%S')} | H:{completed_candle['high']:.2f} L:{completed_candle['low']:.2f} C:{completed_candle['close']:.2f}")
+                        
+                        # STEP 1: Check if this completed candle forms a BULLISH pattern (FLYING CANDLE)
+                        check_pattern_on_candle(completed_candle)
+                        
+                        # STEP 2: Check exit conditions for active trades using this completed candle
+                        if active_trades:
+                            monitor_exit_conditions(current_price, current_time, completed_candle)
+                    
+                    # Start new candle
+                    current_candle = {
+                        'timestamp': current_timeframe,
+                        'open': current_price,
+                        'high': current_price,
+                        'low': current_price,
+                        'close': current_price,
+                        'volume': 0,
+                        'is_complete': False
+                    }
+                    last_complete_timeframe = current_timeframe
+                else:
+                    # Update current candle
+                    if current_candle is not None:
+                        current_candle['high'] = max(current_candle['high'], current_price)
+                        current_candle['low'] = min(current_candle['low'], current_price)
+                        current_candle['close'] = current_price
+                        current_candle['volume'] += 1
+                    
+                    # STEP 2: Monitor breakout on EVERY price update (intra-candle)
+                    if alert_candle is not None and not position_taken:
+                        monitor_entry_on_price(current_price, current_time)
+                
+                # Display status
+                status_str = f"Price: {current_price:.2f}"
+                if alert_candle:
+                    status_str += f" | Alert: {alert_candle['type']} @ {alert_candle['timestamp'].strftime('%H:%M:%S')}"
+                    status_str += f" | Break Level: {alert_candle['high']:.2f}"
+                if current_position:
+                    status_str += f" | Position: {current_position} @ {entry_price:.2f}"
+                status_str += f" | Balance: ₹{current_balance:,.2f}"
+                status_str += f" | Active: {len(active_trades)}"
+                
+                if PAPER_TRADING:
+                    status_str += " | [PAPER MODE]"
+                
+                sys.stdout.write(f"\r{status_str}")
+                sys.stdout.flush()
+                
+        elif isinstance(message, str):
+            # Handle string messages
+            if "pong" in message:
+                pass  # Heartbeat response
+            else:
+                print(f"\n📨 Message: {message}")
+                
+    except Exception as e:
+        print(f"\n❌ Error in message processing: {str(e)}")
+        traceback.print_exc()
+
+def onerror(message):
+    """WebSocket error callback"""
+    print(f"\n❌ WebSocket Error: {message}")
+
+def onclose(message):
+    """WebSocket close callback"""
+    print(f"\n🔌 WebSocket Closed: {message}")
+
+# ================= START WEBSOCKET =================
+def start_live_trading():
+    """Start WebSocket for real-time monitoring and trading - LONG ONLY"""
+    global completed_candles, current_candle, alert_candle, position_taken, current_position, entry_price, current_balance, active_trades, last_complete_timeframe, fyers_ws, fyers_auth, PAPER_TRADING, breakout_triggered
+    
+    # Reset all globals
+    completed_candles.clear()
+    current_candle = None
+    alert_candle = None
+    position_taken = False
+    current_position = None
+    entry_price = None
+    current_balance = INITIAL_CAPITAL
+    active_trades = []
+    last_complete_timeframe = None
+    breakout_triggered = False
+    
+    # Initialize Fyers auth for order placement (only needed for real trading)
+    if not PAPER_TRADING:
+        fyers_auth = fyersModel.FyersModel(
+            client_id=FYERS_CLIENT_ID,
+            token=FYERS_ACCESS_TOKEN,
+            is_async=False,
+            log_path="./logs"
+        )
+    
+    print("\n" + "="*80)
+    print("📊 FLYING CANDLE STRATEGY - LONG ONLY")
+    print("="*80)
+    
+    # Display trading mode
+    if PAPER_TRADING:
+        print("🔵 🔵 🔵 PAPER TRADING MODE ENABLED 🔵 🔵 🔵")
+        print("   No real orders will be placed")
+        print("   All trades are simulated for testing")
+        print("   Balance updates are virtual only")
+    else:
+        print("🔴 🔴 🔴 REAL TRADING MODE ENABLED 🔴 🔴 🔴")
+        print("   Real orders WILL be placed with real money")
+        print("   Ensure you have sufficient funds")
+        print("   Trading at your own risk!")
+    
+    print("="*80)
+    print("🔧 STRATEGY RULES (BULLISH ONLY - LONG POSITIONS):")
+    print("   Step 1 - Flying Candle: GREEN candle completely BELOW EMA5 (high < EMA5)")
+    print("   Step 2 - Breakout: When current price breaks the alert candle's HIGH")
+    print("   Entry Price: Alert candle HIGH (breakout level)")
+    print(f"   Stop Loss: Entry - {SL_PERCENT*100}%")
+    print(f"   Target: Entry + {TARGET_PERCENT*100}%")
+    print(f"   Risk:Reward = 1:1 (Both {SL_PERCENT*100}%)")
+    print(f"   Position Sizing: Full ₹{INITIAL_CAPITAL:,.2f} capital utilization with lot size {BASE_LOT_SIZE}")
+    print("="*80)
+    print(f"\n📈 Instrument: {INSTRUMENT_KEY}")
+    print(f"   Lot Size: {BASE_LOT_SIZE} shares per lot")
+    print("="*80)
+    
+    try:
+        # Initialize WebSocket
+        fyers_ws = data_ws.FyersDataSocket(
+            access_token=FYERS_ACCESS_TOKEN,
+            log_path="./logs",
+            litemode=False,
+            write_to_file=False,
+            reconnect=True,
+            on_connect=onopen,
+            on_close=onclose,
+            on_error=onerror,
+            on_message=onmessage,
+            reconnect_retry=10
+        )
+        
+        print("\n🔌 Connecting to Fyers WebSocket...")
+        fyers_ws.connect()
+        
+        # Keep the main thread alive
+        while True:
+            time.sleep(1)
+            
+    except KeyboardInterrupt:
+        print("\n\n⏹️  Live trading stopped by user")
+        display_live_results()
+        if fyers_ws:
+            fyers_ws.close()
+    except Exception as e:
+        print(f"\n❌ Failed to establish WebSocket connection: {e}")
+        traceback.print_exc()
+
+def display_live_results():
+    """Display live trading results"""
+    global current_balance, active_trades, PAPER_TRADING
+    
+    print("\n" + "="*80)
+    print("📊 LIVE TRADING RESULTS - LONG ONLY")
+    print("="*80)
+    
+    if PAPER_TRADING:
+        print("🔵 [PAPER TRADING RESULTS - SIMULATED]")
+    
+    print(f"💰 Final Balance: ₹{current_balance:,.2f}")
+    print(f"📈 P&L: ₹{current_balance - INITIAL_CAPITAL:+,.2f}")
+    print(f"📊 Return: {(current_balance - INITIAL_CAPITAL) / INITIAL_CAPITAL * 100:+.2f}%")
+    
+    # Get closed trades
+    closed_trades = [t for t in active_trades if t.get('status') == 'CLOSED']
+    active_trades_list = [t for t in active_trades if t.get('status') == 'ACTIVE']
+    
+    if closed_trades:
+        print(f"\n📊 Closed Trades: {len(closed_trades)}")
+        for i, trade in enumerate(closed_trades, 1):
+            print(f"   Trade {i}: {trade['type']} | Entry: ₹{trade['entry_price']:.2f} | Exit: ₹{trade.get('exit_price', 0):.2f} | P&L: ₹{trade.get('PnL', 0):+,.2f}")
+    
+    if active_trades_list:
+        print(f"\n⚠️  Active Trades: {len(active_trades_list)}")
+        for i, trade in enumerate(active_trades_list, 1):
+            print(f"   Trade {i}: {trade['type']} @ ₹{trade['entry_price']:.2f}")
+            print(f"      Entry: ₹{trade['entry_price']:.2f} | SL: ₹{trade['sl_price']:.2f} | Target: ₹{trade['target_price']:.2f}")
+    
+    # Calculate statistics
+    total_trades = len(closed_trades)
+    winning_trades = len([t for t in closed_trades if t.get('PnL', 0) > 0])
+    
+    if total_trades > 0:
+        win_rate = (winning_trades / total_trades) * 100
+        total_pnl = sum([t.get('PnL', 0) for t in closed_trades])
+        avg_pnl = total_pnl / total_trades if total_trades > 0 else 0
+        
+        print(f"\n📊 Trade Statistics:")
+        print(f"   Total Trades: {total_trades}")
+        print(f"   Winning Trades: {winning_trades}")
+        print(f"   Losing Trades: {total_trades - winning_trades}")
+        print(f"   Win Rate: {win_rate:.1f}%")
+        print(f"   Total P&L: ₹{total_pnl:+,.2f}")
+        print(f"   Average P&L per Trade: ₹{avg_pnl:+,.2f}")
+    
+    # Save results to file
+    save_live_results()
+
+def save_live_results():
+    """Save live trading results to CSV"""
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    # Create results directory if not exists
+    results_dir = "live_trading_results"
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
+    
+    # Add paper trading suffix to filename
+    mode_suffix = "PAPER" if PAPER_TRADING else "REAL"
+    
+    # Save closed trades
+    closed_trades = [t for t in active_trades if t.get('status') == 'CLOSED']
+    if closed_trades:
+        trades_df = pd.DataFrame(closed_trades)
+        trades_df.to_csv(os.path.join(results_dir, f"live_trades_LONG_ONLY_{mode_suffix}_{timestamp}.csv"), index=False)
+        print(f"\n💾 Trades saved to: {results_dir}/live_trades_LONG_ONLY_{mode_suffix}_{timestamp}.csv")
+    
+    # Save summary
+    total_pnl = sum([t.get('PnL', 0) for t in closed_trades])
+    
+    summary = {
+        'Trading_Mode': 'PAPER_TRADING' if PAPER_TRADING else 'REAL_TRADING',
+        'Strategy': 'LONG_ONLY_BULLISH_FLYING_CANDLE',
+        'SL_Percent': f'{SL_PERCENT*100}%',
+        'Target_Percent': f'{TARGET_PERCENT*100}%',
+        'Risk_Reward_Ratio': '1:1',
+        'Initial_Capital': INITIAL_CAPITAL,
+        'Final_Balance': current_balance,
+        'Total_PnL': current_balance - INITIAL_CAPITAL,
+        'Total_PnL_From_Closed_Trades': total_pnl,
+        'Return_Percentage': (current_balance - INITIAL_CAPITAL) / INITIAL_CAPITAL * 100,
+        'Active_Trades': len([t for t in active_trades if t.get('status') == 'ACTIVE']),
+        'Closed_Trades': len(closed_trades),
+        'Winning_Trades': len([t for t in closed_trades if t.get('PnL', 0) > 0]),
+        'Losing_Trades': len([t for t in closed_trades if t.get('PnL', 0) < 0]),
+        'Instrument_Symbol': INSTRUMENT_KEY,
+        'Lot_Size': BASE_LOT_SIZE,
+        'Timestamp': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    }
+    
+    summary_df = pd.DataFrame([summary])
+    summary_df.to_csv(os.path.join(results_dir, f"live_summary_LONG_ONLY_{mode_suffix}_{timestamp}.csv"), index=False)
+    print(f"💾 Summary saved to: {results_dir}/live_summary_LONG_ONLY_{mode_suffix}_{timestamp}.csv")
+
+# ================= MAIN EXECUTION =================
+if __name__ == "__main__":
+    print("=" * 80)
+    print("🚀 FLYING CANDLE STRATEGY - LONG ONLY")
+    print("=" * 80)
+    
+    # Display trading mode prominently
+    if PAPER_TRADING:
+        print("🔵 🔵 🔵 PAPER TRADING MODE - SIMULATION ONLY 🔵 🔵 🔵")
+        print("   No real money will be used")
+        print("   All orders are simulated")
+    else:
+        print("🔴 🔴 🔴 REAL TRADING MODE - REAL MONEY 🔴 🔴 🔴")
+        print("   ⚠️  REAL ORDERS WILL BE PLACED ⚠️")
+        print("   Trading at your own risk!")
+    
+    print("=" * 80)
+    print(f"💰 Account Balance: ₹{INITIAL_CAPITAL:,.2f}")
+    print(f"📦 Lot Size: {BASE_LOT_SIZE} shares per lot")
+    print(f"🎯 SL: {SL_PERCENT*100}% | Target: {TARGET_PERCENT*100}%")
+    print(f"⚖️  Risk:Reward Ratio: 1:1")
+    print(f"⏰ Timeframe: {TIMEFRAME} minute")
+    print(f"📊 Instrument: {INSTRUMENT_KEY}")
+    print("=" * 80)
+    print("\n🟢 FLYING CANDLE STRATEGY (LONG POSITIONS):")
+    print("   Step 1 - Flying Candle: GREEN candle completely BELOW EMA5 (high < EMA5)")
+    print("   Step 2 - Entry: When current price breaks the alert candle's HIGH")
+    print("   Entry Price: Alert candle HIGH (breakout level)")
+    print(f"   Stop Loss: Entry - {SL_PERCENT*100}%")
+    print(f"   Target: Entry + {TARGET_PERCENT*100}%")
+    print(f"   Position Sizing: Full ₹{INITIAL_CAPITAL:,.2f} capital with lot size {BASE_LOT_SIZE}")
+    print("=" * 80)
+    
+    # Confirm based on trading mode
+    print("\n" + "="*80)
+    if PAPER_TRADING:
+        print("🔵 PAPER TRADING MODE - No real money involved")
+        print("   This is a simulation for testing the strategy")
+        confirm = input("\nStart PAPER TRADING simulation? (yes/no): ").strip().lower()
+    else:
+        print("🔴 REAL TRADING MODE - Real money WILL be used")
+        print(f"   Trading Instrument: {INSTRUMENT_KEY}")
+        print(f"   Initial Balance: ₹{INITIAL_CAPITAL:,.2f}")
+        confirm = input("\n⚠️  CONFIRM REAL TRADING with real money? (yes/no): ").strip().lower()
+    
+    if confirm in ['yes', 'y']:
+        if PAPER_TRADING:
+            print("\n🔵 Starting paper trading simulation...")
+            print("   Monitoring for FLYING CANDLE patterns only...")
+            print("   All trades will be simulated")
+            print(f"   Trading instrument: {INSTRUMENT_KEY}")
+        else:
+            print("\n🔴 Starting REAL trading system...")
+            print("   ⚠️  REAL ORDERS WILL BE PLACED ⚠️")
+            print("   Monitoring for FLYING CANDLE patterns only...")
+            print(f"   Trading instrument: {INSTRUMENT_KEY}")
+        start_live_trading()
+    else:
+        print("\n❌ Trading cancelled by user.")
+        exit(0)
