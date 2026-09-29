@@ -1,0 +1,741 @@
+================================================================================
+🚀 GREEN CANDLE BELOW EMA5 — BREAKOUT STRATEGY (1:3 RR)
+================================================================================
+🔵 PAPER TRADING MODE
+================================================================================
+💰 Capital: ₹100,000.00
+📦 Lot Size: 65
+📉 EMA Period: 5
+⚖️  Risk:Reward = 1:3
+⏰ Timeframe: 1 minute
+📊 Instrument: NSE:NIFTY26OCT22550CE
+================================================================================
+
+📋 STRATEGY LOGIC:
+   Step 1 → Last COMPLETED candle is GREEN with HIGH < EMA5 → alert candle
+   Step 2 → Entry: price breaks ABOVE alert HIGH; SL = alert LOW
+   Step 3 → Target = Entry + 3 × Risk (1:3 RR)
+   Exits checked on EVERY tick (both target and SL)
+================================================================================
+
+Start trading? (yes/no):  yes
+
+================================================================================
+📊 GREEN CANDLE BELOW EMA5 — BREAKOUT STRATEGY (1:3 RR)
+================================================================================
+🔵 PAPER TRADING MODE
+================================================================================
+🔧 RULES:
+   1. Last COMPLETED candle must be GREEN and HIGH < EMA5 (not touching)
+   2. Entry: current price breaks ABOVE alert candle's HIGH → LONG
+   3. SL: alert candle's LOW
+   4. Target: Entry + 3 × (Entry − SL)  [1:3 RR]
+   5. Exits monitored TICK-BY-TICK (target & SL)
+================================================================================
+📈 Instrument: NSE:NIFTY26OCT22550CE
+================================================================================
+
+📥 STEP 1: Fetching historical data...
+📥 Fetching historical data from 2026-09-24 to 2026-09-29...
+✅ Fetched 1087 historical candles
+
+🔌 Connecting to WebSocket...
+✅ WebSocket opened
+📋 Subscribing to: NSE:NIFTY26OCT22550CE
+✅ Subscription sent
+✅ Subscription confirmed
+
+📊 Candle completed: 16:46:00 | O:506.00 H:506.00 L:506.00 C:506.00
+Price: 504.70 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:16:00 | O:506.70 H:506.80 L:501.05 C:504.70
+Price: 501.05 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:17:00 | O:504.70 H:507.85 L:501.05 C:501.05
+Price: 500.90 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:18:00 | O:501.05 H:503.00 L:498.60 C:500.90
+Price: 510.65 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:19:00 | O:500.90 H:510.65 L:500.90 C:510.65
+Price: 516.10 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:20:00 | O:510.65 H:516.10 L:507.30 C:516.10
+Price: 509.60 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:21:00 | O:516.10 H:516.10 L:509.15 C:509.60
+Price: 506.55 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:22:00 | O:509.60 H:512.40 L:505.75 C:506.55
+Price: 506.10 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:23:00 | O:506.55 H:510.85 L:506.10 C:506.10
+Price: 499.60 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:24:00 | O:506.10 H:506.10 L:498.50 C:499.60
+Price: 499.60 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:25:00 | O:499.60 H:499.60 L:499.60 C:499.60
+Price: 503.05 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:26:00 | O:499.60 H:505.80 L:499.60 C:503.05
+Price: 504.70 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:27:00 | O:503.05 H:507.55 L:502.50 C:504.70
+Price: 514.50 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:28:00 | O:504.70 H:517.55 L:504.55 C:514.50
+Price: 520.60 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:29:00 | O:514.50 H:520.70 L:512.00 C:520.60
+Price: 531.05 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:30:00 | O:520.25 H:535.95 L:520.05 C:531.05
+Price: 541.45 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:31:00 | O:531.05 H:543.70 L:531.05 C:541.45
+Price: 531.90 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:32:00 | O:541.45 H:541.45 L:527.30 C:531.90
+Price: 533.80 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:33:00 | O:531.90 H:539.90 L:531.90 C:533.80
+Price: 529.55 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:34:00 | O:534.05 H:534.05 L:528.10 C:529.55
+Price: 524.60 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:35:00 | O:529.55 H:530.45 L:524.60 C:524.60
+Price: 529.95 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:36:00 | O:524.60 H:529.95 L:524.60 C:529.95
+Price: 526.55 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:37:00 | O:529.95 H:529.95 L:526.55 C:526.55
+Price: 516.65 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:38:00 | O:526.55 H:526.55 L:516.65 C:516.65
+Price: 531.80 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:39:00 | O:516.65 H:532.95 L:516.65 C:531.80
+Price: 541.65 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:40:00 | O:531.80 H:543.30 L:531.80 C:541.65
+Price: 535.90 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:41:00 | O:541.65 H:541.65 L:535.90 C:535.90
+Price: 532.40 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:42:00 | O:535.90 H:536.05 L:531.90 C:532.40
+Price: 530.55 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:43:00 | O:532.40 H:532.40 L:530.55 C:530.55
+Price: 530.55 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:44:00 | O:530.55 H:530.55 L:530.55 C:530.55
+Price: 523.20 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:45:00 | O:530.55 H:530.55 L:523.20 C:523.20
+Price: 524.65 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:46:00 | O:523.20 H:525.60 L:523.20 C:524.65
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-29 11:46:00
+   O=523.20 H=525.60 L=523.20 C=524.65
+   EMA5 (true, full series): 527.41
+   High < EMA5: 525.60 < 527.41 ✓ (not touching)
+   Distance below EMA5: 1.81
+   ⏰ Entry trigger: price > 525.60
+   🛑 Stop Loss: 523.20
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 524.65 | Alert: H=525.60 L=523.20 EMA5=527.41 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:47:00 | O:524.65 H:524.65 L:524.65 C:524.65
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 524.65 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:48:00 | O:524.65 H:524.65 L:524.65 C:524.65
+Price: 523.05 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:49:00 | O:524.65 H:524.65 L:523.05 C:523.05
+Price: 523.05 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:50:00 | O:523.05 H:523.05 L:523.05 C:523.05
+Price: 519.80 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:51:00 | O:523.05 H:523.05 L:518.40 C:519.80
+Price: 520.55 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 11:52:00 | O:519.80 H:520.55 L:519.65 C:520.55
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-29 11:52:00
+   O=519.80 H=520.55 L=519.65 C=520.55
+   EMA5 (true, full series): 522.05
+   High < EMA5: 520.55 < 522.05 ✓ (not touching)
+   Distance below EMA5: 1.50
+   ⏰ Entry trigger: price > 520.55
+   🛑 Stop Loss: 519.65
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 520.55 | Alert: H=520.55 L=519.65 EMA5=522.05 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 524.05 > Alert High 520.55
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹524.05
+   SL (Alert Low): ₹519.65  (Risk = ₹4.40)
+   Target (1:3): ₹537.25  (Reward = ₹13.20)
+
+💰 POSITION SIZING:
+   Lots: 2 | Shares: 130
+   Capital: ₹68,126.50 (68.1%)
+   Risk: ₹572.00 | Reward: ₹1716.00
+
+📈 BUY 130 @ ₹524.05...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 130 NSE:NIFTY26OCT22550CE @ ₹524.05
+✅ [PAPER] Order ID: PAPER_20260929_115309_-3518690879950982073
+✅ LONG position created!
+Price: 522.10 | Alert: H=520.55 L=519.65 EMA5=522.05 | LONG @ 524.05 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📊 Candle completed: 11:53:00 | O:520.55 H:524.05 L:520.55 C:522.10
+Price: 519.95 | Alert: H=520.55 L=519.65 EMA5=522.05 | LONG @ 524.05 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📊 Candle completed: 11:54:00 | O:522.10 H:522.10 L:519.95 C:519.95
+Price: 522.30 | Alert: H=520.55 L=519.65 EMA5=522.05 | LONG @ 524.05 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📊 Candle completed: 11:55:00 | O:519.95 H:522.30 L:519.95 C:522.30
+Price: 530.40 | Alert: H=520.55 L=519.65 EMA5=522.05 | LONG @ 524.05 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📊 Candle completed: 11:56:00 | O:522.30 H:530.40 L:522.30 C:530.40
+Price: 530.40 | Alert: H=520.55 L=519.65 EMA5=522.05 | LONG @ 524.05 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📊 Candle completed: 11:57:00 | O:530.40 H:530.40 L:530.40 C:530.40
+Price: 530.40 | Alert: H=520.55 L=519.65 EMA5=522.05 | LONG @ 524.05 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📊 Candle completed: 11:58:00 | O:530.40 H:530.40 L:530.40 C:530.40
+Price: 527.20 | Alert: H=520.55 L=519.65 EMA5=522.05 | LONG @ 524.05 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📊 Candle completed: 11:59:00 | O:530.40 H:530.40 L:526.75 C:527.20
+Price: 533.45 | Alert: H=520.55 L=519.65 EMA5=522.05 | LONG @ 524.05 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:00:00 | O:532.95 H:533.45 L:532.95 C:533.45
+Price: 533.45 | Alert: H=520.55 L=519.65 EMA5=522.05 | LONG @ 524.05 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📉 SELL 130 @ ₹537.2499999999999 (TARGET_HIT (1:3))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 130 NSE:NIFTY26OCT22550CE @ ₹537.2499999999999
+✅ [PAPER] Order ID: PAPER_20260929_120108_7126738797052068400
+
+📊 TRADE CLOSED
+   Entry: ₹524.05 | Exit: ₹537.25 (TARGET_HIT (1:3))
+   P&L: ₹+1,716.00 (+2.52%)
+   New Balance: ₹101,716.00
+   🔵 [PAPER] No real money changed hands
+Price: 540.15 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:01:00 | O:533.45 H:544.80 L:533.45 C:540.15
+Price: 537.70 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:02:00 | O:540.15 H:540.15 L:535.85 C:537.70
+Price: 542.85 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:03:00 | O:537.70 H:543.85 L:537.70 C:542.85
+Price: 545.70 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:04:00 | O:542.85 H:545.70 L:541.60 C:545.70
+Price: 548.00 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:05:00 | O:545.70 H:548.00 L:544.65 C:548.00
+Price: 543.10 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:06:00 | O:548.00 H:548.90 L:543.10 C:543.10
+Price: 546.45 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:07:00 | O:543.10 H:546.45 L:543.10 C:546.45
+Price: 546.45 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:08:00 | O:546.45 H:546.45 L:546.45 C:546.45
+Price: 540.75 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:09:00 | O:546.45 H:546.45 L:540.75 C:540.75
+Price: 540.40 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:10:00 | O:540.75 H:540.75 L:540.40 C:540.40
+Price: 539.70 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:11:00 | O:540.40 H:540.40 L:539.70 C:539.70
+Price: 542.05 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:12:00 | O:539.70 H:542.05 L:538.45 C:542.05
+Price: 542.05 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:13:00 | O:542.05 H:542.05 L:542.05 C:542.05
+Price: 542.05 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:14:00 | O:542.05 H:542.05 L:542.05 C:542.05
+Price: 542.05 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:15:00 | O:542.05 H:542.05 L:542.05 C:542.05
+Price: 539.85 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:16:00 | O:542.05 H:542.05 L:535.85 C:539.85
+Price: 538.10 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:17:00 | O:539.85 H:539.85 L:538.10 C:538.10
+Price: 534.80 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:18:00 | O:538.10 H:538.20 L:533.95 C:534.80
+Price: 530.55 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:19:00 | O:534.80 H:534.80 L:530.55 C:530.55
+Price: 528.00 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:20:00 | O:530.55 H:533.95 L:524.05 C:528.00
+Price: 527.50 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:21:00 | O:528.00 H:529.80 L:525.20 C:527.50
+Price: 527.35 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:22:00 | O:527.50 H:527.50 L:522.55 C:527.35
+Price: 527.50 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:23:00 | O:527.35 H:528.40 L:527.20 C:527.50
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-29 12:23:00
+   O=527.35 H=528.40 L=527.20 C=527.50
+   EMA5 (true, full series): 529.15
+   High < EMA5: 528.40 < 529.15 ✓ (not touching)
+   Distance below EMA5: 0.75
+   ⏰ Entry trigger: price > 528.40
+   🛑 Stop Loss: 527.20
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 520.00 | Alert: H=528.40 L=527.20 EMA5=529.15 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:24:00 | O:527.50 H:528.00 L:520.00 C:520.00
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 518.50 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:25:00 | O:520.00 H:520.00 L:517.95 C:518.50
+Price: 512.50 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:26:00 | O:518.50 H:518.65 L:512.50 C:512.50
+Price: 503.90 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:27:00 | O:512.50 H:512.50 L:499.85 C:503.90
+Price: 500.95 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:28:00 | O:504.60 H:504.60 L:498.15 C:500.95
+Price: 500.85 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:29:00 | O:500.95 H:501.30 L:499.15 C:500.85
+Price: 488.55 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:30:00 | O:500.85 H:500.95 L:485.95 C:488.55
+Price: 485.35 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:31:00 | O:488.55 H:491.30 L:480.90 C:485.35
+Price: 471.35 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:32:00 | O:485.35 H:485.35 L:470.40 C:471.35
+Price: 477.80 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+📊 Candle completed: 12:33:00 | O:471.35 H:477.80 L:471.35 C:477.80
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-29 12:33:00
+   O=471.35 H=477.80 L=471.35 C=477.80
+   EMA5 (true, full series): 484.31
+   High < EMA5: 477.80 < 484.31 ✓ (not touching)
+   Distance below EMA5: 6.51
+   ⏰ Entry trigger: price > 477.80
+   🛑 Stop Loss: 471.35
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 477.80 | Alert: H=477.80 L=471.35 EMA5=484.31 | Bal: ₹101,716.00 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 484.25 > Alert High 477.80
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹484.25
+   SL (Alert Low): ₹471.35  (Risk = ₹12.90)
+   Target (1:3): ₹522.95  (Reward = ₹38.70)
+
+💰 POSITION SIZING:
+   Lots: 3 | Shares: 195
+   Capital: ₹94,428.75 (94.4%)
+   Risk: ₹2515.50 | Reward: ₹7546.50
+
+📈 BUY 195 @ ₹484.25...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 195 NSE:NIFTY26OCT22550CE @ ₹484.25
+✅ [PAPER] Order ID: PAPER_20260929_123401_-5838076511817855248
+✅ LONG position created!
+Price: 484.20 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:34:00 | O:477.80 H:485.50 L:477.80 C:484.20
+Price: 491.00 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:35:00 | O:486.55 H:493.00 L:486.55 C:491.00
+Price: 496.00 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:36:00 | O:491.00 H:497.25 L:486.45 C:496.00
+Price: 493.50 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:37:00 | O:496.00 H:499.60 L:493.50 C:493.50
+Price: 493.50 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:38:00 | O:493.50 H:493.50 L:493.50 C:493.50
+Price: 497.65 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:39:00 | O:493.50 H:497.65 L:493.50 C:497.65
+Price: 505.90 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:40:00 | O:497.65 H:505.90 L:497.65 C:505.90
+Price: 512.70 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:41:00 | O:505.90 H:513.60 L:503.70 C:512.70
+Price: 508.20 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:42:00 | O:512.70 H:513.45 L:508.20 C:508.20
+Price: 504.75 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:43:00 | O:508.20 H:508.20 L:504.75 C:504.75
+Price: 504.75 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:44:00 | O:504.75 H:504.75 L:504.75 C:504.75
+Price: 496.50 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:45:00 | O:504.75 H:504.75 L:496.50 C:496.50
+Price: 494.70 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:46:00 | O:496.50 H:496.50 L:494.70 C:494.70
+Price: 496.50 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:47:00 | O:494.70 H:496.50 L:494.70 C:496.50
+Price: 496.50 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:48:00 | O:496.50 H:496.50 L:496.50 C:496.50
+Price: 496.50 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:49:00 | O:496.50 H:496.50 L:496.50 C:496.50
+Price: 496.50 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:50:00 | O:496.50 H:496.50 L:496.50 C:496.50
+Price: 496.50 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:51:00 | O:496.50 H:496.50 L:496.50 C:496.50
+Price: 496.50 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:52:00 | O:496.50 H:496.50 L:496.50 C:496.50
+Price: 496.50 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:53:00 | O:496.50 H:496.50 L:496.50 C:496.50
+Price: 508.05 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:54:00 | O:496.50 H:511.10 L:496.50 C:508.05
+Price: 508.05 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:55:00 | O:508.05 H:508.05 L:508.05 C:508.05
+Price: 515.85 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📊 Candle completed: 12:56:00 | O:508.05 H:515.85 L:508.05 C:515.85
+Price: 515.85 | Alert: H=477.80 L=471.35 EMA5=484.31 | LONG @ 484.25 | Bal: ₹101,716.00 | Active: 1 | [PAPER]
+📉 SELL 195 @ ₹522.9499999999999 (TARGET_HIT (1:3))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 195 NSE:NIFTY26OCT22550CE @ ₹522.9499999999999
+✅ [PAPER] Order ID: PAPER_20260929_125731_1041638343153614808
+
+📊 TRADE CLOSED
+   Entry: ₹484.25 | Exit: ₹522.95 (TARGET_HIT (1:3))
+   P&L: ₹+7,546.50 (+7.99%)
+   New Balance: ₹109,262.50
+   🔵 [PAPER] No real money changed hands
+Price: 521.40 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 12:57:00 | O:515.85 H:525.90 L:515.85 C:521.40
+Price: 515.00 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 12:58:00 | O:521.40 H:521.40 L:515.00 C:515.00
+Price: 515.00 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 12:59:00 | O:515.00 H:515.00 L:515.00 C:515.00
+Price: 514.45 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:00:00 | O:515.00 H:515.40 L:514.45 C:514.45
+Price: 515.70 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:06:00 | O:515.70 H:515.70 L:515.70 C:515.70
+Price: 515.70 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:07:00 | O:515.70 H:515.70 L:515.70 C:515.70
+Price: 510.20 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:08:00 | O:515.70 H:515.70 L:510.20 C:510.20
+Price: 521.50 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:09:00 | O:510.20 H:521.50 L:510.20 C:521.50
+Price: 521.50 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:10:00 | O:521.50 H:521.50 L:521.50 C:521.50
+Price: 521.50 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:11:00 | O:521.50 H:521.50 L:521.50 C:521.50
+Price: 510.00 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:12:00 | O:521.50 H:521.50 L:510.00 C:510.00
+Price: 507.95 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:13:00 | O:510.00 H:511.95 L:507.95 C:507.95
+Price: 505.30 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:14:00 | O:507.95 H:507.95 L:505.30 C:505.30
+Price: 501.45 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:15:00 | O:505.30 H:505.30 L:501.45 C:501.45
+Price: 503.25 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+📊 Candle completed: 13:16:00 | O:501.45 H:503.25 L:501.45 C:503.25
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-29 13:16:00
+   O=501.45 H=503.25 L=501.45 C=503.25
+   EMA5 (true, full series): 506.16
+   High < EMA5: 503.25 < 506.16 ✓ (not touching)
+   Distance below EMA5: 2.91
+   ⏰ Entry trigger: price > 503.25
+   🛑 Stop Loss: 501.45
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 503.25 | Alert: H=503.25 L=501.45 EMA5=506.16 | Bal: ₹109,262.50 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 504.70 > Alert High 503.25
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹504.70
+   SL (Alert Low): ₹501.45  (Risk = ₹3.25)
+   Target (1:3): ₹514.45  (Reward = ₹9.75)
+
+💰 POSITION SIZING:
+   Lots: 3 | Shares: 195
+   Capital: ₹98,416.50 (98.4%)
+   Risk: ₹633.75 | Reward: ₹1901.25
+
+📈 BUY 195 @ ₹504.7...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 195 NSE:NIFTY26OCT22550CE @ ₹504.7
+✅ [PAPER] Order ID: PAPER_20260929_131703_-5838076511817855248
+✅ LONG position created!
+Price: 507.90 | Alert: H=503.25 L=501.45 EMA5=506.16 | LONG @ 504.70 | Bal: ₹109,262.50 | Active: 1 | [PAPER]
+📊 Candle completed: 13:17:00 | O:503.25 H:509.95 L:503.25 C:507.90
+Price: 507.60 | Alert: H=503.25 L=501.45 EMA5=506.16 | LONG @ 504.70 | Bal: ₹109,262.50 | Active: 1 | [PAPER]
+📊 Candle completed: 13:18:00 | O:507.90 H:508.00 L:507.60 C:507.60
+Price: 505.60 | Alert: H=503.25 L=501.45 EMA5=506.16 | LONG @ 504.70 | Bal: ₹109,262.50 | Active: 1 | [PAPER]
+📊 Candle completed: 13:19:00 | O:507.60 H:507.60 L:505.60 C:505.60
+Price: 505.60 | Alert: H=503.25 L=501.45 EMA5=506.16 | LONG @ 504.70 | Bal: ₹109,262.50 | Active: 1 | [PAPER]
+📉 SELL 195 @ ₹501.45 (SL_HIT (Alert Low))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 195 NSE:NIFTY26OCT22550CE @ ₹501.45
+✅ [PAPER] Order ID: PAPER_20260929_132015_1041638343153614808
+
+📊 TRADE CLOSED
+   Entry: ₹504.70 | Exit: ₹501.45 (SL_HIT (Alert Low))
+   P&L: ₹-633.75 (-0.64%)
+   New Balance: ₹108,628.75
+   🔵 [PAPER] No real money changed hands
+Price: 496.55 | Bal: ₹108,628.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:20:00 | O:505.60 H:505.60 L:496.55 C:496.55
+Price: 496.60 | Bal: ₹108,628.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:21:00 | O:496.55 H:496.60 L:496.55 C:496.60
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-29 13:21:00
+   O=496.55 H=496.60 L=496.55 C=496.60
+   EMA5 (true, full series): 501.01
+   High < EMA5: 496.60 < 501.01 ✓ (not touching)
+   Distance below EMA5: 4.41
+   ⏰ Entry trigger: price > 496.60
+   🛑 Stop Loss: 496.55
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 496.60 | Alert: H=496.60 L=496.55 EMA5=501.01 | Bal: ₹108,628.75 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 497.00 > Alert High 496.60
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹497.00
+   SL (Alert Low): ₹496.55  (Risk = ₹0.45)
+   Target (1:3): ₹498.35  (Reward = ₹1.35)
+
+💰 POSITION SIZING:
+   Lots: 3 | Shares: 195
+   Capital: ₹96,915.00 (96.9%)
+   Risk: ₹87.75 | Reward: ₹263.25
+
+📈 BUY 195 @ ₹497.0...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 195 NSE:NIFTY26OCT22550CE @ ₹497.0
+✅ [PAPER] Order ID: PAPER_20260929_132239_-5838076511817855248
+✅ LONG position created!
+Price: 497.00 | Alert: H=496.60 L=496.55 EMA5=501.01 | LONG @ 497.00 | Bal: ₹108,628.75 | Active: 1 | [PAPER]
+📊 Candle completed: 13:22:00 | O:496.60 H:497.00 L:496.60 C:497.00
+Price: 497.00 | Alert: H=496.60 L=496.55 EMA5=501.01 | LONG @ 497.00 | Bal: ₹108,628.75 | Active: 1 | [PAPER]
+📉 SELL 195 @ ₹498.34999999999997 (TARGET_HIT (1:3))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 195 NSE:NIFTY26OCT22550CE @ ₹498.34999999999997
+✅ [PAPER] Order ID: PAPER_20260929_132330_1041638343153614808
+
+📊 TRADE CLOSED
+   Entry: ₹497.00 | Exit: ₹498.35 (TARGET_HIT (1:3))
+   P&L: ₹+263.25 (+0.27%)
+   New Balance: ₹108,892.00
+   🔵 [PAPER] No real money changed hands
+Price: 498.35 | Bal: ₹108,892.00 | Active: 0 | [PAPER]
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-29 13:22:00
+   O=496.60 H=497.00 L=496.60 C=497.00
+   EMA5 (true, full series): 499.67
+   High < EMA5: 497.00 < 499.67 ✓ (not touching)
+   Distance below EMA5: 2.67
+   ⏰ Entry trigger: price > 497.00
+   🛑 Stop Loss: 496.60
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+
+🎯 BREAKOUT! Price 498.35 > Alert High 497.00
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹498.35
+   SL (Alert Low): ₹496.60  (Risk = ₹1.75)
+   Target (1:3): ₹503.60  (Reward = ₹5.25)
+
+💰 POSITION SIZING:
+   Lots: 3 | Shares: 195
+   Capital: ₹97,178.25 (97.2%)
+   Risk: ₹341.25 | Reward: ₹1023.75
+
+📈 BUY 195 @ ₹498.35...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 195 NSE:NIFTY26OCT22550CE @ ₹498.35
+✅ [PAPER] Order ID: PAPER_20260929_132331_-5838076511817855248
+✅ LONG position created!
+Price: 498.35 | Alert: H=497.00 L=496.60 EMA5=499.67 | LONG @ 498.35 | Bal: ₹108,892.00 | Active: 1 | [PAPER]
+📊 Candle completed: 13:23:00 | O:497.00 H:498.35 L:497.00 C:498.35
+Price: 498.35 | Alert: H=497.00 L=496.60 EMA5=499.67 | LONG @ 498.35 | Bal: ₹108,892.00 | Active: 1 | [PAPER]
+📊 Candle completed: 13:24:00 | O:498.35 H:498.35 L:498.35 C:498.35
+Price: 498.35 | Alert: H=497.00 L=496.60 EMA5=499.67 | LONG @ 498.35 | Bal: ₹108,892.00 | Active: 1 | [PAPER]
+📊 Candle completed: 13:25:00 | O:498.35 H:498.35 L:498.35 C:498.35
+Price: 498.35 | Alert: H=497.00 L=496.60 EMA5=499.67 | LONG @ 498.35 | Bal: ₹108,892.00 | Active: 1 | [PAPER]
+📊 Candle completed: 13:26:00 | O:498.35 H:498.35 L:498.35 C:498.35
+Price: 498.35 | Alert: H=497.00 L=496.60 EMA5=499.67 | LONG @ 498.35 | Bal: ₹108,892.00 | Active: 1 | [PAPER]
+📉 SELL 195 @ ₹496.6 (SL_HIT (Alert Low))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 195 NSE:NIFTY26OCT22550CE @ ₹496.6
+✅ [PAPER] Order ID: PAPER_20260929_132745_1041638343153614808
+
+📊 TRADE CLOSED
+   Entry: ₹498.35 | Exit: ₹496.60 (SL_HIT (Alert Low))
+   P&L: ₹-341.25 (-0.35%)
+   New Balance: ₹108,550.75
+   🔵 [PAPER] No real money changed hands
+Price: 492.15 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:27:00 | O:498.35 H:498.35 L:492.15 C:492.15
+Price: 493.20 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:28:00 | O:492.15 H:493.20 L:487.65 C:493.20
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-29 13:28:00
+   O=492.15 H=493.20 L=487.65 C=493.20
+   EMA5 (true, full series): 495.37
+   High < EMA5: 493.20 < 495.37 ✓ (not touching)
+   Distance below EMA5: 2.17
+   ⏰ Entry trigger: price > 493.20
+   🛑 Stop Loss: 487.65
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 493.20 | Alert: H=493.20 L=487.65 EMA5=495.37 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:29:00 | O:493.20 H:493.20 L:493.20 C:493.20
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 492.60 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:30:00 | O:493.20 H:493.20 L:491.85 C:492.60
+Price: 492.60 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:31:00 | O:492.60 H:492.60 L:492.60 C:492.60
+Price: 494.10 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:32:00 | O:492.60 H:494.10 L:492.60 C:494.10
+Price: 494.10 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:33:00 | O:494.10 H:494.10 L:494.10 C:494.10
+Price: 494.10 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:34:00 | O:494.10 H:494.10 L:494.10 C:494.10
+Price: 494.10 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:35:00 | O:494.10 H:494.10 L:494.10 C:494.10
+Price: 485.80 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:36:00 | O:494.10 H:494.10 L:485.80 C:485.80
+Price: 485.80 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:37:00 | O:485.80 H:485.80 L:485.80 C:485.80
+Price: 477.70 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:38:00 | O:485.80 H:485.80 L:475.80 C:477.70
+Price: 479.25 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:39:00 | O:477.70 H:479.25 L:477.70 C:479.25
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-29 13:39:00
+   O=477.70 H=479.25 L=477.70 C=479.25
+   EMA5 (true, full series): 483.43
+   High < EMA5: 479.25 < 483.43 ✓ (not touching)
+   Distance below EMA5: 4.18
+   ⏰ Entry trigger: price > 479.25
+   🛑 Stop Loss: 477.70
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 477.80 | Alert: H=479.25 L=477.70 EMA5=483.43 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:40:00 | O:479.25 H:479.25 L:475.15 C:477.80
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 480.00 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+📊 Candle completed: 13:41:00 | O:477.80 H:480.00 L:477.80 C:480.00
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-29 13:41:00
+   O=477.80 H=480.00 L=477.80 C=480.00
+   EMA5 (true, full series): 481.04
+   High < EMA5: 480.00 < 481.04 ✓ (not touching)
+   Distance below EMA5: 1.04
+   ⏰ Entry trigger: price > 480.00
+   🛑 Stop Loss: 477.80
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 480.00 | Alert: H=480.00 L=477.80 EMA5=481.04 | Bal: ₹108,550.75 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 481.40 > Alert High 480.00
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹481.40
+   SL (Alert Low): ₹477.80  (Risk = ₹3.60)
+   Target (1:3): ₹492.20  (Reward = ₹10.80)
+
+💰 POSITION SIZING:
+   Lots: 3 | Shares: 195
+   Capital: ₹93,873.00 (93.9%)
+   Risk: ₹702.00 | Reward: ₹2106.00
+
+📈 BUY 195 @ ₹481.4...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 195 NSE:NIFTY26OCT22550CE @ ₹481.4
+✅ [PAPER] Order ID: PAPER_20260929_134210_-5838076511817855248
+✅ LONG position created!
+Price: 481.40 | Alert: H=480.00 L=477.80 EMA5=481.04 | LONG @ 481.40 | Bal: ₹108,550.75 | Active: 1 | [PAPER]
+📊 Candle completed: 13:42:00 | O:480.00 H:481.40 L:480.00 C:481.40
+Price: 481.40 | Alert: H=480.00 L=477.80 EMA5=481.04 | LONG @ 481.40 | Bal: ₹108,550.75 | Active: 1 | [PAPER]
+📊 Candle completed: 13:43:00 | O:481.40 H:481.40 L:481.40 C:481.40
+Price: 481.40 | Alert: H=480.00 L=477.80 EMA5=481.04 | LONG @ 481.40 | Bal: ₹108,550.75 | Active: 1 | [PAPER]
+📊 Candle completed: 13:44:00 | O:481.40 H:481.40 L:481.40 C:481.40
+Price: 482.00 | Alert: H=480.00 L=477.80 EMA5=481.04 | LONG @ 481.40 | Bal: ₹108,550.75 | Active: 1 | [PAPER]
+📊 Candle completed: 13:45:00 | O:481.40 H:482.00 L:481.40 C:482.00
+Price: 489.80 | Alert: H=480.00 L=477.80 EMA5=481.04 | LONG @ 481.40 | Bal: ₹108,550.75 | Active: 1 | [PAPER]
+📊 Candle completed: 13:46:00 | O:482.00 H:492.00 L:482.00 C:489.80
+Price: 502.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER] LONG @ 481.40 | Bal: ₹108,550.75 | Active: 1 | [PAPER]
+📊 Candle completed: 14:00:00 | O:502.95 H:502.95 L:502.95 C:502.95
+Price: 492.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:01:00 | O:502.95 H:502.95 L:492.95 C:492.95
+Price: 492.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:02:00 | O:492.95 H:492.95 L:492.95 C:492.95
+Price: 492.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:03:00 | O:492.95 H:492.95 L:492.95 C:492.95
+Price: 492.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:04:00 | O:492.95 H:492.95 L:492.95 C:492.95
+Price: 492.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:05:00 | O:492.95 H:492.95 L:492.95 C:492.95
+Price: 492.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:06:00 | O:492.95 H:492.95 L:492.95 C:492.95
+Price: 492.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:07:00 | O:492.95 H:492.95 L:492.95 C:492.95
+Price: 492.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:08:00 | O:492.95 H:492.95 L:492.95 C:492.95
+Price: 503.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:09:00 | O:492.95 H:503.95 L:492.95 C:503.95
+Price: 503.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:10:00 | O:503.95 H:503.95 L:503.95 C:503.95
+Price: 503.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:11:00 | O:503.95 H:503.95 L:503.95 C:503.95
+Price: 500.75 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:12:00 | O:503.95 H:503.95 L:499.60 C:500.75
+Price: 504.45 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:13:00 | O:500.75 H:504.55 L:500.75 C:504.45
+Price: 505.80 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:14:00 | O:504.45 H:505.80 L:504.45 C:505.80
+Price: 505.80 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:15:00 | O:505.80 H:505.80 L:505.80 C:505.80
+Price: 503.50 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:16:00 | O:505.80 H:505.80 L:503.50 C:503.50
+Price: 503.50 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:17:00 | O:503.50 H:503.50 L:503.50 C:503.50
+Price: 503.50 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:18:00 | O:503.50 H:503.50 L:503.50 C:503.50
+Price: 503.50 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:19:00 | O:503.50 H:503.50 L:503.50 C:503.50
+Price: 503.50 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:20:00 | O:503.50 H:503.50 L:503.50 C:503.50
+Price: 503.50 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:21:00 | O:503.50 H:503.50 L:503.50 C:503.50
+Price: 499.50 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:22:00 | O:505.00 H:505.00 L:499.50 C:499.50
+Price: 497.00 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:23:00 | O:499.50 H:499.50 L:497.00 C:497.00
+Price: 497.00 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:24:00 | O:497.00 H:497.00 L:497.00 C:497.00
+Price: 500.70 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:25:00 | O:497.00 H:500.70 L:497.00 C:500.70
+Price: 503.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:26:00 | O:500.70 H:503.95 L:500.70 C:503.95
+Price: 503.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:27:00 | O:503.95 H:503.95 L:503.95 C:503.95
+Price: 498.00 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:28:00 | O:503.95 H:503.95 L:492.65 C:498.00
+Price: 498.00 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:29:00 | O:498.00 H:498.00 L:498.00 C:498.00
+Price: 508.25 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:30:00 | O:498.00 H:508.25 L:498.00 C:508.25
+Price: 515.80 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:31:00 | O:508.25 H:518.35 L:508.25 C:515.80
+Price: 515.25 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:32:00 | O:515.80 H:515.80 L:515.25 C:515.25
+Price: 510.55 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:33:00 | O:515.25 H:515.25 L:508.30 C:510.55
+Price: 504.00 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:34:00 | O:510.55 H:510.55 L:504.00 C:504.00
+Price: 508.55 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:35:00 | O:504.00 H:508.55 L:502.95 C:508.55
+Price: 510.85 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:36:00 | O:508.55 H:510.85 L:508.55 C:510.85
+Price: 510.85 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:37:00 | O:510.85 H:510.85 L:510.85 C:510.85
+Price: 510.85 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:38:00 | O:510.85 H:510.85 L:510.85 C:510.85
+Price: 511.30 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:39:00 | O:510.85 H:511.30 L:510.85 C:511.30
+Price: 511.30 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:40:00 | O:511.30 H:511.30 L:511.30 C:511.30
+Price: 511.30 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:41:00 | O:511.30 H:511.30 L:511.30 C:511.30
+Price: 506.15 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:42:00 | O:510.30 H:510.30 L:506.15 C:506.15
+Price: 506.00 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:43:00 | O:506.15 H:506.15 L:506.00 C:506.00
+Price: 506.00 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:44:00 | O:506.00 H:506.00 L:506.00 C:506.00
+Price: 500.25 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:45:00 | O:506.00 H:506.00 L:500.25 C:500.25
+Price: 498.35 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:46:00 | O:500.25 H:500.25 L:498.35 C:498.35
+Price: 498.35 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:47:00 | O:498.35 H:498.35 L:498.35 C:498.35
+Price: 498.35 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:48:00 | O:498.35 H:498.35 L:498.35 C:498.35
+Price: 504.05 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:49:00 | O:498.35 H:504.05 L:498.35 C:504.05
+Price: 503.75 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:50:00 | O:504.05 H:504.05 L:503.75 C:503.75
+Price: 505.90 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:51:00 | O:503.75 H:505.90 L:503.75 C:505.90
+Price: 505.90 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:52:00 | O:505.90 H:505.90 L:505.90 C:505.90
+Price: 505.90 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:53:00 | O:505.90 H:505.90 L:505.90 C:505.90
+Price: 505.90 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:54:00 | O:505.90 H:505.90 L:505.90 C:505.90
+Price: 509.95 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:55:00 | O:505.90 H:509.95 L:505.90 C:509.95
+Price: 511.80 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:56:00 | O:509.95 H:511.80 L:509.95 C:511.80
+Price: 502.00 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:57:00 | O:511.80 H:511.80 L:502.00 C:502.00
+Price: 502.00 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+📊 Candle completed: 14:58:00 | O:502.00 H:502.00 L:502.00 C:502.00
+Price: 498.35 | Bal: ₹110,656.75 | Active: 0 | [PAPER]
+
