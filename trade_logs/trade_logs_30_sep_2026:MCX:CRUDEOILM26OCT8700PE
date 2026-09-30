@@ -1,0 +1,1167 @@
+================================================================================
+🚀 GREEN CANDLE BELOW EMA5 — BREAKOUT STRATEGY (1:3 RR)
+================================================================================
+🔵 PAPER TRADING MODE
+================================================================================
+💰 Capital: ₹100,000.00
+📦 Lot Size: 10
+📉 EMA Period: 5
+⚖️  Risk:Reward = 1:3
+⏰ Timeframe: 1 minute
+📊 Instrument: MCX:CRUDEOILM26OCT8700PE
+================================================================================
+
+📋 STRATEGY LOGIC:
+   Step 1 → Last COMPLETED candle is GREEN with HIGH < EMA5 → alert candle
+   Step 2 → Entry: price breaks ABOVE alert HIGH; SL = alert LOW
+   Step 3 → Target = Entry + 3 × Risk (1:3 RR)
+   Exits checked on EVERY tick (both target and SL)
+================================================================================
+
+Start trading? (yes/no):  yes
+
+================================================================================
+📊 GREEN CANDLE BELOW EMA5 — BREAKOUT STRATEGY (1:3 RR)
+================================================================================
+🔵 PAPER TRADING MODE
+================================================================================
+🔧 RULES:
+   1. Last COMPLETED candle must be GREEN and HIGH < EMA5 (not touching)
+   2. Entry: current price breaks ABOVE alert candle's HIGH → LONG
+   3. SL: alert candle's LOW
+   4. Target: Entry + 3 × (Entry − SL)  [1:3 RR]
+   5. Exits monitored TICK-BY-TICK (target & SL)
+================================================================================
+📈 Instrument: MCX:CRUDEOILM26OCT8700PE
+================================================================================
+
+📥 STEP 1: Fetching historical data...
+📥 Fetching historical data from 2026-09-25 to 2026-09-30...
+✅ Fetched 3179 historical candles
+
+🔌 Connecting to WebSocket...
+✅ WebSocket opened
+📋 Subscribing to: MCX:CRUDEOILM26OCT8700PE
+✅ Subscription sent
+✅ Subscription confirmed
+
+📊 Candle completed: 23:58:00 | O:445.45 H:445.45 L:445.45 C:445.45
+Price: 441.65 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:29:00 | O:446.65 H:448.20 L:441.25 C:441.65
+Price: 449.90 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:30:00 | O:442.60 H:450.65 L:440.45 C:449.90
+Price: 452.05 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:31:00 | O:449.00 H:453.85 L:447.60 C:452.05
+Price: 456.00 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:32:00 | O:451.70 H:456.00 L:451.20 C:456.00
+Price: 451.70 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:33:00 | O:455.30 H:455.95 L:451.70 C:451.70
+Price: 452.85 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:34:00 | O:451.95 H:454.50 L:451.20 C:452.85
+Price: 448.15 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:35:00 | O:453.30 H:453.30 L:442.85 C:448.15
+Price: 444.65 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:36:00 | O:447.00 H:449.10 L:444.50 C:444.65
+Price: 442.10 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:37:00 | O:443.40 H:447.35 L:440.75 C:442.10
+Price: 428.35 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:38:00 | O:442.40 H:442.40 L:427.10 C:428.35
+Price: 426.00 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:39:00 | O:428.10 H:429.75 L:423.05 C:426.00
+Price: 426.05 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:40:00 | O:426.95 H:428.55 L:424.05 C:426.05
+Price: 428.40 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:41:00 | O:424.45 H:430.25 L:424.45 C:428.40
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 18:41:00
+   O=424.45 H=430.25 L=424.45 C=428.40
+   EMA5 (true, full series): 431.06
+   High < EMA5: 430.25 < 431.06 ✓ (not touching)
+   Distance below EMA5: 0.81
+   ⏰ Entry trigger: price > 430.25
+   🛑 Stop Loss: 424.45
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 422.40 | Alert: H=430.25 L=424.45 EMA5=431.06 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:42:00 | O:428.10 H:429.00 L:422.40 C:422.40
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 419.00 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:43:00 | O:422.85 H:423.25 L:418.60 C:419.00
+Price: 423.00 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:44:00 | O:419.05 H:426.55 L:419.05 C:423.00
+Price: 418.40 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:45:00 | O:422.80 H:424.95 L:418.05 C:418.40
+Price: 419.00 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:46:00 | O:419.65 H:421.75 L:418.40 C:419.00
+Price: 414.40 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:47:00 | O:419.00 H:419.00 L:411.65 C:414.40
+Price: 417.20 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:48:00 | O:415.05 H:417.45 L:412.80 C:417.20
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 18:48:00
+   O=415.05 H=417.45 L=412.80 C=417.20
+   EMA5 (true, full series): 418.39
+   High < EMA5: 417.45 < 418.39 ✓ (not touching)
+   Distance below EMA5: 0.94
+   ⏰ Entry trigger: price > 417.45
+   🛑 Stop Loss: 412.80
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 415.85 | Alert: H=417.45 L=412.80 EMA5=418.39 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 418.00 > Alert High 417.45
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹418.00
+   SL (Alert Low): ₹412.80  (Risk = ₹5.20)
+   Target (1:3): ₹433.60  (Reward = ₹15.60)
+
+💰 POSITION SIZING:
+   Lots: 23 | Shares: 230
+   Capital: ₹96,140.00 (96.1%)
+   Risk: ₹1196.00 | Reward: ₹3588.00
+
+📈 BUY 230 @ ₹418.0...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 230 MCX:CRUDEOILM26OCT8700PE @ ₹418.0
+✅ [PAPER] Order ID: PAPER_20260930_184919_-5586774633147644084
+✅ LONG position created!
+Price: 413.05 | Alert: H=417.45 L=412.80 EMA5=418.39 | LONG @ 418.00 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📉 SELL 230 @ ₹412.8 (SL_HIT (Alert Low))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 230 MCX:CRUDEOILM26OCT8700PE @ ₹412.8
+✅ [PAPER] Order ID: PAPER_20260930_184952_-3921476065982097928
+
+📊 TRADE CLOSED
+   Entry: ₹418.00 | Exit: ₹412.80 (SL_HIT (Alert Low))
+   P&L: ₹-1,196.00 (-1.24%)
+   New Balance: ₹98,804.00
+   🔵 [PAPER] No real money changed hands
+Price: 412.30 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 18:48:00
+   O=415.05 H=417.45 L=412.80 C=417.20
+   EMA5 (true, full series): 418.39
+   High < EMA5: 417.45 < 418.39 ✓ (not touching)
+   Distance below EMA5: 0.94
+   ⏰ Entry trigger: price > 417.45
+   🛑 Stop Loss: 412.80
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 410.55 | Alert: H=417.45 L=412.80 EMA5=418.39 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:49:00 | O:416.10 H:418.00 L:410.00 C:410.55
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 405.35 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:50:00 | O:411.70 H:415.10 L:403.00 C:405.35
+Price: 402.65 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:51:00 | O:406.20 H:408.90 L:402.65 C:402.65
+Price: 404.20 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:52:00 | O:404.50 H:407.75 L:402.10 C:404.20
+Price: 405.90 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:53:00 | O:405.10 H:406.50 L:402.80 C:405.90
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 18:53:00
+   O=405.10 H=406.50 L=402.80 C=405.90
+   EMA5 (true, full series): 406.94
+   High < EMA5: 406.50 < 406.94 ✓ (not touching)
+   Distance below EMA5: 0.44
+   ⏰ Entry trigger: price > 406.50
+   🛑 Stop Loss: 402.80
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 404.95 | Alert: H=406.50 L=402.80 EMA5=406.94 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:54:00 | O:404.95 H:406.30 L:404.10 C:404.95
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 403.25 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:55:00 | O:402.85 H:406.85 L:401.00 C:403.25
+Price: 405.00 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:56:00 | O:403.25 H:406.55 L:403.25 C:405.00
+Price: 404.20 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:57:00 | O:405.00 H:406.40 L:404.20 C:404.20
+Price: 403.90 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:58:00 | O:404.20 H:406.00 L:402.10 C:403.90
+Price: 397.65 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 18:59:00 | O:404.25 H:405.75 L:397.45 C:397.65
+Price: 402.10 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:00:00 | O:398.50 H:405.75 L:396.35 C:402.10
+Price: 408.75 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:01:00 | O:402.00 H:409.75 L:397.40 C:408.75
+Price: 405.35 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:02:00 | O:409.25 H:409.25 L:404.65 C:405.35
+Price: 404.40 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:03:00 | O:405.35 H:406.80 L:402.00 C:404.40
+Price: 403.75 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:04:00 | O:405.50 H:405.55 L:403.15 C:403.75
+Price: 406.30 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:05:00 | O:405.50 H:406.30 L:403.35 C:406.30
+Price: 407.80 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:06:00 | O:407.55 H:410.10 L:407.55 C:407.80
+Price: 408.10 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:07:00 | O:407.55 H:409.35 L:406.65 C:408.10
+Price: 402.75 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:08:00 | O:408.35 H:408.80 L:396.50 C:402.75
+Price: 403.55 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:09:00 | O:402.00 H:405.00 L:402.00 C:403.55
+Price: 405.15 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:10:00 | O:402.55 H:405.50 L:400.85 C:405.15
+Price: 410.50 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:11:00 | O:405.50 H:410.50 L:405.35 C:410.50
+Price: 409.00 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:12:00 | O:410.55 H:411.15 L:408.65 C:409.00
+Price: 406.45 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:13:00 | O:408.50 H:409.95 L:405.75 C:406.45
+Price: 407.90 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:14:00 | O:405.90 H:408.60 L:405.45 C:407.90
+Price: 406.80 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:15:00 | O:408.10 H:408.60 L:405.00 C:406.80
+Price: 409.45 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:16:00 | O:406.30 H:409.45 L:405.55 C:409.45
+Price: 409.85 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:17:00 | O:409.45 H:410.00 L:407.25 C:409.85
+Price: 406.95 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:18:00 | O:409.25 H:412.25 L:406.85 C:406.95
+Price: 412.00 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:19:00 | O:407.10 H:412.20 L:407.10 C:412.00
+Price: 410.05 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:20:00 | O:412.05 H:412.65 L:409.55 C:410.05
+Price: 408.65 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:21:00 | O:410.05 H:412.00 L:408.65 C:408.65
+Price: 407.60 | Bal: ₹98,804.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:22:00 | O:407.35 H:407.60 L:403.25 C:407.60
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 19:22:00
+   O=407.35 H=407.60 L=403.25 C=407.60
+   EMA5 (true, full series): 408.72
+   High < EMA5: 407.60 < 408.72 ✓ (not touching)
+   Distance below EMA5: 1.12
+   ⏰ Entry trigger: price > 407.60
+   🛑 Stop Loss: 403.25
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+
+🎯 BREAKOUT! Price 407.95 > Alert High 407.60
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹407.95
+   SL (Alert Low): ₹403.25  (Risk = ₹4.70)
+   Target (1:3): ₹422.05  (Reward = ₹14.10)
+
+💰 POSITION SIZING:
+   Lots: 24 | Shares: 240
+   Capital: ₹97,908.00 (97.9%)
+   Risk: ₹1128.00 | Reward: ₹3384.00
+
+📈 BUY 240 @ ₹407.95...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 240 MCX:CRUDEOILM26OCT8700PE @ ₹407.95
+✅ [PAPER] Order ID: PAPER_20260930_192300_-4723949019043367779
+✅ LONG position created!
+Price: 415.00 | Alert: H=407.60 L=403.25 EMA5=408.72 | LONG @ 407.95 | Bal: ₹98,804.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:23:00 | O:407.95 H:415.00 L:406.80 C:415.00
+Price: 420.80 | Alert: H=407.60 L=403.25 EMA5=408.72 | LONG @ 407.95 | Bal: ₹98,804.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:24:00 | O:415.65 H:420.80 L:415.65 C:420.80
+Price: 417.65 | Alert: H=407.60 L=403.25 EMA5=408.72 | LONG @ 407.95 | Bal: ₹98,804.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:25:00 | O:420.35 H:421.60 L:416.25 C:417.65
+Price: 417.30 | Alert: H=407.60 L=403.25 EMA5=408.72 | LONG @ 407.95 | Bal: ₹98,804.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:26:00 | O:417.55 H:419.35 L:413.00 C:417.30
+Price: 415.65 | Alert: H=407.60 L=403.25 EMA5=408.72 | LONG @ 407.95 | Bal: ₹98,804.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:27:00 | O:417.65 H:418.00 L:414.65 C:415.65
+Price: 417.20 | Alert: H=407.60 L=403.25 EMA5=408.72 | LONG @ 407.95 | Bal: ₹98,804.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:28:00 | O:416.05 H:417.70 L:414.55 C:417.20
+Price: 419.25 | Alert: H=407.60 L=403.25 EMA5=408.72 | LONG @ 407.95 | Bal: ₹98,804.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:29:00 | O:416.25 H:419.25 L:414.10 C:419.25
+Price: 421.50 | Alert: H=407.60 L=403.25 EMA5=408.72 | LONG @ 407.95 | Bal: ₹98,804.00 | Active: 1 | [PAPER]
+📉 SELL 240 @ ₹422.04999999999995 (TARGET_HIT (1:3))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 240 MCX:CRUDEOILM26OCT8700PE @ ₹422.04999999999995
+✅ [PAPER] Order ID: PAPER_20260930_193031_-4177174869902319822
+
+📊 TRADE CLOSED
+   Entry: ₹407.95 | Exit: ₹422.05 (TARGET_HIT (1:3))
+   P&L: ₹+3,384.00 (+3.46%)
+   New Balance: ₹102,188.00
+   🔵 [PAPER] No real money changed hands
+Price: 421.85 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:30:00 | O:419.95 H:423.30 L:419.00 C:421.85
+Price: 422.00 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:31:00 | O:421.05 H:424.25 L:421.00 C:422.00
+Price: 425.15 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:32:00 | O:421.95 H:426.55 L:421.95 C:425.15
+Price: 420.05 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:33:00 | O:424.55 H:425.45 L:420.05 C:420.05
+Price: 423.30 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:34:00 | O:420.25 H:424.00 L:418.70 C:423.30
+Price: 424.85 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:35:00 | O:423.80 H:426.65 L:423.80 C:424.85
+Price: 427.80 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:36:00 | O:423.80 H:429.15 L:423.80 C:427.80
+Price: 428.05 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:37:00 | O:429.00 H:429.10 L:425.70 C:428.05
+Price: 419.10 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:38:00 | O:426.75 H:426.80 L:418.30 C:419.10
+Price: 419.05 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:39:00 | O:419.00 H:420.00 L:414.95 C:419.05
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 19:39:00
+   O=419.00 H=420.00 L=414.95 C=419.05
+   EMA5 (true, full series): 422.01
+   High < EMA5: 420.00 < 422.01 ✓ (not touching)
+   Distance below EMA5: 2.01
+   ⏰ Entry trigger: price > 420.00
+   🛑 Stop Loss: 414.95
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 414.75 | Alert: H=420.00 L=414.95 EMA5=422.01 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:40:00 | O:417.30 H:417.60 L:413.00 C:414.75
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 412.70 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:41:00 | O:415.75 H:417.60 L:409.90 C:412.70
+Price: 418.40 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:42:00 | O:412.20 H:419.00 L:412.20 C:418.40
+Price: 412.20 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:43:00 | O:418.55 H:419.00 L:412.20 C:412.20
+Price: 403.35 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:44:00 | O:411.65 H:412.55 L:403.35 C:403.35
+Price: 406.75 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:45:00 | O:404.40 H:409.00 L:400.90 C:406.75
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 19:45:00
+   O=404.40 H=409.00 L=400.90 C=406.75
+   EMA5 (true, full series): 410.03
+   High < EMA5: 409.00 < 410.03 ✓ (not touching)
+   Distance below EMA5: 1.03
+   ⏰ Entry trigger: price > 409.00
+   🛑 Stop Loss: 400.90
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 402.95 | Alert: H=409.00 L=400.90 EMA5=410.03 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:46:00 | O:406.50 H:407.15 L:402.95 C:402.95
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 398.65 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:47:00 | O:403.45 H:403.70 L:396.05 C:398.65
+Price: 392.70 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:48:00 | O:397.95 H:398.90 L:392.70 C:392.70
+Price: 395.00 | Bal: ₹102,188.00 | Active: 0 | [PAPER]
+📊 Candle completed: 19:49:00 | O:392.70 H:395.00 L:384.70 C:395.00
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 19:49:00
+   O=392.70 H=395.00 L=384.70 C=395.00
+   EMA5 (true, full series): 398.78
+   High < EMA5: 395.00 < 398.78 ✓ (not touching)
+   Distance below EMA5: 3.78
+   ⏰ Entry trigger: price > 395.00
+   🛑 Stop Loss: 384.70
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+
+🎯 BREAKOUT! Price 395.05 > Alert High 395.00
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹395.05
+   SL (Alert Low): ₹384.70  (Risk = ₹10.35)
+   Target (1:3): ₹426.10  (Reward = ₹31.05)
+
+💰 POSITION SIZING:
+   Lots: 25 | Shares: 250
+   Capital: ₹98,762.50 (98.8%)
+   Risk: ₹2587.50 | Reward: ₹7762.50
+
+📈 BUY 250 @ ₹395.05...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 250 MCX:CRUDEOILM26OCT8700PE @ ₹395.05
+✅ [PAPER] Order ID: PAPER_20260930_195000_7626448780922495661
+✅ LONG position created!
+Price: 396.00 | Alert: H=395.00 L=384.70 EMA5=398.78 | LONG @ 395.05 | Bal: ₹102,188.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:50:00 | O:395.05 H:399.45 L:394.65 C:396.00
+Price: 397.00 | Alert: H=395.00 L=384.70 EMA5=398.78 | LONG @ 395.05 | Bal: ₹102,188.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:51:00 | O:397.35 H:398.55 L:395.40 C:397.00
+Price: 397.95 | Alert: H=395.00 L=384.70 EMA5=398.78 | LONG @ 395.05 | Bal: ₹102,188.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:52:00 | O:396.90 H:398.55 L:396.90 C:397.95
+Price: 392.20 | Alert: H=395.00 L=384.70 EMA5=398.78 | LONG @ 395.05 | Bal: ₹102,188.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:53:00 | O:397.80 H:397.80 L:391.00 C:392.20
+Price: 391.40 | Alert: H=395.00 L=384.70 EMA5=398.78 | LONG @ 395.05 | Bal: ₹102,188.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:54:00 | O:390.95 H:394.70 L:390.95 C:391.40
+Price: 393.05 | Alert: H=395.00 L=384.70 EMA5=398.78 | LONG @ 395.05 | Bal: ₹102,188.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:55:00 | O:391.15 H:393.05 L:390.75 C:393.05
+Price: 390.75 | Alert: H=395.00 L=384.70 EMA5=398.78 | LONG @ 395.05 | Bal: ₹102,188.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:56:00 | O:392.40 H:393.25 L:390.75 C:390.75
+Price: 395.85 | Alert: H=395.00 L=384.70 EMA5=398.78 | LONG @ 395.05 | Bal: ₹102,188.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:57:00 | O:391.00 H:395.85 L:390.05 C:395.85
+Price: 394.20 | Alert: H=395.00 L=384.70 EMA5=398.78 | LONG @ 395.05 | Bal: ₹102,188.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:58:00 | O:394.70 H:395.20 L:392.15 C:394.20
+Price: 396.55 | Alert: H=395.00 L=384.70 EMA5=398.78 | LONG @ 395.05 | Bal: ₹102,188.00 | Active: 1 | [PAPER]
+📊 Candle completed: 19:59:00 | O:393.55 H:396.55 L:392.50 C:396.55
+Price: 395.35 | Alert: H=395.00 L=384.70 EMA5=398.78 | LONG @ 395.05 | Bal: ₹102,188.00 | Active: 1 | [PAPER]
+📉 SELL 250 @ ₹384.7 (SL_HIT (Alert Low))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 250 MCX:CRUDEOILM26OCT8700PE @ ₹384.7
+✅ [PAPER] Order ID: PAPER_20260930_200002_-2421603964659992118
+
+📊 TRADE CLOSED
+   Entry: ₹395.05 | Exit: ₹384.70 (SL_HIT (Alert Low))
+   P&L: ₹-2,587.50 (-2.62%)
+   New Balance: ₹99,600.50
+   🔵 [PAPER] No real money changed hands
+Price: 398.15 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:00:00 | O:395.35 H:398.20 L:379.75 C:398.15
+Price: 392.35 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:01:00 | O:398.00 H:398.00 L:391.25 C:392.35
+Price: 398.00 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:02:00 | O:392.35 H:400.05 L:392.35 C:398.00
+Price: 397.85 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:03:00 | O:397.80 H:399.40 L:395.50 C:397.85
+Price: 394.60 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:04:00 | O:398.95 H:398.95 L:392.30 C:394.60
+Price: 396.65 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:05:00 | O:394.60 H:397.30 L:394.00 C:396.65
+Price: 397.00 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:06:00 | O:396.10 H:398.80 L:395.60 C:397.00
+Price: 402.90 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:07:00 | O:397.05 H:402.90 L:397.00 C:402.90
+Price: 400.40 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:08:00 | O:402.60 H:404.30 L:398.00 C:400.40
+Price: 399.25 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:09:00 | O:400.40 H:401.40 L:399.20 C:399.25
+Price: 397.55 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:10:00 | O:398.25 H:400.15 L:395.20 C:397.55
+Price: 398.10 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:11:00 | O:398.35 H:400.10 L:397.45 C:398.10
+Price: 393.95 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:12:00 | O:397.55 H:397.65 L:392.00 C:393.95
+Price: 390.10 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:13:00 | O:394.30 H:397.50 L:388.50 C:390.10
+Price: 387.20 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:14:00 | O:389.65 H:397.35 L:386.75 C:387.20
+Price: 391.55 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:15:00 | O:387.10 H:391.55 L:383.70 C:391.55
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 20:15:00
+   O=387.10 H=391.55 L=383.70 C=391.55
+   EMA5 (true, full series): 391.97
+   High < EMA5: 391.55 < 391.97 ✓ (not touching)
+   Distance below EMA5: 0.42
+   ⏰ Entry trigger: price > 391.55
+   🛑 Stop Loss: 383.70
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 388.00 | Alert: H=391.55 L=383.70 EMA5=391.97 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:16:00 | O:389.00 H:391.00 L:388.00 C:388.00
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 393.75 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:17:00 | O:388.45 H:393.80 L:387.20 C:393.75
+Price: 388.85 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:18:00 | O:393.55 H:393.55 L:388.85 C:388.85
+Price: 391.15 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:19:00 | O:390.10 H:391.55 L:388.20 C:391.15
+Price: 391.30 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:20:00 | O:391.15 H:392.15 L:389.25 C:391.30
+Price: 392.40 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:21:00 | O:391.30 H:394.70 L:390.00 C:392.40
+Price: 390.00 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:22:00 | O:392.40 H:392.40 L:389.35 C:390.00
+Price: 383.90 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:23:00 | O:390.00 H:390.25 L:383.90 C:383.90
+Price: 390.00 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:24:00 | O:385.50 H:394.25 L:385.50 C:390.00
+Price: 388.30 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:25:00 | O:389.65 H:393.70 L:387.75 C:388.30
+Price: 382.00 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:26:00 | O:388.15 H:388.15 L:382.00 C:382.00
+Price: 385.15 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:27:00 | O:381.85 H:385.80 L:380.10 C:385.15
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 20:27:00
+   O=381.85 H=385.80 L=380.10 C=385.15
+   EMA5 (true, full series): 386.08
+   High < EMA5: 385.80 < 386.08 ✓ (not touching)
+   Distance below EMA5: 0.28
+   ⏰ Entry trigger: price > 385.80
+   🛑 Stop Loss: 380.10
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 383.80 | Alert: H=385.80 L=380.10 EMA5=386.08 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:28:00 | O:385.10 H:385.10 L:381.90 C:383.80
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 381.05 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:29:00 | O:383.65 H:384.10 L:380.20 C:381.05
+Price: 377.90 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:30:00 | O:381.05 H:382.30 L:376.50 C:377.90
+Price: 378.00 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:31:00 | O:376.25 H:379.70 L:376.25 C:378.00
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 20:31:00
+   O=376.25 H=379.70 L=376.25 C=378.00
+   EMA5 (true, full series): 380.60
+   High < EMA5: 379.70 < 380.60 ✓ (not touching)
+   Distance below EMA5: 0.90
+   ⏰ Entry trigger: price > 379.70
+   🛑 Stop Loss: 376.25
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 377.95 | Alert: H=379.70 L=376.25 EMA5=380.60 | Bal: ₹99,600.50 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 380.00 > Alert High 379.70
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹380.00
+   SL (Alert Low): ₹376.25  (Risk = ₹3.75)
+   Target (1:3): ₹391.25  (Reward = ₹11.25)
+
+💰 POSITION SIZING:
+   Lots: 26 | Shares: 260
+   Capital: ₹98,800.00 (98.8%)
+   Risk: ₹975.00 | Reward: ₹2925.00
+
+📈 BUY 260 @ ₹380.0...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 260 MCX:CRUDEOILM26OCT8700PE @ ₹380.0
+✅ [PAPER] Order ID: PAPER_20260930_203217_-6856118969975581526
+✅ LONG position created!
+Price: 382.00 | Alert: H=379.70 L=376.25 EMA5=380.60 | LONG @ 380.00 | Bal: ₹99,600.50 | Active: 1 | [PAPER]
+📊 Candle completed: 20:32:00 | O:378.50 H:382.00 L:377.90 C:382.00
+Price: 385.05 | Alert: H=379.70 L=376.25 EMA5=380.60 | LONG @ 380.00 | Bal: ₹99,600.50 | Active: 1 | [PAPER]
+📊 Candle completed: 20:33:00 | O:380.60 H:386.95 L:380.60 C:385.05
+Price: 387.65 | Alert: H=379.70 L=376.25 EMA5=380.60 | LONG @ 380.00 | Bal: ₹99,600.50 | Active: 1 | [PAPER]
+📊 Candle completed: 20:34:00 | O:385.05 H:388.45 L:381.30 C:387.65
+Price: 382.70 | Alert: H=379.70 L=376.25 EMA5=380.60 | LONG @ 380.00 | Bal: ₹99,600.50 | Active: 1 | [PAPER]
+📊 Candle completed: 20:35:00 | O:388.80 H:389.75 L:382.60 C:382.70
+Price: 383.40 | Alert: H=379.70 L=376.25 EMA5=380.60 | LONG @ 380.00 | Bal: ₹99,600.50 | Active: 1 | [PAPER]
+📊 Candle completed: 20:36:00 | O:384.80 H:384.80 L:381.00 C:383.40
+Price: 385.10 | Alert: H=379.70 L=376.25 EMA5=380.60 | LONG @ 380.00 | Bal: ₹99,600.50 | Active: 1 | [PAPER]
+📊 Candle completed: 20:37:00 | O:383.40 H:386.35 L:380.00 C:385.10
+Price: 390.15 | Alert: H=379.70 L=376.25 EMA5=380.60 | LONG @ 380.00 | Bal: ₹99,600.50 | Active: 1 | [PAPER]
+📉 SELL 260 @ ₹391.25 (TARGET_HIT (1:3))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 260 MCX:CRUDEOILM26OCT8700PE @ ₹391.25
+✅ [PAPER] Order ID: PAPER_20260930_203900_-3792817897425335438
+
+📊 TRADE CLOSED
+   Entry: ₹380.00 | Exit: ₹391.25 (TARGET_HIT (1:3))
+   P&L: ₹+2,925.00 (+2.96%)
+   New Balance: ₹102,525.50
+   🔵 [PAPER] No real money changed hands
+Price: 391.40 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:38:00 | O:385.10 H:391.40 L:385.10 C:391.40
+Price: 387.50 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:39:00 | O:390.00 H:390.00 L:386.80 C:387.50
+Price: 391.95 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:40:00 | O:387.50 H:391.95 L:387.00 C:391.95
+Price: 386.50 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:41:00 | O:391.95 H:394.20 L:385.60 C:386.50
+Price: 380.45 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:42:00 | O:385.35 H:388.70 L:375.00 C:380.45
+Price: 383.60 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:43:00 | O:380.65 H:385.80 L:380.65 C:383.60
+Price: 382.20 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:44:00 | O:383.60 H:385.10 L:380.80 C:382.20
+Price: 377.15 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:45:00 | O:383.40 H:383.60 L:376.70 C:377.15
+Price: 377.00 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:46:00 | O:377.45 H:378.30 L:373.00 C:377.00
+Price: 378.35 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:47:00 | O:378.00 H:381.00 L:377.40 C:378.35
+Price: 380.60 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:48:00 | O:377.40 H:381.35 L:375.00 C:380.60
+Price: 379.50 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:49:00 | O:380.35 H:380.95 L:378.75 C:379.50
+Price: 375.55 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:50:00 | O:379.50 H:379.50 L:374.15 C:375.55
+Price: 373.75 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:51:00 | O:375.00 H:377.65 L:371.30 C:373.75
+Price: 366.35 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:52:00 | O:372.80 H:376.00 L:366.35 C:366.35
+Price: 369.50 | Bal: ₹102,525.50 | Active: 0 | [PAPER]
+📊 Candle completed: 20:53:00 | O:366.35 H:369.85 L:365.70 C:369.50
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 20:53:00
+   O=366.35 H=369.85 L=365.70 C=369.50
+   EMA5 (true, full series): 372.05
+   High < EMA5: 369.85 < 372.05 ✓ (not touching)
+   Distance below EMA5: 2.20
+   ⏰ Entry trigger: price > 369.85
+   🛑 Stop Loss: 365.70
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+
+🎯 BREAKOUT! Price 370.45 > Alert High 369.85
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹370.45
+   SL (Alert Low): ₹365.70  (Risk = ₹4.75)
+   Target (1:3): ₹384.70  (Reward = ₹14.25)
+
+💰 POSITION SIZING:
+   Lots: 27 | Shares: 270
+   Capital: ₹100,021.50 (100.0%)
+   Risk: ₹1282.50 | Reward: ₹3847.50
+
+📈 BUY 270 @ ₹370.45...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 270 MCX:CRUDEOILM26OCT8700PE @ ₹370.45
+✅ [PAPER] Order ID: PAPER_20260930_205402_1748551463640774140
+✅ LONG position created!
+Price: 369.45 | Alert: H=369.85 L=365.70 EMA5=372.05 | LONG @ 370.45 | Bal: ₹102,525.50 | Active: 1 | [PAPER]
+📊 Candle completed: 20:54:00 | O:370.45 H:372.55 L:369.20 C:369.45
+Price: 372.95 | Alert: H=369.85 L=365.70 EMA5=372.05 | LONG @ 370.45 | Bal: ₹102,525.50 | Active: 1 | [PAPER]
+📊 Candle completed: 20:55:00 | O:369.45 H:373.00 L:369.45 C:372.95
+Price: 373.40 | Alert: H=369.85 L=365.70 EMA5=372.05 | LONG @ 370.45 | Bal: ₹102,525.50 | Active: 1 | [PAPER]
+📊 Candle completed: 20:56:00 | O:372.95 H:374.75 L:371.80 C:373.40
+Price: 376.35 | Alert: H=369.85 L=365.70 EMA5=372.05 | LONG @ 370.45 | Bal: ₹102,525.50 | Active: 1 | [PAPER]
+📊 Candle completed: 20:57:00 | O:373.55 H:377.00 L:373.50 C:376.35
+Price: 379.25 | Alert: H=369.85 L=365.70 EMA5=372.05 | LONG @ 370.45 | Bal: ₹102,525.50 | Active: 1 | [PAPER]
+📊 Candle completed: 20:58:00 | O:376.25 H:381.00 L:376.25 C:379.25
+Price: 384.00 | Alert: H=369.85 L=365.70 EMA5=372.05 | LONG @ 370.45 | Bal: ₹102,525.50 | Active: 1 | [PAPER]
+📉 SELL 270 @ ₹384.7 (TARGET_HIT (1:3))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 270 MCX:CRUDEOILM26OCT8700PE @ ₹384.7
+✅ [PAPER] Order ID: PAPER_20260930_205952_4215872454884457379
+
+📊 TRADE CLOSED
+   Entry: ₹370.45 | Exit: ₹384.70 (TARGET_HIT (1:3))
+   P&L: ₹+3,847.50 (+3.85%)
+   New Balance: ₹106,373.00
+   🔵 [PAPER] No real money changed hands
+Price: 381.55 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 20:59:00 | O:380.45 H:384.85 L:377.85 C:381.55
+Price: 387.80 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:00:00 | O:382.85 H:388.00 L:382.85 C:387.80
+Price: 391.95 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:01:00 | O:388.85 H:391.95 L:386.10 C:391.95
+Price: 391.80 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:02:00 | O:391.75 H:394.50 L:390.90 C:391.80
+Price: 392.20 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:03:00 | O:391.80 H:393.10 L:388.30 C:392.20
+Price: 384.40 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:04:00 | O:391.80 H:392.00 L:383.05 C:384.40
+Price: 392.25 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:05:00 | O:383.95 H:392.25 L:383.95 C:392.25
+Price: 392.10 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:06:00 | O:392.45 H:393.25 L:389.00 C:392.10
+Price: 387.45 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:07:00 | O:391.10 H:392.00 L:387.45 C:387.45
+Price: 390.15 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:08:00 | O:388.60 H:390.15 L:386.40 C:390.15
+Price: 389.45 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:09:00 | O:390.15 H:391.65 L:389.40 C:389.45
+Price: 390.85 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:10:00 | O:388.85 H:390.95 L:386.00 C:390.85
+Price: 390.50 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:11:00 | O:390.80 H:392.00 L:387.85 C:390.50
+Price: 384.80 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:12:00 | O:389.25 H:390.60 L:384.05 C:384.80
+Price: 380.40 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:13:00 | O:383.35 H:383.35 L:378.40 C:380.40
+Price: 374.70 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:14:00 | O:381.45 H:382.95 L:374.70 C:374.70
+Price: 380.40 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:15:00 | O:375.40 H:380.40 L:374.45 C:380.40
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 21:15:00
+   O=375.40 H=380.40 L=374.45 C=380.40
+   EMA5 (true, full series): 381.49
+   High < EMA5: 380.40 < 381.49 ✓ (not touching)
+   Distance below EMA5: 1.09
+   ⏰ Entry trigger: price > 380.40
+   🛑 Stop Loss: 374.45
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 378.95 | Alert: H=380.40 L=374.45 EMA5=381.49 | Bal: ₹106,373.00 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 380.85 > Alert High 380.40
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹380.85
+   SL (Alert Low): ₹374.45  (Risk = ₹6.40)
+   Target (1:3): ₹400.05  (Reward = ₹19.20)
+
+💰 POSITION SIZING:
+   Lots: 27 | Shares: 270
+   Capital: ₹102,829.50 (102.8%)
+   Risk: ₹1728.00 | Reward: ₹5184.00
+
+📈 BUY 270 @ ₹380.85...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 270 MCX:CRUDEOILM26OCT8700PE @ ₹380.85
+✅ [PAPER] Order ID: PAPER_20260930_211610_1748551463640774140
+✅ LONG position created!
+Price: 375.80 | Alert: H=380.40 L=374.45 EMA5=381.49 | LONG @ 380.85 | Bal: ₹106,373.00 | Active: 1 | [PAPER]
+📊 Candle completed: 21:16:00 | O:379.45 H:380.85 L:375.00 C:375.80
+Price: 375.05 | Alert: H=380.40 L=374.45 EMA5=381.49 | LONG @ 380.85 | Bal: ₹106,373.00 | Active: 1 | [PAPER]
+📉 SELL 270 @ ₹374.45 (SL_HIT (Alert Low))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 270 MCX:CRUDEOILM26OCT8700PE @ ₹374.45
+✅ [PAPER] Order ID: PAPER_20260930_211704_4215872454884457379
+
+📊 TRADE CLOSED
+   Entry: ₹380.85 | Exit: ₹374.45 (SL_HIT (Alert Low))
+   P&L: ₹-1,728.00 (-1.68%)
+   New Balance: ₹104,645.00
+   🔵 [PAPER] No real money changed hands
+Price: 379.85 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:17:00 | O:376.60 H:380.40 L:373.55 C:379.85
+Price: 383.00 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:18:00 | O:379.85 H:384.90 L:379.70 C:383.00
+Price: 384.35 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:19:00 | O:383.70 H:384.35 L:380.00 C:384.35
+Price: 383.80 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:20:00 | O:382.20 H:384.40 L:379.25 C:383.80
+Price: 379.65 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:21:00 | O:383.40 H:385.35 L:379.20 C:379.65
+Price: 379.85 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:22:00 | O:379.65 H:381.70 L:379.65 C:379.85
+Price: 381.25 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:23:00 | O:379.00 H:381.25 L:378.05 C:381.25
+Price: 380.80 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:24:00 | O:381.25 H:381.60 L:380.05 C:380.80
+Price: 383.00 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:25:00 | O:380.15 H:383.55 L:380.15 C:383.00
+Price: 389.50 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:26:00 | O:383.00 H:389.50 L:382.20 C:389.50
+Price: 393.00 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:27:00 | O:389.80 H:393.30 L:388.60 C:393.00
+Price: 394.30 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:28:00 | O:393.00 H:394.30 L:392.35 C:394.30
+Price: 395.50 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:29:00 | O:394.55 H:396.00 L:393.40 C:395.50
+Price: 387.55 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:30:00 | O:395.50 H:395.60 L:385.20 C:387.55
+Price: 388.70 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:31:00 | O:387.55 H:390.75 L:387.55 C:388.70
+Price: 387.25 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:32:00 | O:388.10 H:389.30 L:387.15 C:387.25
+Price: 386.75 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:33:00 | O:387.00 H:387.35 L:384.00 C:386.75
+Price: 387.20 | Bal: ₹104,645.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:34:00 | O:386.75 H:387.20 L:383.15 C:387.20
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 21:34:00
+   O=386.75 H=387.20 L=383.15 C=387.20
+   EMA5 (true, full series): 387.85
+   High < EMA5: 387.20 < 387.85 ✓ (not touching)
+   Distance below EMA5: 0.65
+   ⏰ Entry trigger: price > 387.20
+   🛑 Stop Loss: 383.15
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+
+🎯 BREAKOUT! Price 388.00 > Alert High 387.20
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹388.00
+   SL (Alert Low): ₹383.15  (Risk = ₹4.85)
+   Target (1:3): ₹402.55  (Reward = ₹14.55)
+
+💰 POSITION SIZING:
+   Lots: 26 | Shares: 260
+   Capital: ₹100,880.00 (100.9%)
+   Risk: ₹1261.00 | Reward: ₹3783.00
+
+📈 BUY 260 @ ₹388.0...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 260 MCX:CRUDEOILM26OCT8700PE @ ₹388.0
+✅ [PAPER] Order ID: PAPER_20260930_213501_-6856118969975581526
+✅ LONG position created!
+Price: 385.95 | Alert: H=387.20 L=383.15 EMA5=387.85 | LONG @ 388.00 | Bal: ₹104,645.00 | Active: 1 | [PAPER]
+📊 Candle completed: 21:35:00 | O:388.00 H:388.95 L:384.25 C:385.95
+Price: 388.00 | Alert: H=387.20 L=383.15 EMA5=387.85 | LONG @ 388.00 | Bal: ₹104,645.00 | Active: 1 | [PAPER]
+📊 Candle completed: 21:36:00 | O:385.95 H:388.00 L:385.00 C:388.00
+Price: 388.90 | Alert: H=387.20 L=383.15 EMA5=387.85 | LONG @ 388.00 | Bal: ₹104,645.00 | Active: 1 | [PAPER]
+📊 Candle completed: 21:37:00 | O:388.00 H:389.15 L:386.40 C:388.90
+Price: 386.40 | Alert: H=387.20 L=383.15 EMA5=387.85 | LONG @ 388.00 | Bal: ₹104,645.00 | Active: 1 | [PAPER]
+📊 Candle completed: 21:38:00 | O:389.05 H:389.05 L:385.60 C:386.40
+Price: 383.90 | Alert: H=387.20 L=383.15 EMA5=387.85 | LONG @ 388.00 | Bal: ₹104,645.00 | Active: 1 | [PAPER]
+📉 SELL 260 @ ₹383.15 (SL_HIT (Alert Low))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 260 MCX:CRUDEOILM26OCT8700PE @ ₹383.15
+✅ [PAPER] Order ID: PAPER_20260930_213932_-3792817897425335438
+
+📊 TRADE CLOSED
+   Entry: ₹388.00 | Exit: ₹383.15 (SL_HIT (Alert Low))
+   P&L: ₹-1,261.00 (-1.25%)
+   New Balance: ₹103,384.00
+   🔵 [PAPER] No real money changed hands
+Price: 381.55 | Bal: ₹103,384.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:39:00 | O:386.40 H:386.80 L:380.70 C:381.55
+Price: 380.45 | Bal: ₹103,384.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:40:00 | O:381.50 H:382.00 L:378.95 C:380.45
+Price: 383.20 | Bal: ₹103,384.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:41:00 | O:380.40 H:386.00 L:379.05 C:383.20
+Price: 381.40 | Bal: ₹103,384.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:42:00 | O:383.25 H:383.70 L:380.40 C:381.40
+Price: 384.30 | Bal: ₹103,384.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:43:00 | O:381.55 H:384.50 L:381.40 C:384.30
+Price: 381.70 | Bal: ₹103,384.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:44:00 | O:382.05 H:383.35 L:381.70 C:381.70
+Price: 380.65 | Bal: ₹103,384.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:45:00 | O:381.70 H:383.60 L:380.00 C:380.65
+Price: 380.40 | Bal: ₹103,384.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:46:00 | O:380.00 H:381.00 L:380.00 C:380.40
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 21:46:00
+   O=380.00 H=381.00 L=380.00 C=380.40
+   EMA5 (true, full series): 381.52
+   High < EMA5: 381.00 < 381.52 ✓ (not touching)
+   Distance below EMA5: 0.52
+   ⏰ Entry trigger: price > 381.00
+   🛑 Stop Loss: 380.00
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 381.00 | Alert: H=381.00 L=380.00 EMA5=381.52 | Bal: ₹103,384.00 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 381.40 > Alert High 381.00
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹381.40
+   SL (Alert Low): ₹380.00  (Risk = ₹1.40)
+   Target (1:3): ₹385.60  (Reward = ₹4.20)
+
+💰 POSITION SIZING:
+   Lots: 27 | Shares: 270
+   Capital: ₹102,978.00 (103.0%)
+   Risk: ₹378.00 | Reward: ₹1134.00
+
+📈 BUY 270 @ ₹381.4...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 270 MCX:CRUDEOILM26OCT8700PE @ ₹381.4
+✅ [PAPER] Order ID: PAPER_20260930_214714_1748551463640774140
+✅ LONG position created!
+Price: 380.55 | Alert: H=381.00 L=380.00 EMA5=381.52 | LONG @ 381.40 | Bal: ₹103,384.00 | Active: 1 | [PAPER]
+📉 SELL 270 @ ₹380.0 (SL_HIT (Alert Low))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 270 MCX:CRUDEOILM26OCT8700PE @ ₹380.0
+✅ [PAPER] Order ID: PAPER_20260930_214728_4215872454884457379
+
+📊 TRADE CLOSED
+   Entry: ₹381.40 | Exit: ₹380.00 (SL_HIT (Alert Low))
+   P&L: ₹-378.00 (-0.37%)
+   New Balance: ₹103,006.00
+   🔵 [PAPER] No real money changed hands
+Price: 379.55 | Bal: ₹103,006.00 | Active: 0 | [PAPER]
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 21:46:00
+   O=380.00 H=381.00 L=380.00 C=380.40
+   EMA5 (true, full series): 381.52
+   High < EMA5: 381.00 < 381.52 ✓ (not touching)
+   Distance below EMA5: 0.52
+   ⏰ Entry trigger: price > 381.00
+   🛑 Stop Loss: 380.00
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 380.00 | Alert: H=381.00 L=380.00 EMA5=381.52 | Bal: ₹103,006.00 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 381.05 > Alert High 381.00
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹381.05
+   SL (Alert Low): ₹380.00  (Risk = ₹1.05)
+   Target (1:3): ₹384.20  (Reward = ₹3.15)
+
+💰 POSITION SIZING:
+   Lots: 27 | Shares: 270
+   Capital: ₹102,883.50 (102.9%)
+   Risk: ₹283.50 | Reward: ₹850.50
+
+📈 BUY 270 @ ₹381.05...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 270 MCX:CRUDEOILM26OCT8700PE @ ₹381.05
+✅ [PAPER] Order ID: PAPER_20260930_214739_1748551463640774140
+✅ LONG position created!
+Price: 381.05 | Alert: H=381.00 L=380.00 EMA5=381.52 | LONG @ 381.05 | Bal: ₹103,006.00 | Active: 1 | [PAPER]
+📊 Candle completed: 21:47:00 | O:380.40 H:382.30 L:379.30 C:381.05
+Price: 384.00 | Alert: H=381.00 L=380.00 EMA5=381.52 | LONG @ 381.05 | Bal: ₹103,006.00 | Active: 1 | [PAPER]
+📉 SELL 270 @ ₹384.20000000000005 (TARGET_HIT (1:3))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 270 MCX:CRUDEOILM26OCT8700PE @ ₹384.20000000000005
+✅ [PAPER] Order ID: PAPER_20260930_214823_4215872454884457379
+
+📊 TRADE CLOSED
+   Entry: ₹381.05 | Exit: ₹384.20 (TARGET_HIT (1:3))
+   P&L: ₹+850.50 (+0.83%)
+   New Balance: ₹103,856.50
+   🔵 [PAPER] No real money changed hands
+Price: 387.35 | Bal: ₹103,856.50 | Active: 0 | [PAPER]
+📊 Candle completed: 21:48:00 | O:381.45 H:387.50 L:381.45 C:387.35
+Price: 386.00 | Bal: ₹103,856.50 | Active: 0 | [PAPER]
+📊 Candle completed: 21:49:00 | O:387.60 H:387.90 L:385.00 C:386.00
+Price: 385.00 | Bal: ₹103,856.50 | Active: 0 | [PAPER]
+📊 Candle completed: 21:50:00 | O:386.00 H:387.95 L:384.40 C:385.00
+Price: 385.25 | Bal: ₹103,856.50 | Active: 0 | [PAPER]
+📊 Candle completed: 21:51:00 | O:386.15 H:387.25 L:384.20 C:385.25
+Price: 383.15 | Bal: ₹103,856.50 | Active: 0 | [PAPER]
+📊 Candle completed: 21:52:00 | O:383.05 H:384.85 L:380.40 C:383.15
+Price: 386.15 | Bal: ₹103,856.50 | Active: 0 | [PAPER]
+📊 Candle completed: 21:53:00 | O:383.15 H:386.15 L:382.25 C:386.15
+Price: 383.70 | Bal: ₹103,856.50 | Active: 0 | [PAPER]
+📊 Candle completed: 21:54:00 | O:386.10 H:386.75 L:383.70 C:383.70
+Price: 382.00 | Bal: ₹103,856.50 | Active: 0 | [PAPER]
+📊 Candle completed: 21:55:00 | O:383.70 H:384.55 L:381.30 C:382.00
+Price: 381.70 | Bal: ₹103,856.50 | Active: 0 | [PAPER]
+📊 Candle completed: 21:56:00 | O:382.00 H:382.10 L:379.20 C:381.70
+Price: 380.90 | Bal: ₹103,856.50 | Active: 0 | [PAPER]
+📊 Candle completed: 21:57:00 | O:380.85 H:381.25 L:380.05 C:380.90
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 21:57:00
+   O=380.85 H=381.25 L=380.05 C=380.90
+   EMA5 (true, full series): 382.30
+   High < EMA5: 381.25 < 382.30 ✓ (not touching)
+   Distance below EMA5: 1.05
+   ⏰ Entry trigger: price > 381.25
+   🛑 Stop Loss: 380.05
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 380.20 | Alert: H=381.25 L=380.05 EMA5=382.30 | Bal: ₹103,856.50 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 381.30 > Alert High 381.25
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹381.30
+   SL (Alert Low): ₹380.05  (Risk = ₹1.25)
+   Target (1:3): ₹385.05  (Reward = ₹3.75)
+
+💰 POSITION SIZING:
+   Lots: 27 | Shares: 270
+   Capital: ₹102,951.00 (103.0%)
+   Risk: ₹337.50 | Reward: ₹1012.50
+
+📈 BUY 270 @ ₹381.3...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 270 MCX:CRUDEOILM26OCT8700PE @ ₹381.3
+✅ [PAPER] Order ID: PAPER_20260930_215815_1748551463640774140
+✅ LONG position created!
+Price: 381.25 | Alert: H=381.25 L=380.05 EMA5=382.30 | LONG @ 381.30 | Bal: ₹103,856.50 | Active: 1 | [PAPER]
+📊 Candle completed: 21:58:00 | O:380.90 H:381.40 L:380.20 C:381.25
+Price: 381.25 | Alert: H=381.25 L=380.05 EMA5=382.30 | LONG @ 381.30 | Bal: ₹103,856.50 | Active: 1 | [PAPER]
+📉 SELL 270 @ ₹380.05 (SL_HIT (Alert Low))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 270 MCX:CRUDEOILM26OCT8700PE @ ₹380.05
+✅ [PAPER] Order ID: PAPER_20260930_215958_4215872454884457379
+
+📊 TRADE CLOSED
+   Entry: ₹381.30 | Exit: ₹380.05 (SL_HIT (Alert Low))
+   P&L: ₹-337.50 (-0.33%)
+   New Balance: ₹103,519.00
+   🔵 [PAPER] No real money changed hands
+Price: 380.00 | Bal: ₹103,519.00 | Active: 0 | [PAPER]
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 21:58:00
+   O=380.90 H=381.40 L=380.20 C=381.25
+   EMA5 (true, full series): 381.95
+   High < EMA5: 381.40 < 381.95 ✓ (not touching)
+   Distance below EMA5: 0.55
+   ⏰ Entry trigger: price > 381.40
+   🛑 Stop Loss: 380.20
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 379.85 | Alert: H=381.40 L=380.20 EMA5=381.95 | Bal: ₹103,519.00 | Active: 0 | [PAPER]
+📊 Candle completed: 21:59:00 | O:381.25 H:384.70 L:379.85 C:379.85
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 378.75 | Bal: ₹103,519.00 | Active: 0 | [PAPER]
+📊 Candle completed: 22:00:00 | O:380.80 H:384.25 L:378.75 C:378.75
+Price: 379.65 | Bal: ₹103,519.00 | Active: 0 | [PAPER]
+📊 Candle completed: 22:01:00 | O:378.50 H:380.00 L:377.65 C:379.65
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 22:01:00
+   O=378.50 H=380.00 L=377.65 C=379.65
+   EMA5 (true, full series): 380.16
+   High < EMA5: 380.00 < 380.16 ✓ (not touching)
+   Distance below EMA5: 0.16
+   ⏰ Entry trigger: price > 380.00
+   🛑 Stop Loss: 377.65
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 379.15 | Alert: H=380.00 L=377.65 EMA5=380.16 | Bal: ₹103,519.00 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 380.20 > Alert High 380.00
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹380.20
+   SL (Alert Low): ₹377.65  (Risk = ₹2.55)
+   Target (1:3): ₹387.85  (Reward = ₹7.65)
+
+💰 POSITION SIZING:
+   Lots: 27 | Shares: 270
+   Capital: ₹102,654.00 (102.7%)
+   Risk: ₹688.50 | Reward: ₹2065.50
+
+📈 BUY 270 @ ₹380.2...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 270 MCX:CRUDEOILM26OCT8700PE @ ₹380.2
+✅ [PAPER] Order ID: PAPER_20260930_220213_1748551463640774140
+✅ LONG position created!
+Price: 380.70 | Alert: H=380.00 L=377.65 EMA5=380.16 | LONG @ 380.20 | Bal: ₹103,519.00 | Active: 1 | [PAPER]
+📊 Candle completed: 22:02:00 | O:379.65 H:381.30 L:379.10 C:380.70
+Price: 379.15 | Alert: H=380.00 L=377.65 EMA5=380.16 | LONG @ 380.20 | Bal: ₹103,519.00 | Active: 1 | [PAPER]
+📊 Candle completed: 22:03:00 | O:380.70 H:380.70 L:379.05 C:379.15
+Price: 378.35 | Alert: H=380.00 L=377.65 EMA5=380.16 | LONG @ 380.20 | Bal: ₹103,519.00 | Active: 1 | [PAPER]
+📉 SELL 270 @ ₹377.65 (SL_HIT (Alert Low))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 270 MCX:CRUDEOILM26OCT8700PE @ ₹377.65
+✅ [PAPER] Order ID: PAPER_20260930_220439_4215872454884457379
+
+📊 TRADE CLOSED
+   Entry: ₹380.20 | Exit: ₹377.65 (SL_HIT (Alert Low))
+   P&L: ₹-688.50 (-0.67%)
+   New Balance: ₹102,830.50
+   🔵 [PAPER] No real money changed hands
+Price: 378.35 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:04:00 | O:379.15 H:379.55 L:376.95 C:378.35
+Price: 376.95 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:05:00 | O:378.35 H:380.75 L:376.95 C:376.95
+Price: 374.20 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:06:00 | O:376.95 H:377.25 L:374.20 C:374.20
+Price: 380.00 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:07:00 | O:375.45 H:381.30 L:375.45 C:380.00
+Price: 382.20 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:08:00 | O:380.80 H:382.20 L:378.85 C:382.20
+Price: 380.45 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:09:00 | O:382.20 H:383.00 L:380.45 C:380.45
+Price: 379.90 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:10:00 | O:380.05 H:380.80 L:379.50 C:379.90
+Price: 380.90 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:11:00 | O:379.90 H:381.95 L:379.90 C:380.90
+Price: 381.35 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:12:00 | O:380.75 H:381.35 L:378.70 C:381.35
+Price: 385.00 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:13:00 | O:381.30 H:385.00 L:379.95 C:385.00
+Price: 387.25 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:14:00 | O:384.30 H:389.55 L:384.30 C:387.25
+Price: 384.30 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:15:00 | O:387.25 H:388.10 L:384.00 C:384.30
+Price: 381.55 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:16:00 | O:384.30 H:385.40 L:379.05 C:381.55
+Price: 387.50 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:17:00 | O:382.10 H:387.50 L:382.10 C:387.50
+Price: 387.60 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:18:00 | O:387.50 H:388.00 L:385.65 C:387.60
+Price: 386.00 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:19:00 | O:386.40 H:388.00 L:385.00 C:386.00
+Price: 387.10 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:20:00 | O:385.45 H:388.85 L:385.45 C:387.10
+Price: 386.30 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:21:00 | O:388.00 H:388.05 L:385.70 C:386.30
+Price: 384.80 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:22:00 | O:386.30 H:386.65 L:384.55 C:384.80
+Price: 384.30 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:23:00 | O:385.00 H:387.00 L:384.30 C:384.30
+Price: 386.40 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:24:00 | O:385.70 H:387.00 L:384.05 C:386.40
+Price: 388.45 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:25:00 | O:386.40 H:388.80 L:386.40 C:388.45
+Price: 389.95 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:26:00 | O:389.15 H:391.20 L:387.45 C:389.95
+Price: 395.50 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:27:00 | O:390.40 H:395.60 L:390.00 C:395.50
+Price: 399.00 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:28:00 | O:395.15 H:399.75 L:393.25 C:399.00
+Price: 395.90 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:29:00 | O:398.00 H:398.55 L:395.00 C:395.90
+Price: 398.05 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:30:00 | O:395.90 H:399.15 L:395.90 C:398.05
+Price: 394.80 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:31:00 | O:398.55 H:398.55 L:393.50 C:394.80
+Price: 395.55 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:32:00 | O:394.95 H:398.50 L:394.55 C:395.55
+Price: 392.90 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:33:00 | O:395.95 H:396.25 L:389.00 C:392.90
+Price: 391.90 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:34:00 | O:392.55 H:392.55 L:388.60 C:391.90
+Price: 395.00 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:35:00 | O:391.10 H:395.00 L:391.05 C:395.00
+Price: 397.85 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:36:00 | O:395.00 H:398.35 L:394.20 C:397.85
+Price: 397.80 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:37:00 | O:397.00 H:399.00 L:396.15 C:397.80
+Price: 397.70 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:38:00 | O:398.65 H:399.25 L:397.15 C:397.70
+Price: 397.00 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:39:00 | O:397.70 H:399.00 L:397.00 C:397.00
+Price: 399.05 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:40:00 | O:398.25 H:399.45 L:398.25 C:399.05
+Price: 397.80 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:41:00 | O:399.00 H:399.10 L:397.80 C:397.80
+Price: 397.00 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:42:00 | O:397.40 H:398.85 L:396.95 C:397.00
+Price: 391.00 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:43:00 | O:397.45 H:397.45 L:391.00 C:391.00
+Price: 393.20 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:44:00 | O:391.45 H:395.45 L:391.10 C:393.20
+Price: 391.55 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:45:00 | O:394.00 H:394.00 L:391.50 C:391.55
+Price: 393.60 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:46:00 | O:391.60 H:393.60 L:388.30 C:393.60
+Price: 392.30 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:47:00 | O:394.90 H:394.95 L:392.10 C:392.30
+Price: 395.70 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:48:00 | O:393.55 H:395.80 L:392.05 C:395.70
+Price: 393.35 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:49:00 | O:395.50 H:397.25 L:392.50 C:393.35
+Price: 389.00 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:50:00 | O:392.95 H:394.20 L:389.00 C:389.00
+Price: 390.05 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:51:00 | O:389.70 H:391.30 L:388.70 C:390.05
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 22:51:00
+   O=389.70 H=391.30 L=388.70 C=390.05
+   EMA5 (true, full series): 391.48
+   High < EMA5: 391.30 < 391.48 ✓ (not touching)
+   Distance below EMA5: 0.18
+   ⏰ Entry trigger: price > 391.30
+   🛑 Stop Loss: 388.70
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 387.25 | Alert: H=391.30 L=388.70 EMA5=391.48 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:52:00 | O:390.00 H:391.15 L:386.15 C:387.25
+
+⚠️  Last completed candle no longer qualifies as alert. Alert cleared.
+Price: 388.15 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+📊 Candle completed: 22:53:00 | O:386.55 H:388.15 L:384.90 C:388.15
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-09-30 22:53:00
+   O=386.55 H=388.15 L=384.90 C=388.15
+   EMA5 (true, full series): 389.43
+   High < EMA5: 388.15 < 389.43 ✓ (not touching)
+   Distance below EMA5: 1.28
+   ⏰ Entry trigger: price > 388.15
+   🛑 Stop Loss: 384.90
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 387.90 | Alert: H=388.15 L=384.90 EMA5=389.43 | Bal: ₹102,830.50 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 388.20 > Alert High 388.15
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹388.20
+   SL (Alert Low): ₹384.90  (Risk = ₹3.30)
+   Target (1:3): ₹398.10  (Reward = ₹9.90)
+
+💰 POSITION SIZING:
+   Lots: 26 | Shares: 260
+   Capital: ₹100,932.00 (100.9%)
+   Risk: ₹858.00 | Reward: ₹2574.00
+
+📈 BUY 260 @ ₹388.2...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 260 MCX:CRUDEOILM26OCT8700PE @ ₹388.2
+✅ [PAPER] Order ID: PAPER_20260930_225404_-6856118969975581526
+✅ LONG position created!
+Price: 388.15 | Alert: H=388.15 L=384.90 EMA5=389.43 | LONG @ 388.20 | Bal: ₹102,830.50 | Active: 1 | [PAPER]
+
+Click to add a cell.
