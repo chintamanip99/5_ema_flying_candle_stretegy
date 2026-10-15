@@ -1,0 +1,221 @@
+
+
+
+
+
+
+
+
+Selection deleted
+INSTRUMENT_KEY = "MCX:CRUDEOILM26OCT9050PE"
+
+    print(f"💰 Final Balance: ₹{current_balance:,.2f}")
+    print(f"📈 P&L: ₹{current_balance - INITIAL_CAPITAL:+,.2f}")
+    print(f"📊 Return: {(current_balance - INITIAL_CAPITAL) / INITIAL_CAPITAL * 100:+.2f}%")
+
+    closed_trades = [t for t in active_trades if t.get('status') == 'CLOSED']
+    active_trades_list = [t for t in active_trades if t.get('status') == 'ACTIVE']
+
+    if closed_trades:
+        print(f"\n📊 Closed Trades: {len(closed_trades)}")
+        for i, trade in enumerate(closed_trades, 1):
+            print(f"   {i}. {trade['type']} | Entry: ₹{trade['entry_price']:.2f} | "
+                  f"Exit: ₹{trade.get('exit_price', 0):.2f} | "
+                  f"P&L: ₹{trade.get('PnL', 0):+,.2f}")
+
+    if active_trades_list:
+        print(f"\n⚠️  Active Trades: {len(active_trades_list)}")
+        for i, trade in enumerate(active_trades_list, 1):
+            print(f"   {i}. {trade['type']} @ ₹{trade['entry_price']:.2f} | "
+                  f"SL: ₹{trade['sl_price']:.2f} | Target: ₹{trade['target_price']:.2f}")
+
+    total_trades = len(closed_trades)
+    winning_trades = len([t for t in closed_trades if t.get('PnL', 0) > 0])
+
+    if total_trades > 0:
+        print(f"\n📊 Statistics:")
+        print(f"   Total: {total_trades} | Wins: {winning_trades} | "
+              f"Losses: {total_trades - winning_trades}")
+        print(f"   Win Rate: {(winning_trades/total_trades)*100:.1f}%")
+        print(f"   Total P&L: ₹{sum([t.get('PnL', 0) for t in closed_trades]):+,.2f}")
+
+    save_live_results()
+
+
+def save_live_results():
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    results_dir = "live_trading_results"
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
+
+    mode_suffix = "PAPER" if PAPER_TRADING else "REAL"
+
+    closed_trades = [t for t in active_trades if t.get('status') == 'CLOSED']
+    if closed_trades:
+        pd.DataFrame(closed_trades).to_csv(
+            os.path.join(results_dir, f"trades_GREEN_BELOW_EMA5_{mode_suffix}_{timestamp}.csv"),
+            index=False
+        )
+
+    summary = {
+        'Trading_Mode': 'PAPER' if PAPER_TRADING else 'REAL',
+        'Strategy': 'GREEN_CANDLE_BELOW_EMA5_BREAKOUT_1_3_RR',
+        'EMA_Period': EMA_PERIOD,
+        'Risk_Reward_Ratio': f'1:{RISK_REWARD_RATIO:.0f}',
+        'Initial_Capital': INITIAL_CAPITAL,
+        'Final_Balance': current_balance,
+        'Total_PnL': current_balance - INITIAL_CAPITAL,
+        'Return_Percentage': (current_balance - INITIAL_CAPITAL) / INITIAL_CAPITAL * 100,
+        'Closed_Trades': len(closed_trades),
+        'Winning_Trades': len([t for t in closed_trades if t.get('PnL', 0) > 0]),
+        'Instrument': INSTRUMENT_KEY,
+        'Lot_Size': BASE_LOT_SIZE,
+        'Timestamp': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    }
+    pd.DataFrame([summary]).to_csv(
+        os.path.join(results_dir, f"summary_GREEN_BELOW_EMA5_{mode_suffix}_{timestamp}.csv"),
+        index=False
+    )
+    print(f"\n💾 Results saved to {results_dir}/")
+
+
+# ================= MAIN =================
+if __name__ == "__main__":
+    print("=" * 80)
+    print("🚀 GREEN CANDLE BELOW EMA5 — BREAKOUT STRATEGY (1:3 RR)")
+    print("=" * 80)
+    print("🔵 PAPER TRADING MODE" if PAPER_TRADING else "🔴 REAL TRADING MODE")
+    print("=" * 80)
+    print(f"💰 Capital: ₹{INITIAL_CAPITAL:,.2f}")
+    print(f"📦 Lot Size: {BASE_LOT_SIZE}")
+    print(f"📉 EMA Period: {EMA_PERIOD}")
+    print(f"⚖️  Risk:Reward = 1:{RISK_REWARD_RATIO:.0f}")
+    print(f"⏰ Timeframe: {TIMEFRAME} minute")
+    print(f"📊 Instrument: {INSTRUMENT_KEY}")
+    print("=" * 80)
+    print("\n📋 STRATEGY LOGIC:")
+    print("   Step 1 → Last COMPLETED candle is GREEN with HIGH < EMA5 → alert candle")
+    print("   Step 2 → Entry: price breaks ABOVE alert HIGH; SL = alert LOW")
+    print(f"   Step 3 → Target = Entry + {RISK_REWARD_RATIO:.0f} × Risk (1:{RISK_REWARD_RATIO:.0f} RR)")
+    print("   Exits checked on EVERY tick (both target and SL)")
+    print("=" * 80)
+
+    confirm = input("\nStart trading? (yes/no): ").strip().lower()
+    if confirm in ['yes', 'y']:
+        start_live_trading()
+    else:
+        print("\n❌ Cancelled.")
+        exit(0)
+================================================================================
+🚀 GREEN CANDLE BELOW EMA5 — BREAKOUT STRATEGY (1:3 RR)
+================================================================================
+🔵 PAPER TRADING MODE
+================================================================================
+💰 Capital: ₹100,000.00
+📦 Lot Size: 10
+📉 EMA Period: 5
+⚖️  Risk:Reward = 1:3
+⏰ Timeframe: 5 minute
+📊 Instrument: MCX:CRUDEOILM26OCT9050PE
+================================================================================
+
+📋 STRATEGY LOGIC:
+   Step 1 → Last COMPLETED candle is GREEN with HIGH < EMA5 → alert candle
+   Step 2 → Entry: price breaks ABOVE alert HIGH; SL = alert LOW
+   Step 3 → Target = Entry + 3 × Risk (1:3 RR)
+   Exits checked on EVERY tick (both target and SL)
+================================================================================
+
+Start trading? (yes/no):  yes
+
+================================================================================
+📊 GREEN CANDLE BELOW EMA5 — BREAKOUT STRATEGY (1:3 RR)
+================================================================================
+🔵 PAPER TRADING MODE
+================================================================================
+🔧 RULES:
+   1. Last COMPLETED candle must be GREEN and HIGH < EMA5 (not touching)
+   2. Entry: current price breaks ABOVE alert candle's HIGH → LONG
+   3. SL: alert candle's LOW
+   4. Target: Entry + 3 × (Entry − SL)  [1:3 RR]
+   5. Exits monitored TICK-BY-TICK (target & SL)
+================================================================================
+📈 Instrument: MCX:CRUDEOILM26OCT9050PE
+================================================================================
+
+📥 STEP 1: Fetching historical data...
+📥 Fetching historical data from 2026-10-10 to 2026-10-15...
+✅ Fetched 3050 historical candles
+
+🔌 Connecting to WebSocket...
+✅ WebSocket opened
+📋 Subscribing to: MCX:CRUDEOILM26OCT9050PE
+✅ Subscription sent
+✅ Subscription confirmed
+
+📊 Candle completed: 21:49:00 | O:85.55 H:85.55 L:85.55 C:85.55
+Price: 88.65 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 16:19:00 | O:87.10 H:89.55 L:86.75 C:88.65
+Price: 88.40 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 16:20:00 | O:88.50 H:88.55 L:87.00 C:88.40
+Price: 87.55 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 16:21:00 | O:88.50 H:88.50 L:87.10 C:87.55
+Price: 85.65 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 16:22:00 | O:87.85 H:87.90 L:84.40 C:85.65
+Price: 87.00 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 16:23:00 | O:85.75 H:87.00 L:84.95 C:87.00
+Price: 86.40 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 16:24:00 | O:86.50 H:87.45 L:85.65 C:86.40
+Price: 87.30 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 16:25:00 | O:86.25 H:87.85 L:86.00 C:87.30
+Price: 83.00 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 16:26:00 | O:86.90 H:86.90 L:83.00 C:83.00
+Price: 81.45 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 16:27:00 | O:83.00 H:83.55 L:81.15 C:81.45
+Price: 81.45 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+📊 Candle completed: 16:28:00 | O:81.40 H:81.80 L:80.20 C:81.45
+
+
+🟢 ALERT CANDLE DETECTED (LAST COMPLETED CANDLE):
+   Time: 2026-10-15 16:28:00
+   O=81.40 H=81.80 L=80.20 C=81.45
+   EMA5 (true, full series): 83.28
+   High < EMA5: 81.80 < 83.28 ✓ (not touching)
+   Distance below EMA5: 1.48
+   ⏰ Entry trigger: price > 81.80
+   🛑 Stop Loss: 80.20
+   🎯 Target (1:3): Entry + 3 × (Entry − SL)
+Price: 81.35 | Alert: H=81.80 L=80.20 EMA5=83.28 | Bal: ₹100,000.00 | Active: 0 | [PAPER]
+🎯 BREAKOUT! Price 82.45 > Alert High 81.80
+
+🚨 LONG POSITION ENTERED!
+   Entry: ₹82.45
+   SL (Alert Low): ₹80.20  (Risk = ₹2.25)
+   Target (1:3): ₹89.20  (Reward = ₹6.75)
+
+💰 POSITION SIZING:
+   Lots: 121 | Shares: 1210
+   Capital: ₹99,764.50 (99.8%)
+   Risk: ₹2722.50 | Reward: ₹8167.50
+
+📈 BUY 1210 @ ₹82.45...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: BUY 1210 MCX:CRUDEOILM26OCT9050PE @ ₹82.45
+✅ [PAPER] Order ID: PAPER_20261015_162935_-5631209295321098994
+✅ LONG position created!
+Price: 82.05 | Alert: H=81.80 L=80.20 EMA5=83.28 | LONG @ 82.45 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📊 Candle completed: 16:29:00 | O:81.55 H:82.60 L:80.20 C:82.05
+Price: 88.85 | Alert: H=81.80 L=80.20 EMA5=83.28 | LONG @ 82.45 | Bal: ₹100,000.00 | Active: 1 | [PAPER]
+📉 SELL 1210 @ ₹89.2 (TARGET_HIT (1:3))...
+🔵 [PAPER MODE]
+📝 [PAPER] Simulating: SELL 1210 MCX:CRUDEOILM26OCT9050PE @ ₹89.2
+✅ [PAPER] Order ID: PAPER_20261015_163059_-6798440927595057059
+
+📊 TRADE CLOSED
+   Entry: ₹82.45 | Exit: ₹89.20 (TARGET_HIT (1:3))
+   P&L: ₹+8,167.50 (+8.19%)
+   New Balance: ₹108,167.50
+   🔵 [PAPER] No real money changed hands
+Price: 89.35 | Bal: ₹108,167.50 | Active: 0 | [PAPER]
+📊 Candle completed: 16:30:00 | O:82.10 H:89.35 L:82.10 C:89.35
+Price: 92.10 | Bal: ₹108,167.50 | Active: 0 | [PAPER]
