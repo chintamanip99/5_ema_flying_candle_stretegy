@@ -1,0 +1,311 @@
+================================================================================
+🚀 FLYING CANDLE STRATEGY - LONG ONLY
+================================================================================
+🔵 🔵 🔵 PAPER TRADING MODE - SIMULATION ONLY 🔵 🔵 🔵
+   No real money will be used
+   All orders are simulated
+================================================================================
+💰 Account Balance: ₹100,000.00
+📦 Lot Size: 10 shares per lot
+🎯 SL: 3.0% | Target: 3.0%
+⚖️  Risk:Reward Ratio: 1:1
+⏰ Timeframe: 5 minute
+📊 Instrument: NSE:NIFTY26NOV22650PE
+================================================================================
+
+🟢 FLYING CANDLE STRATEGY (LONG POSITIONS):
+   Step 1 - Flying Candle: GREEN candle completely BELOW EMA5 (high < EMA5)
+   Step 2 - Entry: When current price breaks the alert candle's HIGH
+   Entry Price: Alert candle HIGH (breakout level)
+   Stop Loss: Entry - 3.0%
+   Target: Entry + 3.0%
+   Position Sizing: Full ₹100,000.00 capital with lot size 10
+================================================================================
+
+================================================================================
+🔵 PAPER TRADING MODE - No real money involved
+   This is a simulation for testing the strategy
+
+Start PAPER TRADING simulation? (yes/no):  yes
+
+🔵 Starting paper trading simulation...
+   Monitoring for FLYING CANDLE patterns only...
+   All trades will be simulated
+   Trading instrument: NSE:NIFTY26NOV22650PE
+
+================================================================================
+📊 FLYING CANDLE STRATEGY - LONG ONLY
+================================================================================
+🔵 🔵 🔵 PAPER TRADING MODE ENABLED 🔵 🔵 🔵
+   No real orders will be placed
+   All trades are simulated for testing
+   Balance updates are virtual only
+================================================================================
+🔧 STRATEGY RULES (BULLISH ONLY - LONG POSITIONS):
+   Step 1 - Flying Candle: GREEN candle completely BELOW EMA5 (high < EMA5)
+   Step 2 - Breakout: When current price breaks the alert candle's HIGH
+   Entry Price: Alert candle HIGH (breakout level)
+   Stop Loss: Entry - 3.0%
+   Target: Entry + 3.0%
+   Risk:Reward = 1:1 (Both 3.0%)
+   Position Sizing: Full ₹100,000.00 capital utilization with lot size 10
+================================================================================
+
+📈 Instrument: NSE:NIFTY26NOV22650PE
+   Lot Size: 10 shares per lot
+================================================================================
+
+🔌 Connecting to Fyers WebSocket...
+✅ WebSocket connection opened
+📋 Subscribing to: NSE:NIFTY26NOV22650PE
+✅ Subscription request sent
+✅ Subscription confirmed
+Price: 405.40 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:39:00 | H:412.10 L:403.45 C:405.40
+Price: 401.05 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:40:00 | H:405.40 L:401.05 C:401.05
+Price: 400.95 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:42:00 | H:401.30 L:397.20 C:400.95
+Price: 393.75 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:43:00 | H:400.95 L:393.75 C:393.75
+Price: 395.95 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:45:00 | H:395.95 L:394.00 C:395.95
+Price: 395.95 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:46:00 | H:395.95 L:395.95 C:395.95
+Price: 400.60 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:49:00 | H:400.60 L:400.60 C:400.60
+Price: 399.05 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:50:00 | H:405.00 L:399.00 C:399.05
+Price: 399.60 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:51:00 | H:399.60 L:399.05 C:399.60
+Price: 390.00 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:56:00 | H:392.90 L:385.00 C:390.00
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time: 2026-10-26 11:56:00
+   Green Candle: O=385.00, C=390.00
+   High=392.90, Low=385.00
+   EMA_5: 394.62
+   Distance below EMA: 1.72
+   ⏰ Monitoring current price for breakout above 392.90
+Price: 388.20 | Alert: BULLISH @ 11:56:00 | Break Level: 392.90 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:58:00 | H:390.00 L:388.20 C:388.20
+Price: 377.35 | Alert: BULLISH @ 11:56:00 | Break Level: 392.90 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 11:59:00 | H:388.20 L:377.20 C:377.35
+Price: 376.25 | Alert: BULLISH @ 11:56:00 | Break Level: 392.90 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:01:00 | H:376.25 L:376.25 C:376.25
+Price: 376.25 | Alert: BULLISH @ 11:56:00 | Break Level: 392.90 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:02:00 | H:376.25 L:376.25 C:376.25
+Price: 359.75 | Alert: BULLISH @ 11:56:00 | Break Level: 392.90 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:03:00 | H:376.25 L:359.75 C:359.75
+Price: 365.90 | Alert: BULLISH @ 12:04:00 | Break Level: 365.90 | Balance: ₹100,000.00 | Active: 0 | [PAPER MODE]
+🎯 BREAKOUT DETECTED!
+   Alert Candle High: 365.90
+   Current Price: 381.10
+   Breakout confirmed! Entering LONG position immediately...
+
+
+🚨 LONG POSITION ENTERED!
+   Alert Candle High (Break Level): 365.90
+   Entry Price: 365.90
+   Stop Loss: 354.92 (-3.00%)
+   Target: 376.88 (+3.00%)
+   Risk: 2% of Entry
+   Reward: 2% of Entry
+   Risk:Reward = 1:1
+
+💰 POSITION SIZING:
+   Lots: 27
+   Shares: 270
+   Capital Required: ₹98,793.00
+   Risk Amount: ₹2963.79 (2% of Entry)
+   Reward Amount: ₹2963.79 (2% of Entry)
+   Capital Utilization: 98.8%
+
+📈 Placing BUY order for 270 shares @ ₹365.9...
+🔵 [PAPER TRADING MODE] - No real money involved
+📝 [PAPER TRADING] Simulating order: BUY 270 shares of NSE:NIFTY26NOV22650PE @ ₹365.9
+✅ [PAPER TRADING] Order simulated successfully! Order ID: PAPER_20261026_120604_-1974239185430827585
+✅ LONG position created successfully!
+Price: 377.90 | Alert: BULLISH @ 12:04:00 | Break Level: 365.90 | Position: LONG @ 365.90 | Balance: ₹100,000.00 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 12:06:00 | H:381.10 L:365.90 C:377.90
+
+📉 Placing SELL order to exit long position @ ₹376.877...
+🔵 [PAPER TRADING MODE] - Simulating exit order
+📝 [PAPER TRADING] Simulating order: SELL 270 shares of NSE:NIFTY26NOV22650PE @ ₹376.877
+✅ [PAPER TRADING] Order simulated successfully! Order ID: PAPER_20261026_120701_-1734559579042953211
+
+
+📊 TRADE CLOSED - LONG
+   Entry: ₹365.90 | Exit: ₹376.88 (TARGET_HIT (2%))
+   P&L: ₹+2,963.79
+   Return: +3.00%
+   New Balance: ₹102,963.79
+   🔵 [PAPER TRADING] - No actual money changed hands
+Price: 377.90 | Balance: ₹102,963.79 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:07:00 | H:377.90 L:377.90 C:377.90
+Price: 380.70 | Balance: ₹102,963.79 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:08:00 | H:380.70 L:377.90 C:380.70
+Price: 380.70 | Balance: ₹102,963.79 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:10:00 | H:380.70 L:380.70 C:380.70
+Price: 370.00 | Balance: ₹102,963.79 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:12:00 | H:377.65 L:370.00 C:370.00
+Price: 371.15 | Alert: BULLISH @ 12:13:00 | Break Level: 371.15 | Balance: ₹102,963.79 | Active: 0 | [PAPER MODE]
+🎯 BREAKOUT DETECTED!
+   Alert Candle High: 371.15
+   Current Price: 377.30
+   Breakout confirmed! Entering LONG position immediately...
+
+
+🚨 LONG POSITION ENTERED!
+   Alert Candle High (Break Level): 371.15
+   Entry Price: 371.15
+   Stop Loss: 360.02 (-3.00%)
+   Target: 382.28 (+3.00%)
+   Risk: 2% of Entry
+   Reward: 2% of Entry
+   Risk:Reward = 1:1
+
+💰 POSITION SIZING:
+   Lots: 26
+   Shares: 260
+   Capital Required: ₹96,499.00
+   Risk Amount: ₹2894.97 (2% of Entry)
+   Reward Amount: ₹2894.97 (2% of Entry)
+   Capital Utilization: 96.5%
+
+📈 Placing BUY order for 260 shares @ ₹371.15...
+🔵 [PAPER TRADING MODE] - No real money involved
+📝 [PAPER TRADING] Simulating order: BUY 260 shares of NSE:NIFTY26NOV22650PE @ ₹371.15
+✅ [PAPER TRADING] Order simulated successfully! Order ID: PAPER_20261026_121411_7374192523918250591
+✅ LONG position created successfully!
+Price: 379.00 | Alert: BULLISH @ 12:13:00 | Break Level: 371.15 | Position: LONG @ 371.15 | Balance: ₹102,963.79 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 12:14:00 | H:379.00 L:371.15 C:379.00
+Price: 379.00 | Alert: BULLISH @ 12:13:00 | Break Level: 371.15 | Position: LONG @ 371.15 | Balance: ₹102,963.79 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 12:17:00 | H:379.00 L:379.00 C:379.00
+Price: 386.30 | Alert: BULLISH @ 12:13:00 | Break Level: 371.15 | Position: LONG @ 371.15 | Balance: ₹102,963.79 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 12:20:00 | H:386.30 L:379.00 C:386.30
+
+📉 Placing SELL order to exit long position @ ₹382.2845...
+🔵 [PAPER TRADING MODE] - Simulating exit order
+📝 [PAPER TRADING] Simulating order: SELL 260 shares of NSE:NIFTY26NOV22650PE @ ₹382.2845
+✅ [PAPER TRADING] Order simulated successfully! Order ID: PAPER_20261026_122100_3453601913962985353
+
+
+📊 TRADE CLOSED - LONG
+   Entry: ₹371.15 | Exit: ₹382.28 (TARGET_HIT (2%))
+   P&L: ₹+2,894.97
+   Return: +3.00%
+   New Balance: ₹105,858.76
+   🔵 [PAPER TRADING] - No actual money changed hands
+Price: 378.95 | Balance: ₹108,753.73 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:27:00 | H:378.95 L:375.80 C:378.95
+Price: 367.80 | Balance: ₹108,753.73 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:29:00 | H:378.95 L:367.80 C:367.80
+Price: 364.00 | Alert: BULLISH @ 12:30:00 | Break Level: 369.25 | Balance: ₹108,753.73 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:31:00 | H:369.25 L:363.00 C:364.00
+Price: 358.90 | Alert: BULLISH @ 12:30:00 | Break Level: 369.25 | Balance: ₹108,753.73 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:32:00 | H:364.05 L:358.90 C:358.90
+Price: 368.90 | Alert: BULLISH @ 12:30:00 | Break Level: 369.25 | Balance: ₹108,753.73 | Active: 0 | [PAPER MODE]
+🎯 BREAKOUT DETECTED!
+   Alert Candle High: 369.25
+   Current Price: 370.30
+   Breakout confirmed! Entering LONG position immediately...
+
+
+🚨 LONG POSITION ENTERED!
+   Alert Candle High (Break Level): 369.25
+   Entry Price: 369.25
+   Stop Loss: 358.17 (-3.00%)
+   Target: 380.33 (+3.00%)
+   Risk: 2% of Entry
+   Reward: 2% of Entry
+   Risk:Reward = 1:1
+
+💰 POSITION SIZING:
+   Lots: 27
+   Shares: 270
+   Capital Required: ₹99,697.50
+   Risk Amount: ₹2990.92 (2% of Entry)
+   Reward Amount: ₹2990.92 (2% of Entry)
+   Capital Utilization: 99.7%
+
+📈 Placing BUY order for 270 shares @ ₹369.25...
+🔵 [PAPER TRADING MODE] - No real money involved
+📝 [PAPER TRADING] Simulating order: BUY 270 shares of NSE:NIFTY26NOV22650PE @ ₹369.25
+✅ [PAPER TRADING] Order simulated successfully! Order ID: PAPER_20261026_123354_-1974239185430827585
+✅ LONG position created successfully!
+Price: 370.65 | Alert: BULLISH @ 12:30:00 | Break Level: 369.25 | Position: LONG @ 369.25 | Balance: ₹108,753.73 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 12:33:00 | H:370.65 L:358.90 C:370.65
+Price: 375.50 | Alert: BULLISH @ 12:30:00 | Break Level: 369.25 | Position: LONG @ 369.25 | Balance: ₹108,753.73 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 12:37:00 | H:375.50 L:370.90 C:375.50
+Price: 377.30 | Alert: BULLISH @ 12:30:00 | Break Level: 369.25 | Position: LONG @ 369.25 | Balance: ₹108,753.73 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 12:38:00 | H:377.30 L:373.50 C:377.30
+Price: 380.80 | Balance: ₹111,744.66 | Active: 0 | [PAPER MODE] | Position: LONG @ 369.25 | Balance: ₹108,753.73 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 12:40:00 | H:380.80 L:380.80 C:380.80
+Price: 384.90 | Balance: ₹111,744.66 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:42:00 | H:384.90 L:381.25 C:384.90
+Price: 389.65 | Balance: ₹111,744.66 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:46:00 | H:389.65 L:389.65 C:389.65
+Price: 384.95 | Balance: ₹111,744.66 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:49:00 | H:384.95 L:384.95 C:384.95
+Price: 394.95 | Balance: ₹111,744.66 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:54:00 | H:394.95 L:394.95 C:394.95
+Price: 390.35 | Balance: ₹111,744.66 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:56:00 | H:390.35 L:390.35 C:390.35
+Price: 388.30 | Balance: ₹111,744.66 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 12:58:00 | H:389.45 L:387.05 C:388.30
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time: 2026-10-26 12:58:00
+   Green Candle: O=387.05, C=388.30
+   High=389.45, Low=387.05
+   EMA_5: 390.06
+   Distance below EMA: 0.61
+   ⏰ Monitoring current price for breakout above 389.45
+Price: 375.50 | Alert: BULLISH @ 12:58:00 | Break Level: 389.45 | Balance: ₹111,744.66 | Active: 0 | [PAPER MODE]
+📊 5-minute Candle completed: 13:00:00 | H:377.95 L:375.25 C:375.50
+Price: 371.00 | Alert: BULLISH @ 13:03:00 | Break Level: 371.00 | Balance: ₹111,744.66 | Active: 0 | [PAPER MODE]
+🎯 BREAKOUT DETECTED!
+   Alert Candle High: 371.00
+   Current Price: 373.80
+   Breakout confirmed! Entering LONG position immediately...
+
+
+🚨 LONG POSITION ENTERED!
+   Alert Candle High (Break Level): 371.00
+   Entry Price: 371.00
+   Stop Loss: 359.87 (-3.00%)
+   Target: 382.13 (+3.00%)
+   Risk: 2% of Entry
+   Reward: 2% of Entry
+   Risk:Reward = 1:1
+
+💰 POSITION SIZING:
+   Lots: 26
+   Shares: 260
+   Capital Required: ₹96,460.00
+   Risk Amount: ₹2893.80 (2% of Entry)
+   Reward Amount: ₹2893.80 (2% of Entry)
+   Capital Utilization: 96.5%
+
+📈 Placing BUY order for 260 shares @ ₹371.0...
+🔵 [PAPER TRADING MODE] - No real money involved
+📝 [PAPER TRADING] Simulating order: BUY 260 shares of NSE:NIFTY26NOV22650PE @ ₹371.0
+✅ [PAPER TRADING] Order simulated successfully! Order ID: PAPER_20261026_130527_7374192523918250591
+✅ LONG position created successfully!
+Price: 373.80 | Alert: BULLISH @ 13:03:00 | Break Level: 371.00 | Position: LONG @ 371.00 | Balance: ₹111,744.66 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 13:05:00 | H:373.80 L:371.00 C:373.80
+Price: 369.05 | Alert: BULLISH @ 13:03:00 | Break Level: 371.00 | Position: LONG @ 371.00 | Balance: ₹111,744.66 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 13:10:00 | H:369.70 L:369.05 C:369.05
+Price: 366.40 | Alert: BULLISH @ 13:11:00 | Break Level: 369.20 | Position: LONG @ 371.00 | Balance: ₹111,744.66 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 13:13:00 | H:366.40 L:366.40 C:366.40
+Price: 365.25 | Alert: BULLISH @ 13:11:00 | Break Level: 369.20 | Position: LONG @ 371.00 | Balance: ₹111,744.66 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 13:16:00 | H:365.25 L:365.25 C:365.25
+Price: 365.25 | Alert: BULLISH @ 13:11:00 | Break Level: 369.20 | Position: LONG @ 371.00 | Balance: ₹111,744.66 | Active: 1 | [PAPER MODE]
+📊 5-minute Candle completed: 13:17:00 | H:365.25 L:365.25 C:365.25
+Price: 365.25 | Alert: BULLISH @ 13:11:00 | Break Level: 369.20 | Position: LONG @ 371.00 | Balance: ₹111,744.66 | Active: 1 | [PAPER MODE]
+
+Click to add a cell.
