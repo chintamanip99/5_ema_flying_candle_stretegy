@@ -1,0 +1,661 @@
+================================================================================
+🚀 FLYING CANDLE — LONG ONLY
+================================================================================
+🔵 PAPER TRADING
+================================================================================
+Balance ₹100,000 | Lot 10 | R:R 1:3
+TF 5m | Instrument MCX:CRUDEOILM26NOV9750PE
+================================================================================
+
+Start? (yes/no):  yes
+
+================================================================================
+📊 FLYING CANDLE STRATEGY — LONG ONLY
+================================================================================
+🔵 PAPER TRADING
+================================================================================
+RULES
+  1) Alert: GREEN candle fully BELOW EMA5 (high < EMA5)
+  2) Entry: next candle breaks alert HIGH → LONG at alert HIGH
+  3) SL  : alert candle LOW
+  4) Target: entry + 3 × risk   (R:R = 1:3)
+  5) Capital: ₹100,000 | Lot: 10
+================================================================================
+
+🔌 Connecting...
+✅ WebSocket opened
+✅ Subscribed
+✅ Subscription OK
+Price: 624.25 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:01 O:624.25 H:624.25 L:624.25 C:624.25
+Price: 619.70 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:02 O:623.95 H:623.95 L:616.50 C:619.70
+Price: 636.15 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:03 O:619.70 H:636.15 L:618.60 C:636.15
+Price: 633.70 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:04 O:636.15 H:636.65 L:629.30 C:633.70
+Price: 641.05 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:05 O:633.10 H:641.05 L:630.80 C:641.05
+Price: 640.75 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:06 O:641.90 H:649.85 L:640.65 C:640.75
+Price: 625.85 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:07 O:638.50 H:638.50 L:625.85 C:625.85
+Price: 635.25 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:08 O:625.85 H:636.10 L:625.85 C:635.25
+Price: 635.65 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:09 O:635.25 H:636.70 L:632.10 C:635.65
+Price: 633.45 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:10 O:635.65 H:643.80 L:633.45 C:633.45
+Price: 627.00 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:11 O:633.45 H:633.45 L:627.00 C:627.00
+Price: 624.00 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:12 O:627.00 H:627.00 L:622.00 C:624.00
+Price: 620.45 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:13 O:626.00 H:626.00 L:619.90 C:620.45
+Price: 621.40 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 20:14 O:620.45 H:621.40 L:618.55 C:621.40
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 20:14:00
+   Green:    O=620.45  C=621.40
+   High=621.40  Low=618.55
+   EMA5:     626.20  (gap = 4.80)
+   ⏰ Waiting for NEXT candle to break above 621.40
+   🛑 SL will be alert LOW = 618.55
+Price: 621.40 | Alert @ 20:14 H:621.40 L:618.55 | Bal ₹100,000 | Active 0 | [PAPER]
+🎯 BREAKOUT — LONG ENTRY
+   Alert High (entry): 621.40
+   Current Price:      622.75
+   SL (alert LOW):     618.55  (risk = 2.85)
+   Target (3R):        629.95  (reward = 8.55)
+   Risk:Reward = 1:3
+
+💰 POSITION SIZING
+   Lots: 16   Shares: 160
+   Capital Required: ₹99,424.00 (99.4% of capital)
+   Risk Amount:   ₹456.00
+   Reward Amount: ₹1,368.00
+
+📈 BUY 160 @ ₹621.40
+🔵 [PAPER] No real money
+📝 [PAPER] BUY 160 @ ₹621.40
+✅ [PAPER] Order ID: PAPER_20261027_201543_369548
+✅ LONG position created.
+Price: 622.75 | Alert @ 20:14 H:621.40 L:618.55 | LONG @ 621.40 | Bal ₹100,000 | Active 1 | [PAPER]
+📊 Candle closed 20:15 O:621.40 H:622.75 L:621.40 C:622.75
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 20:15:00
+   Green:    O=621.40  C=622.75
+   High=622.75  Low=621.40
+   EMA5:     624.60  (gap = 1.85)
+   ⏰ Waiting for NEXT candle to break above 622.75
+   🛑 SL will be alert LOW = 621.40
+Price: 621.55 | Alert @ 20:15 H:622.75 L:621.40 | LONG @ 621.40 | Bal ₹100,000 | Active 1 | [PAPER]
+📊 Candle closed 20:16 O:622.75 H:628.25 L:621.55 C:621.55
+Price: 626.60 | Alert @ 20:15 H:622.75 L:621.40 | LONG @ 621.40 | Bal ₹100,000 | Active 1 | [PAPER]
+📉 SELL 160 @ ₹629.95  (TARGET_HIT (3R))
+🔵 [PAPER] Simulating exit
+📝 [PAPER] SELL 160 @ ₹629.95
+✅ [PAPER] Order ID: PAPER_20261027_201754_479979
+
+📊 TRADE CLOSED — LONG
+   Entry ₹621.40 → Exit ₹629.95 (TARGET_HIT (3R))
+   P&L ₹+1,368.00  (+1.38%)
+   Balance ₹101,368.00
+Price: 629.25 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:17 O:621.55 H:630.60 L:621.55 C:629.25
+Price: 631.90 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:18 O:629.25 H:632.45 L:629.25 C:631.90
+Price: 640.25 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:20 O:634.05 H:641.30 L:632.15 C:640.25
+Price: 640.00 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:21 O:640.25 H:640.25 L:638.55 C:640.00
+Price: 641.50 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:22 O:640.00 H:641.50 L:640.00 C:641.50
+Price: 644.70 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:23 O:641.50 H:645.00 L:641.35 C:644.70
+Price: 645.60 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:24 O:644.70 H:649.25 L:642.50 C:645.60
+Price: 643.90 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:25 O:645.60 H:646.00 L:641.90 C:643.90
+Price: 644.20 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:26 O:643.90 H:646.00 L:643.90 C:644.20
+Price: 639.90 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:27 O:644.20 H:644.20 L:635.45 C:639.90
+Price: 638.20 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:28 O:639.90 H:639.90 L:634.35 C:638.20
+Price: 640.25 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:29 O:639.90 H:641.70 L:639.35 C:640.25
+Price: 654.65 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:30 O:643.00 H:656.15 L:643.00 C:654.65
+Price: 651.75 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:31 O:654.65 H:654.65 L:651.55 C:651.75
+Price: 650.00 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:32 O:647.60 H:653.80 L:647.60 C:650.00
+Price: 645.95 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:33 O:650.00 H:650.00 L:645.25 C:645.95
+Price: 646.90 | Bal ₹101,368 | Active 0 | [PAPER]
+📊 Candle closed 20:34 O:645.95 H:646.90 L:644.75 C:646.90
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 20:34:00
+   Green:    O=645.95  C=646.90
+   High=646.90  Low=644.75
+   EMA5:     647.51  (gap = 0.61)
+   ⏰ Waiting for NEXT candle to break above 646.90
+   🛑 SL will be alert LOW = 644.75
+Price: 646.90 | Alert @ 20:34 H:646.90 L:644.75 | Bal ₹101,368 | Active 0 | [PAPER]
+🎯 BREAKOUT — LONG ENTRY
+   Alert High (entry): 646.90
+   Current Price:      647.00
+   SL (alert LOW):     644.75  (risk = 2.15)
+   Target (3R):        653.35  (reward = 6.45)
+   Risk:Reward = 1:3
+
+💰 POSITION SIZING
+   Lots: 15   Shares: 150
+   Capital Required: ₹97,035.00 (97.0% of capital)
+   Risk Amount:   ₹322.50
+   Reward Amount: ₹967.50
+
+📈 BUY 150 @ ₹646.90
+🔵 [PAPER] No real money
+📝 [PAPER] BUY 150 @ ₹646.90
+✅ [PAPER] Order ID: PAPER_20261027_203512_485704
+✅ LONG position created.
+Price: 647.10 | Alert @ 20:34 H:646.90 L:644.75 | LONG @ 646.90 | Bal ₹101,368 | Active 1 | [PAPER]
+📊 Candle closed 20:35 O:646.90 H:650.00 L:646.90 C:647.10
+Price: 647.10 | Alert @ 20:34 H:646.90 L:644.75 | LONG @ 646.90 | Bal ₹101,368 | Active 1 | [PAPER]
+📉 SELL 150 @ ₹653.35  (TARGET_HIT (3R))
+🔵 [PAPER] Simulating exit
+📝 [PAPER] SELL 150 @ ₹653.35
+✅ [PAPER] Order ID: PAPER_20261027_203617_577119
+
+📊 TRADE CLOSED — LONG
+   Entry ₹646.90 → Exit ₹653.35 (TARGET_HIT (3R))
+   P&L ₹+967.50  (+1.00%)
+   Balance ₹102,335.50
+Price: 653.40 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:36 O:647.10 H:654.50 L:647.10 C:653.40
+Price: 655.10 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:37 O:655.00 H:657.70 L:654.05 C:655.10
+Price: 656.60 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:38 O:655.10 H:657.75 L:653.05 C:656.60
+Price: 652.35 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:39 O:656.60 H:656.60 L:652.35 C:652.35
+Price: 645.70 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:40 O:652.35 H:652.35 L:643.25 C:645.70
+Price: 648.25 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:41 O:645.45 H:650.70 L:645.45 C:648.25
+Price: 657.85 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:42 O:648.25 H:659.10 L:648.25 C:657.85
+Price: 657.75 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:43 O:658.25 H:660.45 L:657.75 C:657.75
+Price: 655.50 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:44 O:657.75 H:657.75 L:655.50 C:655.50
+Price: 654.00 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:45 O:655.50 H:655.50 L:654.00 C:654.00
+Price: 648.25 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:46 O:654.00 H:654.00 L:647.10 C:648.25
+Price: 652.15 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:47 O:648.25 H:653.00 L:648.25 C:652.15
+Price: 652.35 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:48 O:652.15 H:652.35 L:644.85 C:652.35
+Price: 649.35 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:49 O:652.05 H:652.05 L:648.70 C:649.35
+Price: 652.40 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:50 O:649.35 H:652.40 L:649.35 C:652.40
+Price: 641.70 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:51 O:652.40 H:652.40 L:641.10 C:641.70
+Price: 639.50 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:52 O:641.70 H:641.70 L:637.15 C:639.50
+Price: 639.50 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:53 O:639.50 H:639.50 L:639.50 C:639.50
+Price: 645.00 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:54 O:639.50 H:645.00 L:639.50 C:645.00
+Price: 647.55 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:55 O:645.00 H:647.55 L:645.00 C:647.55
+Price: 647.55 | Bal ₹102,336 | Active 0 | [PAPER]
+❌ WS Error: Connection to remote host was lost.
+Attempting reconnect 1 of 10...
+✅ WebSocket opened
+✅ Subscribed
+✅ Subscription OK
+Price: 647.60 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:56 O:647.55 H:647.60 L:647.55 C:647.60
+Price: 649.25 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:57 O:647.60 H:649.25 L:647.60 C:649.25
+Price: 649.25 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:58 O:649.25 H:649.25 L:649.25 C:649.25
+Price: 647.55 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 20:59 O:649.25 H:649.25 L:647.55 C:647.55
+Price: 649.00 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 21:00 O:647.55 H:649.00 L:647.55 C:649.00
+Price: 643.45 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 21:02 O:640.50 H:643.45 L:640.50 C:643.45
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 21:02:00
+   Green:    O=640.50  C=643.45
+   High=643.45  Low=640.50
+   EMA5:     645.59  (gap = 2.14)
+   ⏰ Waiting for NEXT candle to break above 643.45
+   🛑 SL will be alert LOW = 640.50
+Price: 641.10 | Alert @ 21:02 H:643.45 L:640.50 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 21:03 O:643.05 H:643.05 L:641.10 C:641.10
+Price: 636.70 | Alert @ 21:02 H:643.45 L:640.50 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 21:04 O:641.10 H:641.10 L:635.60 C:636.70
+Price: 643.30 | Alert @ 21:02 H:643.45 L:640.50 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 21:05 O:636.70 H:643.30 L:636.70 C:643.30
+Price: 643.10 | Alert @ 21:02 H:643.45 L:640.50 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 21:06 O:643.10 H:643.10 L:643.10 C:643.10
+Price: 643.10 | Alert @ 21:02 H:643.45 L:640.50 | Bal ₹102,336 | Active 0 | [PAPER]
+📊 Candle closed 21:07 O:643.10 H:643.10 L:643.10 C:643.10
+Price: 643.35 | Alert @ 21:02 H:643.45 L:640.50 | Bal ₹102,336 | Active 0 | [PAPER]
+🎯 BREAKOUT — LONG ENTRY
+   Alert High (entry): 643.45
+   Current Price:      644.50
+   SL (alert LOW):     640.50  (risk = 2.95)
+   Target (3R):        652.30  (reward = 8.85)
+   Risk:Reward = 1:3
+
+💰 POSITION SIZING
+   Lots: 15   Shares: 150
+   Capital Required: ₹96,517.50 (96.5% of capital)
+   Risk Amount:   ₹442.50
+   Reward Amount: ₹1,327.50
+
+📈 BUY 150 @ ₹643.45
+🔵 [PAPER] No real money
+📝 [PAPER] BUY 150 @ ₹643.45
+✅ [PAPER] Order ID: PAPER_20261027_210844_263879
+✅ LONG position created.
+Price: 644.50 | Alert @ 21:02 H:643.45 L:640.50 | LONG @ 643.45 | Bal ₹102,336 | Active 1 | [PAPER]
+📊 Candle closed 21:08 O:643.10 H:644.50 L:642.05 C:644.50
+Price: 644.50 | Alert @ 21:02 H:643.45 L:640.50 | LONG @ 643.45 | Bal ₹102,336 | Active 1 | [PAPER]
+📊 Candle closed 21:09 O:644.50 H:644.50 L:644.50 C:644.50
+Price: 647.95 | Alert @ 21:02 H:643.45 L:640.50 | LONG @ 643.45 | Bal ₹102,336 | Active 1 | [PAPER]
+📊 Candle closed 21:10 O:644.50 H:647.95 L:643.80 C:647.95
+Price: 647.95 | Alert @ 21:02 H:643.45 L:640.50 | LONG @ 643.45 | Bal ₹102,336 | Active 1 | [PAPER]
+📉 SELL 150 @ ₹652.30  (TARGET_HIT (3R))
+🔵 [PAPER] Simulating exit
+📝 [PAPER] SELL 150 @ ₹652.30
+✅ [PAPER] Order ID: PAPER_20261027_211126_861341
+
+📊 TRADE CLOSED — LONG
+   Entry ₹643.45 → Exit ₹652.30 (TARGET_HIT (3R))
+   P&L ₹+1,327.50  (+1.38%)
+   Balance ₹103,663.00
+Price: 652.75 | Bal ₹103,663 | Active 0 | [PAPER]
+📊 Candle closed 21:11 O:647.95 H:652.75 L:647.95 C:652.75
+Price: 656.20 | Bal ₹103,663 | Active 0 | [PAPER]
+📊 Candle closed 21:13 O:653.40 H:656.70 L:653.40 C:656.20
+Price: 647.30 | Bal ₹103,663 | Active 0 | [PAPER]
+📊 Candle closed 21:14 O:656.20 H:656.20 L:647.30 C:647.30
+Price: 644.05 | Bal ₹103,663 | Active 0 | [PAPER]
+📊 Candle closed 21:15 O:647.30 H:647.30 L:644.05 C:644.05
+Price: 642.70 | Bal ₹103,663 | Active 0 | [PAPER]
+📊 Candle closed 21:16 O:644.05 H:644.05 L:641.60 C:642.70
+Price: 638.75 | Bal ₹103,663 | Active 0 | [PAPER]
+📊 Candle closed 21:19 O:641.70 H:641.70 L:638.75 C:638.75
+Price: 639.85 | Bal ₹103,663 | Active 0 | [PAPER]
+📊 Candle closed 21:20 O:638.75 H:639.85 L:638.75 C:639.85
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 21:20:00
+   Green:    O=638.75  C=639.85
+   High=639.85  Low=638.75
+   EMA5:     642.10  (gap = 2.25)
+   ⏰ Waiting for NEXT candle to break above 639.85
+   🛑 SL will be alert LOW = 638.75
+Price: 639.80 | Alert @ 21:20 H:639.85 L:638.75 | Bal ₹103,663 | Active 0 | [PAPER]
+📊 Candle closed 21:21 O:639.85 H:639.85 L:639.80 C:639.80
+Price: 639.80 | Alert @ 21:20 H:639.85 L:638.75 | Bal ₹103,663 | Active 0 | [PAPER]
+📊 Candle closed 21:22 O:639.80 H:639.80 L:639.80 C:639.80
+Price: 639.80 | Alert @ 21:20 H:639.85 L:638.75 | Bal ₹103,663 | Active 0 | [PAPER]
+📊 Candle closed 21:23 O:639.80 H:639.80 L:639.80 C:639.80
+Price: 640.60 | Alert @ 21:20 H:639.85 L:638.75 | LONG @ 639.85 | Bal ₹103,663 | Active 1 | [PAPER]
+📉 SELL 150 @ ₹638.75  (SL_HIT (alert LOW))
+🔵 [PAPER] Simulating exit
+📝 [PAPER] SELL 150 @ ₹638.75
+✅ [PAPER] Order ID: PAPER_20261027_212431_402841
+
+📊 TRADE CLOSED — LONG
+   Entry ₹639.85 → Exit ₹638.75 (SL_HIT (alert LOW))
+   P&L ₹-165.00  (-0.17%)
+   Balance ₹103,498.00
+Price: 630.90 | Bal ₹103,498 | Active 0 | [PAPER]
+📊 Candle closed 21:24 O:639.80 H:640.60 L:630.80 C:630.90
+Price: 632.25 | Bal ₹103,498 | Active 0 | [PAPER]
+📊 Candle closed 21:26 O:624.40 H:632.25 L:624.40 C:632.25
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 21:26:00
+   Green:    O=624.40  C=632.25
+   High=632.25  Low=624.40
+   EMA5:     632.89  (gap = 0.64)
+   ⏰ Waiting for NEXT candle to break above 632.25
+   🛑 SL will be alert LOW = 624.40
+Price: 632.25 | Alert @ 21:26 H:632.25 L:624.40 | Bal ₹103,498 | Active 0 | [PAPER]
+📊 Candle closed 21:27 O:632.25 H:632.25 L:632.25 C:632.25
+Price: 632.25 | Alert @ 21:26 H:632.25 L:624.40 | Bal ₹103,498 | Active 0 | [PAPER]
+🎯 BREAKOUT — LONG ENTRY
+   Alert High (entry): 632.25
+   Current Price:      638.45
+   SL (alert LOW):     624.40  (risk = 7.85)
+   Target (3R):        655.80  (reward = 23.55)
+   Risk:Reward = 1:3
+
+💰 POSITION SIZING
+   Lots: 15   Shares: 150
+   Capital Required: ₹94,837.50 (94.8% of capital)
+   Risk Amount:   ₹1,177.50
+   Reward Amount: ₹3,532.50
+
+📈 BUY 150 @ ₹632.25
+🔵 [PAPER] No real money
+📝 [PAPER] BUY 150 @ ₹632.25
+✅ [PAPER] Order ID: PAPER_20261027_212839_744373
+✅ LONG position created.
+Price: 652.80 | Alert @ 21:26 H:632.25 L:624.40 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:29 O:636.00 H:653.55 L:636.00 C:652.80
+Price: 653.60 | Alert @ 21:26 H:632.25 L:624.40 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:30 O:652.80 H:653.60 L:649.35 C:653.60
+Price: 653.60 | Alert @ 21:26 H:632.25 L:624.40 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:31 O:653.60 H:653.60 L:653.60 C:653.60
+Price: 643.05 | Alert @ 21:26 H:632.25 L:624.40 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:32 O:653.60 H:653.60 L:643.05 C:643.05
+Price: 641.75 | Alert @ 21:26 H:632.25 L:624.40 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:33 O:643.05 H:643.05 L:641.75 C:641.75
+Price: 637.55 | Alert @ 21:26 H:632.25 L:624.40 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:34 O:641.75 H:641.75 L:637.55 C:637.55
+Price: 641.75 | Alert @ 21:26 H:632.25 L:624.40 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:35 O:637.55 H:641.75 L:637.55 C:641.75
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 21:35:00
+   Green:    O=637.55  C=641.75
+   High=641.75  Low=637.55
+   EMA5:     642.27  (gap = 0.52)
+   ⏰ Waiting for NEXT candle to break above 641.75
+   🛑 SL will be alert LOW = 637.55
+Price: 641.55 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:36 O:641.75 H:641.75 L:641.55 C:641.55
+Price: 642.70 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:37 O:641.55 H:642.70 L:641.55 C:642.70
+Price: 645.75 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:38 O:645.75 H:645.75 L:645.75 C:645.75
+Price: 645.75 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:39 O:645.75 H:645.75 L:645.75 C:645.75
+Price: 645.75 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:40 O:645.75 H:645.75 L:645.75 C:645.75
+Price: 637.35 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:41 O:645.75 H:645.75 L:637.35 C:637.35
+Price: 637.35 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:42 O:637.35 H:637.35 L:637.35 C:637.35
+Price: 628.15 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:44 O:630.25 H:630.70 L:628.15 C:628.15
+Price: 638.95 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:46 O:638.95 H:638.95 L:638.95 C:638.95
+Price: 639.50 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:47 O:638.95 H:642.00 L:638.95 C:639.50
+Price: 642.00 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:48 O:639.50 H:642.00 L:639.50 C:642.00
+Price: 637.05 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:49 O:642.00 H:642.00 L:637.05 C:637.05
+Price: 633.70 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:51 O:636.45 H:636.45 L:633.70 C:633.70
+Price: 633.70 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:52 O:633.70 H:633.70 L:633.70 C:633.70
+Price: 643.00 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:53 O:633.70 H:643.00 L:633.70 C:643.00
+Price: 643.00 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:55 O:643.00 H:643.00 L:643.00 C:643.00
+Price: 643.00 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:56 O:643.00 H:643.00 L:643.00 C:643.00
+Price: 640.30 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:57 O:643.00 H:643.00 L:640.30 C:640.30
+Price: 635.35 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:58 O:640.30 H:640.30 L:635.35 C:635.35
+Price: 640.25 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 21:59 O:635.35 H:640.25 L:635.35 C:640.25
+Price: 647.55 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:01 O:645.35 H:650.00 L:645.35 C:647.55
+Price: 639.95 | Alert @ 21:35 H:641.75 L:637.55 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:06 O:638.30 H:639.95 L:638.30 C:639.95
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 22:06:00
+   Green:    O=638.30  C=639.95
+   High=639.95  Low=638.30
+   EMA5:     641.26  (gap = 1.31)
+   ⏰ Waiting for NEXT candle to break above 639.95
+   🛑 SL will be alert LOW = 638.30
+Price: 639.95 | Alert @ 22:06 H:639.95 L:638.30 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:07 O:639.95 H:639.95 L:639.95 C:639.95
+Price: 640.65 | Alert @ 22:06 H:639.95 L:638.30 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:08 O:639.95 H:640.80 L:639.95 C:640.65
+Price: 633.75 | Alert @ 22:06 H:639.95 L:638.30 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:09 O:640.65 H:640.65 L:633.75 C:633.75
+Price: 634.30 | Alert @ 22:06 H:639.95 L:638.30 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:10 O:633.75 H:634.30 L:633.50 C:634.30
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 22:10:00
+   Green:    O=633.75  C=634.30
+   High=634.30  Low=633.50
+   EMA5:     638.30  (gap = 4.00)
+   ⏰ Waiting for NEXT candle to break above 634.30
+   🛑 SL will be alert LOW = 633.50
+Price: 626.70 | Alert @ 22:10 H:634.30 L:633.50 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:11 O:634.30 H:634.30 L:626.70 C:626.70
+Price: 629.05 | Alert @ 22:10 H:634.30 L:633.50 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:12 O:626.70 H:629.05 L:626.70 C:629.05
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 22:12:00
+   Green:    O=626.70  C=629.05
+   High=629.05  Low=626.70
+   EMA5:     633.54  (gap = 4.49)
+   ⏰ Waiting for NEXT candle to break above 629.05
+   🛑 SL will be alert LOW = 626.70
+Price: 629.05 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:13 O:629.05 H:629.05 L:629.05 C:629.05
+Price: 631.35 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:14 O:629.05 H:634.25 L:629.05 C:631.35
+Price: 631.35 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:15 O:631.35 H:631.35 L:631.35 C:631.35
+Price: 638.75 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:16 O:631.35 H:639.65 L:629.95 C:638.75
+Price: 637.10 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:17 O:638.75 H:640.50 L:637.10 C:637.10
+Price: 637.10 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:18 O:637.10 H:637.10 L:637.10 C:637.10
+Price: 638.60 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:19 O:637.10 H:638.60 L:637.10 C:638.60
+Price: 638.60 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:20 O:638.60 H:638.60 L:638.60 C:638.60
+Price: 638.60 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:21 O:638.60 H:638.60 L:638.60 C:638.60
+Price: 638.60 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:22 O:638.60 H:638.60 L:638.60 C:638.60
+Price: 629.30 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:24 O:639.00 H:639.00 L:629.25 C:629.30
+Price: 634.25 | Alert @ 22:12 H:629.05 L:626.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:25 O:629.30 H:634.25 L:629.30 C:634.25
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 22:25:00
+   Green:    O=629.30  C=634.25
+   High=634.25  Low=629.30
+   EMA5:     635.33  (gap = 1.08)
+   ⏰ Waiting for NEXT candle to break above 634.25
+   🛑 SL will be alert LOW = 629.30
+Price: 634.25 | Alert @ 22:25 H:634.25 L:629.30 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:26 O:634.25 H:634.25 L:634.25 C:634.25
+Price: 636.50 | Alert @ 22:25 H:634.25 L:629.30 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:27 O:634.25 H:640.20 L:634.25 C:636.50
+Price: 637.20 | Alert @ 22:25 H:634.25 L:629.30 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:28 O:636.50 H:637.20 L:636.50 C:637.20
+Price: 637.50 | Alert @ 22:25 H:634.25 L:629.30 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:29 O:637.20 H:640.00 L:637.20 C:637.50
+Price: 627.05 | Alert @ 22:25 H:634.25 L:629.30 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:31 O:637.50 H:637.50 L:627.05 C:627.05
+Price: 630.35 | Alert @ 22:25 H:634.25 L:629.30 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:32 O:627.05 H:631.30 L:627.05 C:630.35
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 22:32:00
+   Green:    O=627.05  C=630.35
+   High=631.30  Low=627.05
+   EMA5:     633.56  (gap = 2.26)
+   ⏰ Waiting for NEXT candle to break above 631.30
+   🛑 SL will be alert LOW = 627.05
+Price: 630.55 | Alert @ 22:32 H:631.30 L:627.05 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:33 O:630.35 H:630.55 L:630.10 C:630.55
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 22:33:00
+   Green:    O=630.35  C=630.55
+   High=630.55  Low=630.10
+   EMA5:     632.49  (gap = 1.94)
+   ⏰ Waiting for NEXT candle to break above 630.55
+   🛑 SL will be alert LOW = 630.10
+Price: 634.50 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:34 O:630.55 H:634.50 L:630.55 C:634.50
+Price: 633.30 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:35 O:634.50 H:634.50 L:633.30 C:633.30
+Price: 635.10 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:37 O:631.80 H:635.15 L:631.80 C:635.10
+Price: 635.70 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:38 O:635.10 H:635.70 L:635.10 C:635.70
+Price: 635.55 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:39 O:635.70 H:639.70 L:635.55 C:635.55
+Price: 637.25 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:40 O:635.55 H:637.25 L:635.55 C:637.25
+Price: 637.25 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:41 O:637.25 H:637.25 L:637.25 C:637.25
+Price: 635.75 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:42 O:637.25 H:637.25 L:633.30 C:635.75
+Price: 635.95 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:44 O:635.75 H:635.95 L:633.75 C:635.95
+Price: 642.90 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:45 O:635.95 H:642.90 L:635.95 C:642.90
+Price: 638.55 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:47 O:638.55 H:638.55 L:638.55 C:638.55
+Price: 638.55 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:48 O:638.55 H:638.55 L:638.55 C:638.55
+Price: 638.00 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:49 O:638.55 H:638.55 L:638.00 C:638.00
+Price: 638.00 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:50 O:638.00 H:638.00 L:638.00 C:638.00
+Price: 638.00 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:51 O:638.00 H:638.00 L:638.00 C:638.00
+Price: 634.15 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:52 O:638.00 H:638.00 L:631.90 C:634.15
+Price: 634.15 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:53 O:634.15 H:634.15 L:634.15 C:634.15
+Price: 634.15 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:54 O:634.15 H:634.15 L:634.15 C:634.15
+Price: 632.80 | Alert @ 22:33 H:630.55 L:630.10 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:55 O:634.15 H:634.55 L:632.70 C:632.70
+Price: 632.30 | Alert @ 22:56 H:633.00 L:632.70 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:57 O:630.50 H:632.30 L:630.50 C:632.30
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 22:57:00
+   Green:    O=630.50  C=632.30
+   High=632.30  Low=630.50
+   EMA5:     633.97  (gap = 1.67)
+   ⏰ Waiting for NEXT candle to break above 632.30
+   🛑 SL will be alert LOW = 630.50
+Price: 632.30 | Alert @ 22:57 H:632.30 L:630.50 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:58 O:632.30 H:632.30 L:632.30 C:632.30
+Price: 634.50 | Alert @ 22:57 H:632.30 L:630.50 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 22:59 O:632.30 H:634.50 L:632.30 C:634.50
+Price: 640.70 | Alert @ 22:57 H:632.30 L:630.50 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 23:00 O:634.50 H:641.45 L:634.50 C:640.70
+Price: 647.35 | Alert @ 22:57 H:632.30 L:630.50 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 23:01 O:640.70 H:647.40 L:640.70 C:647.35
+Price: 652.75 | Alert @ 22:57 H:632.30 L:630.50 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📊 Candle closed 23:03 O:647.35 H:654.30 L:647.35 C:652.75
+Price: 650.65 | Alert @ 22:57 H:632.30 L:630.50 | LONG @ 632.25 | Bal ₹103,498 | Active 1 | [PAPER]
+📉 SELL 150 @ ₹655.80  (TARGET_HIT (3R))
+🔵 [PAPER] Simulating exit
+📝 [PAPER] SELL 150 @ ₹655.80
+✅ [PAPER] Order ID: PAPER_20261027_230434_068517
+
+📊 TRADE CLOSED — LONG
+   Entry ₹632.25 → Exit ₹655.80 (TARGET_HIT (3R))
+   P&L ₹+3,532.50  (+3.72%)
+   Balance ₹107,030.50
+Price: 658.25 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:04 O:652.75 H:661.40 L:650.65 C:658.25
+Price: 656.05 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:05 O:658.25 H:658.25 L:649.65 C:656.05
+Price: 655.00 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:08 O:653.40 H:655.15 L:653.40 C:655.00
+Price: 644.35 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:10 O:645.40 H:647.75 L:644.35 C:644.35
+Price: 647.75 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:11 O:646.10 H:650.20 L:646.10 C:647.75
+Price: 647.60 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:12 O:647.75 H:647.75 L:645.50 C:647.60
+Price: 650.00 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:13 O:647.60 H:650.85 L:647.60 C:650.00
+Price: 652.80 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:15 O:652.20 H:655.65 L:651.75 C:652.80
+Price: 652.40 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:16 O:653.30 H:653.30 L:652.10 C:652.40
+Price: 655.30 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:17 O:652.40 H:655.30 L:651.65 C:655.30
+Price: 648.05 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:18 O:655.30 H:655.30 L:648.05 C:648.05
+Price: 650.00 | Bal ₹107,031 | Active 0 | [PAPER]
+📊 Candle closed 23:19 O:648.05 H:650.00 L:648.05 C:650.00
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-10-27 23:19:00
+   Green:    O=648.05  C=650.00
+   High=650.00  Low=648.05
+   EMA5:     651.17  (gap = 1.17)
+   ⏰ Waiting for NEXT candle to break above 650.00
+   🛑 SL will be alert LOW = 648.05
+Price: 652.15 | Alert @ 23:19 H:650.00 L:648.05 | LONG @ 650.00 | Bal ₹107,031 | Active 1 | [PAPER]
+📊 Candle closed 23:20 O:651.25 H:652.55 L:651.25 C:652.15
+Price: 655.50 | Alert @ 23:19 H:650.00 L:648.05 | LONG @ 650.00 | Bal ₹107,031 | Active 1 | [PAPER]
+📊 Candle closed 23:21 O:652.15 H:655.50 L:652.15 C:655.50
+Price: 654.40 | Alert @ 23:19 H:650.00 L:648.05 | LONG @ 650.00 | Bal ₹107,031 | Active 1 | [PAPER]
+📊 Candle closed 23:22 O:655.50 H:655.50 L:654.40 C:654.40
+Price: 652.45 | Alert @ 23:19 H:650.00 L:648.05 | LONG @ 650.00 | Bal ₹107,031 | Active 1 | [PAPER]
+📊 Candle closed 23:24 O:652.85 H:652.85 L:650.95 C:652.45
+Price: 651.05 | Alert @ 23:19 H:650.00 L:648.05 | LONG @ 650.00 | Bal ₹107,031 | Active 1 | [PAPER]
+📊 Candle closed 23:28 O:653.15 H:653.15 L:648.25 C:651.05
+
+📉 SELL 150 @ ₹655.85  (TARGET_HIT (3R))
+🔵 [PAPER] Simulating exit
+📝 [PAPER] SELL 150 @ ₹655.85
+✅ [PAPER] Order ID: PAPER_20261027_232901_349182
+
+📊 TRADE CLOSED — LONG
+   Entry ₹650.00 → Exit ₹655.85 (TARGET_HIT (3R))
+   P&L ₹+877.50  (+0.90%)
+   Balance ₹107,908.00
+Price: 650.20 | Bal ₹107,908 | Active 0 | [PAPER]
+Click to add a cell.
