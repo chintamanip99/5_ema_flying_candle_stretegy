@@ -1165,4 +1165,21 @@ Price: 358.60 | Bal ₹107,608 | Active 0 | [PAPER]
 Price: 360.00 | Bal ₹107,608 | Active 0 | [PAPER]
 📊 Candle closed 15:08 O:358.60 H:360.00 L:357.95 C:360.00
 Price: 359.80 | Bal ₹107,608 | Active 0 | [PAPER]
+📊 Candle closed 15:09 O:360.00 H:360.00 L:358.15 C:359.80
+Price: 359.65 | Bal ₹107,608 | Active 0 | [PAPER]
+📊 Candle closed 15:10 O:361.55 H:362.80 L:359.65 C:359.65
+Price: 355.20 | Bal ₹107,608 | Active 0 | [PAPER]
+📊 Candle closed 15:11 O:359.65 H:359.65 L:355.20 C:355.20
+Price: 356.00 | Bal ₹107,608 | Active 0 | [PAPER]
+📊 Candle closed 15:12 O:354.65 H:356.00 L:354.65 C:356.00
+
+
+🟢 BULLISH FLYING CANDLE DETECTED!
+   Time:     2026-11-04 15:12:00
+   Green:    O=354.65  C=356.00
+   High=356.00  Low=354.65
+   EMA5:     358.01  (gap = 2.01)
+   ⏰ Waiting for NEXT candle to break above 356.00
+   🛑 SL will be alert LOW = 354.65
+Price: 356.00 | Alert @ 15:12 H:356.00 L:354.65 | Bal ₹107,608 | Active 0 | [PAPER]
 Click to add a cell.
