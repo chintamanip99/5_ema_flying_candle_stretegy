@@ -1,0 +1,726 @@
+import pandas as pd
+import datetime
+from datetime import timedelta
+import time
+import math
+import json
+import sys
+import traceback
+import os
+
+# ================= FYERS API IMPORTS =================
+from fyers_apiv3 import fyersModel
+
+# ================= FYERS CONFIG =================
+FYERS_CLIENT_ID = "IWVRS44JXD-100"
+FYERS_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIl0sImF0X2hhc2giOiJnQUFBQUFCcTdXNHg2Q0s3VmpKU3QwWk5VdTBBQVBDUzUtZzAtWXQ3X3dFdy1WY3p3eVJyM0JSdWlfTUZuUThhd1gtNF9CV2htNW5jd0Q5RjlMa1lTUzBwdWVERWdxNi1QV3dKS0lzNUNTNFhKMlhMRmdGbDFHbz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiI0YzQ2MjI4NGQzMzg4NmQ4OGNiNjNiNzQ3NGYyZDcxOWQzMzUxOTBlNGJiZWU5MzlmM2Q1ZjZmNSIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWUMwMzM4MyIsImFwcFR5cGUiOjEwMCwiZXhwIjoxNzk0MDExNDAwLCJpYXQiOjE3OTM5NDUxMzcsImlzcyI6ImFwaS5meWVycy5pbiIsIm5iZiI6MTc5Mzk0NTEzNywic3ViIjoiYWNjZXNzX3Rva2VuIn0.JoJ0hx86qSEzg-C93SaB2fVwQdyXjTJ0lGqXrufHCy8"
+# ================= INSTRUMENT CONFIGURATION =================
+INSTRUMENT_KEY = "MCX:CRUDEOILM26NOV8550PE"  # CHANGE THIS TO YOUR DESIRED INSTRUMENT
+
+# ================= TRADING CONFIG =================
+INITIAL_CAPITAL = 100000  # Fixed 1 lakh capital for each trade
+BASE_LOT_SIZE = 10
+MAX_CAPITAL_UTILIZATION = 1.0  # Use 100% of capital
+RISK_REWARD_RATIO = 1 # Risk:Reward = 1:2
+TIMEFRAME = "1"  # 1-minute candles
+HISTORICAL_CANDLES_TO_FETCH = 500
+
+# ================= BACKTEST DATE CONFIGURATION =================
+BACKTEST_DATE = "2026-11-06"  # Backtest date
+
+# ================= MARKET HOURS (IST) =================
+MARKET_OPEN_HOUR = 9
+MARKET_OPEN_MINUTE = 20
+MARKET_CLOSE_HOUR = 20
+MARKET_CLOSE_MINUTE = 0
+
+# ================= PAPER/REAL TRADING FLAG =================
+PAPER_TRADING = True  # True = Paper trading, False = Real order placement
+
+# ================= CSV LOGGING SETUP =================
+SESSION_START_TIME = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+RESULTS_DIR = f"long_only_logs_{SESSION_START_TIME}"
+os.makedirs(RESULTS_DIR, exist_ok=True)
+
+TRADES_CSV = os.path.join(RESULTS_DIR, "long_trades_log.csv")
+ALERTS_CSV = os.path.join(RESULTS_DIR, "bullish_alerts_log.csv")
+SESSION_SUMMARY_CSV = os.path.join(RESULTS_DIR, "session_summary.csv")
+EQUITY_CURVE_CSV = os.path.join(RESULTS_DIR, "equity_curve.csv")
+
+# ================= GLOBAL VARIABLES =================
+total_pnl = 0
+active_trade = None
+all_trades = []
+all_alerts = []
+equity_curve = []
+
+# ================= TIMEZONE HELPER FUNCTIONS =================
+def convert_utc_to_ist(utc_datetime):
+    """Convert UTC datetime to IST (UTC+5:30)"""
+    if utc_datetime is None:
+        return None
+    ist_offset = datetime.timedelta(hours=5, minutes=30)
+    return utc_datetime + ist_offset
+
+def is_within_market_hours_ist(timestamp_ist):
+    """Check if given IST timestamp is within market hours (9:30 AM to 3:00 PM IST)"""
+    if timestamp_ist is None:
+        return False
+    
+    market_open = datetime.time(MARKET_OPEN_HOUR, MARKET_OPEN_MINUTE)
+    market_close = datetime.time(MARKET_CLOSE_HOUR, MARKET_CLOSE_MINUTE)
+    time_only = timestamp_ist.time()
+    
+    return market_open <= time_only <= market_close
+
+def filter_market_hours_only(df):
+    """Strict filter - keep ONLY candles between 9:30 AM and 3:00 PM IST"""
+    if df is None or len(df) == 0:
+        return df
+    
+    df = df.copy()
+    mask = df.index.map(is_within_market_hours_ist)
+    df_filtered = df[mask]
+    
+    return df_filtered
+
+def fetch_historical_data():
+    """Fetch historical minute candle data for the specific backtest date only"""
+    if INSTRUMENT_KEY is None:
+        print("❌ Instrument key not set")
+        return None
+    
+    try:
+        fyers = fyersModel.FyersModel(
+            client_id=FYERS_CLIENT_ID,
+            token=FYERS_ACCESS_TOKEN,
+            is_async=False,
+            log_path="./logs"
+        )
+        
+        from_date = BACKTEST_DATE
+        to_date = BACKTEST_DATE
+        
+        data = {
+            "symbol": INSTRUMENT_KEY,
+            "resolution": TIMEFRAME,
+            "date_format": "1",
+            "range_from": from_date,
+            "range_to": to_date,
+            "cont_flag": "5"
+        }
+        
+        print(f"📡 Fetching {TIMEFRAME}-minute data for {INSTRUMENT_KEY}")
+        print(f"   Date range: {from_date} to {to_date} (SINGLE DAY)")
+        response = fyers.history(data=data)
+        
+        if response.get('s') == 'ok':
+            candles = response.get('candles', [])
+            if not candles:
+                print(f"❌ No data found for {BACKTEST_DATE}")
+                return None
+            
+            df = pd.DataFrame(candles, columns=['timestamp', 'Open', 'High', 'Low', 'Close', 'Volume'])
+            df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
+            df['timestamp'] = df['timestamp'].apply(convert_utc_to_ist)
+            df.set_index('timestamp', inplace=True)
+            
+            numeric_columns = ['Open', 'High', 'Low', 'Close', 'Volume']
+            df[numeric_columns] = df[numeric_columns].astype(float)
+            df.sort_index(inplace=True)
+            
+            print(f"✅ Fetched {len(df)} candles for {BACKTEST_DATE} (UTC converted to IST)")
+            df = filter_market_hours_only(df)
+            
+            if df is None or len(df) == 0:
+                print(f"❌ No market hours data available for {BACKTEST_DATE}")
+                return None
+            
+            print(f"   Market hours candles (9:30-15:00 IST): {len(df)}")
+            print(f"   First candle: {df.index[0].strftime('%Y-%m-%d %H:%M:%S')}")
+            print(f"   Last candle: {df.index[-1].strftime('%Y-%m-%d %H:%M:%S')}")
+            
+            return df
+        else:
+            print(f"❌ API error: {response}")
+            return None
+            
+    except Exception as e:
+        print(f"❌ Error fetching data: {e}")
+        traceback.print_exc()
+        return None
+
+def calculate_lots_from_capital(entry_price):
+    """Calculate number of lots possible with 1 lakh capital"""
+    capital_per_lot = entry_price * BASE_LOT_SIZE
+    
+    if capital_per_lot > 0:
+        max_lots = math.floor(INITIAL_CAPITAL / capital_per_lot)
+        
+        if max_lots == 0 and INITIAL_CAPITAL >= capital_per_lot:
+            max_lots = 1
+        
+        return max_lots
+    
+    return 0
+
+def place_real_order(order_data):
+    """Place REAL order with Fyers API"""
+    try:
+        fyers = fyersModel.FyersModel(
+            client_id=FYERS_CLIENT_ID,
+            token=FYERS_ACCESS_TOKEN,
+            is_async=False,
+            log_path="./logs"
+        )
+        
+        side_str = "BUY" if order_data['side'] == 1 else "SELL"
+        
+        order = {
+            "symbol": order_data['symbol'],
+            "qty": order_data['quantity'],
+            "type": "LIMIT",
+            "side": side_str,
+            "productType": "INTRADAY",
+            "limitPrice": order_data['price'],
+            "stopPrice": 0,
+            "validity": "DAY",
+            "disclosedQty": 0,
+            "offlineOrder": False
+        }
+        
+        print(f"📝 Placing REAL order: {order}")
+        response = fyers.place_order(order)
+        
+        if response.get('s') == 'ok':
+            print(f"✅ REAL ORDER PLACED: {side_str} {order_data['quantity']} shares @ ₹{order_data['price']}")
+            print(f"   Order ID: {response.get('id', 'N/A')}")
+            return response.get('id')
+        else:
+            print(f"❌ REAL ORDER FAILED: {response}")
+            return None
+            
+    except Exception as e:
+        print(f"❌ Error placing real order: {e}")
+        traceback.print_exc()
+        return None
+
+def save_alert_to_csv(alert_data):
+    """Save bullish alert to CSV"""
+    try:
+        df_alerts = pd.DataFrame([alert_data])
+        if os.path.exists(ALERTS_CSV):
+            df_existing = pd.read_csv(ALERTS_CSV)
+            df_combined = pd.concat([df_existing, df_alerts], ignore_index=True)
+            df_combined.to_csv(ALERTS_CSV, index=False)
+        else:
+            df_alerts.to_csv(ALERTS_CSV, index=False)
+    except Exception as e:
+        print(f"⚠️ Failed to save alert: {e}")
+
+def save_trade_to_csv(trade_data):
+    """Save long trade to CSV"""
+    try:
+        df_trades = pd.DataFrame([trade_data])
+        if os.path.exists(TRADES_CSV):
+            df_existing = pd.read_csv(TRADES_CSV)
+            df_combined = pd.concat([df_existing, df_trades], ignore_index=True)
+            df_combined.to_csv(TRADES_CSV, index=False)
+        else:
+            df_trades.to_csv(TRADES_CSV, index=False)
+    except Exception as e:
+        print(f"⚠️ Failed to save trade: {e}")
+
+def save_equity_curve():
+    """Save equity curve to CSV"""
+    try:
+        df_equity = pd.DataFrame(equity_curve)
+        df_equity.to_csv(EQUITY_CURVE_CSV, index=False)
+        print(f"💾 Equity curve saved to: {EQUITY_CURVE_CSV}")
+    except Exception as e:
+        print(f"⚠️ Failed to save equity curve: {e}")
+
+def save_session_summary():
+    """Save session summary"""
+    global total_pnl, all_trades, all_alerts
+    
+    closed_trades = [t for t in all_trades if t.get('status') == 'CLOSED']
+    total_trades = len(closed_trades)
+    winning_trades = len([t for t in closed_trades if t.get('PnL', 0) > 0])
+    losing_trades = len([t for t in closed_trades if t.get('PnL', 0) < 0])
+    total_pnl_sum = sum([t.get('PnL', 0) for t in closed_trades])
+    
+    win_rate = (winning_trades / total_trades * 100) if total_trades > 0 else 0
+    avg_pnl = total_pnl_sum / total_trades if total_trades > 0 else 0
+    
+    gross_profit = sum([t.get('PnL', 0) for t in closed_trades if t.get('PnL', 0) > 0])
+    gross_loss = abs(sum([t.get('PnL', 0) for t in closed_trades if t.get('PnL', 0) < 0]))
+    profit_factor = gross_profit / gross_loss if gross_loss > 0 else 0
+    
+    summary_data = {
+        'Strategy': 'LONG_ONLY - BULLISH PATTERN',
+        'Backtest_Date': BACKTEST_DATE,
+        'Session_Start_Time': SESSION_START_TIME,
+        'Session_End_Time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'Trading_Mode': 'PAPER_TRADING' if PAPER_TRADING else 'REAL_TRADING',
+        'Market_Hours': f'{MARKET_OPEN_HOUR}:{MARKET_OPEN_MINUTE:02d} to {MARKET_CLOSE_HOUR}:{MARKET_CLOSE_MINUTE:02d} IST',
+        'Instrument_Symbol': INSTRUMENT_KEY,
+        'Lot_Size': BASE_LOT_SIZE,
+        'Risk_Reward_Ratio': f'1:{RISK_REWARD_RATIO}',
+        'Initial_Capital_Per_Trade': INITIAL_CAPITAL,
+        'Total_PnL': total_pnl_sum,
+        'Closed_Trades': total_trades,
+        'Winning_Trades': winning_trades,
+        'Losing_Trades': losing_trades,
+        'Win_Rate_Percentage': win_rate,
+        'Average_PnL_Per_Trade': avg_pnl,
+        'Gross_Profit': gross_profit,
+        'Gross_Loss': gross_loss,
+        'Profit_Factor': profit_factor,
+        'Total_Bullish_Alerts': len(all_alerts),
+        'Alerts_To_Trades': len([a for a in all_alerts if a.get('converted_to_trade', False)]),
+        'Timestamp': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    }
+    
+    try:
+        df_summary = pd.DataFrame([summary_data])
+        df_summary.to_csv(SESSION_SUMMARY_CSV, index=False)
+        print(f"\n💾 Session summary saved to: {SESSION_SUMMARY_CSV}")
+    except Exception as e:
+        print(f"⚠️ Failed to save session summary: {e}")
+
+# ================= BULLISH PATTERN DETECTION (LONG ONLY) =================
+def check_bullish_pattern(candle, ema_5, index, timestamp):
+    """
+    Check for BULLISH pattern: Green candle completely BELOW EMA5 (high < EMA5)
+    This is the ONLY pattern we look for in LONG ONLY strategy
+    """
+    if not is_within_market_hours_ist(timestamp):
+        return None
+    
+    is_green = candle['close'] > candle['open']
+    
+    # High should be strictly below EMA5 (not touching)
+    if is_green and candle['high'] < ema_5:
+        alert_data = {
+            'Alert_Index': index,
+            'Alert_Time': timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+            'Alert_Type': 'BULLISH',
+            'Open': round(candle['open'], 2),
+            'High': round(candle['high'], 2),
+            'Low': round(candle['low'], 2),
+            'Close': round(candle['close'], 2),
+            'EMA_5': round(ema_5, 2),
+            'Distance_Below_EMA': round(ema_5 - candle['high'], 2),
+            'Converted_To_Trade': False,
+            'Timestamp': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        }
+        all_alerts.append(alert_data)
+        save_alert_to_csv(alert_data)
+        
+        print(f"\n🟢 BULLISH ALERT at {timestamp.strftime('%H:%M:%S')}")
+        print(f"   Green Candle: O={candle['open']:.2f} H={candle['high']:.2f} L={candle['low']:.2f} C={candle['close']:.2f}")
+        print(f"   EMA5: {ema_5:.2f} | Distance below: {ema_5 - candle['high']:.2f}")
+        
+        return {
+            'type': 'BULLISH',
+            'index': index,
+            'timestamp': timestamp,
+            'open': candle['open'],
+            'high': candle['high'],
+            'low': candle['low'],
+            'close': candle['close'],
+            'ema_5': ema_5
+        }
+    return None
+
+def execute_long_trade(alert_candle, current_candle, trade_index):
+    """
+    Execute a LONG trade using full 1 lakh capital
+    FIXED: Entry at breakout price (alert candle's HIGH + small buffer)
+    """
+    if not is_within_market_hours_ist(current_candle['timestamp']):
+        return None
+    
+    # ✅ FIXED: Entry price is the BREAKOUT level (alert candle's HIGH + 0.05 for buffer)
+    # This ensures we actually break the high, not just touch it
+    entry_price = alert_candle['high'] + 0.05
+    
+    # ✅ FIXED: Stop Loss is LOW of alert candle
+    sl_price = alert_candle['low']
+    
+    # Risk points
+    risk_points = abs(entry_price - sl_price)
+    
+    # Target: Entry + (Risk * Risk Reward Ratio)
+    target_price = entry_price + (risk_points * RISK_REWARD_RATIO)
+    
+    # Calculate number of lots possible with 1 lakh capital
+    lot_size = calculate_lots_from_capital(entry_price)
+    
+    if lot_size < 1:
+        print(f"   ⚠️ Cannot take trade. Need ₹{entry_price * BASE_LOT_SIZE:,.2f} per lot")
+        return None
+    
+    shares_to_trade = lot_size * BASE_LOT_SIZE
+    capital_required = entry_price * shares_to_trade
+    
+    print(f"\n💰 POSITION SIZING (Using ₹{INITIAL_CAPITAL:,.2f} capital):")
+    print(f"   Alert Candle High: ₹{alert_candle['high']:.2f}")
+    print(f"   Entry Price (Breakout): ₹{entry_price:.2f}")
+    print(f"   Stop Loss (Alert Low): ₹{sl_price:.2f}")
+    print(f"   Target: ₹{target_price:.2f}")
+    print(f"   Lots: {lot_size} | Shares: {shares_to_trade}")
+    print(f"   Capital Required: ₹{capital_required:,.2f}")
+    
+    # Place order (paper or real)
+    order_id = None
+    if not PAPER_TRADING:
+        order_data = {
+            'symbol': INSTRUMENT_KEY,
+            'quantity': shares_to_trade,
+            'side': 1,  # 1 for BUY (long position)
+            'price': entry_price
+        }
+        order_id = place_real_order(order_data)
+        if not order_id:
+            return None
+    
+    trade = {
+        'trade_id': trade_index,
+        'type': 'LONG',
+        'entry_price': entry_price,
+        'sl_price': sl_price,
+        'target_price': target_price,
+        'lot_size': lot_size,
+        'shares': shares_to_trade,
+        'capital_used': capital_required,
+        'entry_time': current_candle['timestamp'],
+        'risk_points': risk_points,
+        'reward_points': risk_points * RISK_REWARD_RATIO,
+        'status': 'ACTIVE',
+        'alert_candle_time': alert_candle['timestamp'],
+        'alert_candle_high': alert_candle['high'],
+        'alert_candle_low': alert_candle['low'],
+        'order_id': order_id,
+        'instrument_symbol': INSTRUMENT_KEY
+    }
+    
+    print(f"\n🚨 LONG POSITION ENTERED at {current_candle['timestamp'].strftime('%H:%M:%S')}")
+    print(f"   Entry (Breakout): ₹{entry_price:.2f}")
+    print(f"   Stop Loss (Alert Low): ₹{sl_price:.2f} (-{(entry_price-sl_price)/entry_price*100:.2f}%)")
+    print(f"   Target: ₹{target_price:.2f} (+{(target_price-entry_price)/entry_price*100:.2f}%)")
+    print(f"   Risk:Reward = 1:{RISK_REWARD_RATIO}")
+    if order_id:
+        print(f"   Order ID: {order_id}")
+    
+    return trade
+
+def check_exit_conditions(trade, current_candle):
+    """Check if LONG trade should be exited"""
+    if not is_within_market_hours_ist(current_candle['timestamp']):
+        return False, 0
+    
+    exit_price = None
+    exit_reason = None
+    
+    # For LONG: Exit when price hits target (higher) or SL (lower)
+    # Target hit (price went up to target)
+    if current_candle['high'] >= trade['target_price']:
+        exit_price = trade['target_price']
+        exit_reason = 'TARGET_HIT'
+    # Stop loss hit (price went down to SL)
+    elif current_candle['low'] <= trade['sl_price']:
+        exit_price = trade['sl_price']
+        exit_reason = 'SL_HIT'
+    
+    if exit_price is not None:
+        # Calculate PnL for LONG (Profit when exit price > entry price)
+        pnl = (exit_price - trade['entry_price']) * trade['shares']
+        
+        # Place REAL exit order if not paper trading
+        if not PAPER_TRADING and trade.get('order_id'):
+            try:
+                fyers = fyersModel.FyersModel(
+                    client_id=FYERS_CLIENT_ID,
+                    token=FYERS_ACCESS_TOKEN,
+                    is_async=False,
+                    log_path="./logs"
+                )
+                
+                exit_order = {
+                    "symbol": INSTRUMENT_KEY,
+                    "qty": trade['shares'],
+                    "type": "LIMIT",
+                    "side": "SELL",  # Sell to exit long position
+                    "productType": "INTRADAY",
+                    "limitPrice": exit_price,
+                    "stopPrice": 0,
+                    "validity": "DAY",
+                    "disclosedQty": 0,
+                    "offlineOrder": False
+                }
+                
+                response = fyers.place_order(exit_order)
+                if response.get('s') == 'ok':
+                    print(f"✅ REAL EXIT ORDER PLACED: SELL @ ₹{exit_price}")
+                else:
+                    print(f"⚠️ REAL EXIT ORDER FAILED: {response}")
+            except Exception as e:
+                print(f"⚠️ Error placing exit order: {e}")
+        
+        trade['status'] = 'CLOSED'
+        trade['exit_price'] = exit_price
+        trade['exit_reason'] = exit_reason
+        trade['exit_time'] = current_candle['timestamp']
+        trade['pnl'] = pnl
+        trade['return_percentage'] = (pnl / trade['capital_used']) * 100
+        
+        return True, pnl
+    
+    return False, 0
+
+# ================= MAIN BACKTEST FUNCTION (LONG ONLY) =================
+def run_backtest():
+    """Main backtest function - LONG ONLY strategy"""
+    global total_pnl, active_trade, all_trades, equity_curve, all_alerts
+    
+    print("\n" + "="*80)
+    print("📊 LONG ONLY BACKTEST - BULLISH PATTERN STRATEGY")
+    print("="*80)
+    print(f"📅 BACKTEST DATE: {BACKTEST_DATE} (SINGLE DAY ONLY)")
+    print(f"🔧 INSTRUMENT: {INSTRUMENT_KEY}")
+    print(f"⏰ Market Hours: 9:30 AM to 3:00 PM IST")
+    print(f"🔵 {'PAPER TRADING' if PAPER_TRADING else 'REAL TRADING'} MODE")
+    print("🟢 LONG POSITIONS ONLY - No SHORT trades")
+    print(f"🎯 Risk:Reward = 1:{RISK_REWARD_RATIO}")
+    print("="*80)
+    
+    # Fetch historical data for the specific date
+    print(f"\n📡 Fetching data for {BACKTEST_DATE}...")
+    df = fetch_historical_data()
+    
+    if df is None or len(df) < 10:
+        print(f"❌ Insufficient data for {BACKTEST_DATE}")
+        return
+    
+    print(f"\n📈 Analyzing {len(df)} market hours candles for BULLISH patterns...")
+    print("="*80)
+    
+    # Calculate EMA
+    df['EMA_5'] = df['Close'].ewm(span=5, adjust=False).mean()
+    
+    # Reset state
+    total_pnl = 0
+    active_trade = None
+    all_trades = []
+    all_alerts = []
+    equity_curve = []
+    trade_counter = 0
+    pending_alert = None
+    running_pnl = 0
+    
+    # Iterate through candles
+    for i in range(len(df)):
+        current_time = df.index[i]
+        current_candle = {
+            'index': i,
+            'timestamp': current_time,
+            'open': df.iloc[i]['Open'],
+            'high': df.iloc[i]['High'],
+            'low': df.iloc[i]['Low'],
+            'close': df.iloc[i]['Close'],
+        }
+        
+        ema_5 = df.iloc[i]['EMA_5']
+        
+        # Check exit conditions for active LONG trade
+        if active_trade is not None and active_trade['status'] == 'ACTIVE':
+            should_close, pnl = check_exit_conditions(active_trade, current_candle)
+            if should_close:
+                running_pnl += pnl
+                total_pnl = running_pnl
+                active_trade['status'] = 'CLOSED'
+                
+                trade_data = {
+                    'Trade_ID': active_trade['trade_id'],
+                    'Trade_Type': active_trade['type'],
+                    'Entry_Time': active_trade['entry_time'].strftime('%Y-%m-%d %H:%M:%S'),
+                    'Entry_Price': active_trade['entry_price'],
+                    'Stop_Loss': active_trade['sl_price'],
+                    'Target_Price': active_trade['target_price'],
+                    'Exit_Time': active_trade['exit_time'].strftime('%Y-%m-%d %H:%M:%S'),
+                    'Exit_Price': active_trade['exit_price'],
+                    'PnL': active_trade['pnl'],
+                    'Return_Percentage': active_trade['return_percentage'],
+                    'Exit_Reason': active_trade['exit_reason'],
+                    'Lots': active_trade['lot_size'],
+                    'Shares': active_trade['shares'],
+                    'Risk_Points': active_trade['risk_points'],
+                    'Reward_Points': active_trade['reward_points'],
+                    'Alert_Candle_High': active_trade['alert_candle_high'],
+                    'Alert_Candle_Low': active_trade['alert_candle_low'],
+                    'status': 'CLOSED'
+                }
+                all_trades.append(trade_data)
+                save_trade_to_csv(trade_data)
+                
+                print(f"\n📊 LONG TRADE #{active_trade['trade_id']} CLOSED - {active_trade['exit_reason']}")
+                print(f"   Entry: ₹{active_trade['entry_price']:.2f} | Exit: ₹{active_trade['exit_price']:.2f}")
+                print(f"   P&L: ₹{active_trade['pnl']:+,.2f} ({active_trade['return_percentage']:+.2f}%)")
+                print(f"   Running Total P&L: ₹{running_pnl:+,.2f}")
+                
+                active_trade = None
+                pending_alert = None
+        
+        # Check for BULLISH pattern ONLY
+        if active_trade is None:
+            bullish_alert = check_bullish_pattern(current_candle, ema_5, i, current_time)
+            if bullish_alert:
+                pending_alert = bullish_alert
+        
+        # ✅ FIXED: Check for LONG entry on NEXT candle after alert
+        # Entry when current candle's HIGH breaks alert candle's HIGH
+        if pending_alert is not None and active_trade is None:
+            # For LONG: Entry when current candle's HIGH breaks alert candle's HIGH
+            if current_candle['high'] > pending_alert['high']:
+                trade_counter += 1
+                new_trade = execute_long_trade(pending_alert, current_candle, trade_counter)
+                
+                if new_trade:
+                    # Update alert to show it converted to trade
+                    for alert in all_alerts:
+                        if alert['Alert_Time'] == pending_alert['timestamp'].strftime('%Y-%m-%d %H:%M:%S'):
+                            alert['Converted_To_Trade'] = True
+                            save_alert_to_csv(alert)
+                            break
+                    
+                    active_trade = new_trade
+                    pending_alert = None
+                    
+                    print(f"\n✅ LONG Trade #{trade_counter} activated. Monitoring for exit...")
+        
+        # Record equity curve
+        if i % 10 == 0 or i == len(df) - 1:
+            equity_curve.append({
+                'Candle_Index': i,
+                'Timestamp': current_time.strftime('%Y-%m-%d %H:%M:%S'),
+                'Running_PnL': running_pnl,
+                'Active_Trade': active_trade['trade_id'] if active_trade else 'None'
+            })
+        
+        # Progress indicator
+        if (i + 1) % 50 == 0:
+            print(f"   Progress: {i+1}/{len(df)} candles... | P&L: ₹{running_pnl:+,.2f}")
+    
+    # Close any open position at market close
+    if active_trade is not None and active_trade['status'] == 'ACTIVE':
+        print(f"\n⚠️ Market closed - closing LONG position at last price")
+        last_candle = {
+            'close': df.iloc[-1]['Close']
+        }
+        
+        pnl = (last_candle['close'] - active_trade['entry_price']) * active_trade['shares']
+        running_pnl += pnl
+        
+        active_trade['status'] = 'CLOSED'
+        active_trade['exit_price'] = last_candle['close']
+        active_trade['exit_reason'] = 'MARKET_CLOSE'
+        active_trade['exit_time'] = df.index[-1]
+        active_trade['pnl'] = pnl
+        active_trade['return_percentage'] = (pnl / active_trade['capital_used']) * 100
+        
+        trade_data = {
+            'Trade_ID': active_trade['trade_id'],
+            'Trade_Type': active_trade['type'],
+            'Entry_Time': active_trade['entry_time'].strftime('%Y-%m-%d %H:%M:%S'),
+            'Entry_Price': active_trade['entry_price'],
+            'Stop_Loss': active_trade['sl_price'],
+            'Target_Price': active_trade['target_price'],
+            'Exit_Time': active_trade['exit_time'].strftime('%Y-%m-%d %H:%M:%S'),
+            'Exit_Price': active_trade['exit_price'],
+            'PnL': active_trade['pnl'],
+            'Return_Percentage': active_trade['return_percentage'],
+            'Exit_Reason': active_trade['exit_reason'],
+            'Lots': active_trade['lot_size'],
+            'Shares': active_trade['shares'],
+            'Risk_Points': active_trade['risk_points'],
+            'Reward_Points': active_trade['reward_points'],
+            'Alert_Candle_High': active_trade['alert_candle_high'],
+            'Alert_Candle_Low': active_trade['alert_candle_low'],
+            'status': 'CLOSED'
+        }
+        all_trades.append(trade_data)
+        save_trade_to_csv(trade_data)
+        
+        print(f"\n📊 LONG TRADE #{active_trade['trade_id']} CLOSED at market close")
+        print(f"   P&L: ₹{pnl:+,.2f}")
+    
+    # Display results
+    print("\n" + "="*80)
+    print(f"📊 LONG ONLY BACKTEST RESULTS - {BACKTEST_DATE}")
+    print("="*80)
+    print(f"💰 Initial Capital per Trade: ₹{INITIAL_CAPITAL:,.2f}")
+    print(f"📈 Total P&L: ₹{running_pnl:+,.2f}")
+    
+    if all_trades:
+        print("\n📋 ALL LONG TRADES SUMMARY")
+        print("="*80)
+        trades_df = pd.DataFrame(all_trades)
+        display_cols = ['Trade_ID', 'Trade_Type', 'Entry_Time', 'Entry_Price', 'Exit_Price', 'PnL', 'Return_Percentage', 'Exit_Reason']
+        print(trades_df[display_cols].to_string(index=False))
+        
+        total_trades = len(all_trades)
+        winning_trades = len([t for t in all_trades if t['PnL'] > 0])
+        losing_trades = len([t for t in all_trades if t['PnL'] < 0])
+        win_rate = (winning_trades / total_trades * 100) if total_trades > 0 else 0
+        avg_return = sum([t['Return_Percentage'] for t in all_trades]) / total_trades if total_trades > 0 else 0
+        
+        print(f"\n📊 LONG TRADE STATISTICS:")
+        print(f"   Total Long Trades: {total_trades}")
+        print(f"   Winning Trades: {winning_trades}")
+        print(f"   Losing Trades: {losing_trades}")
+        print(f"   Win Rate: {win_rate:.1f}%")
+        print(f"   Average Return per Trade: {avg_return:+.2f}%")
+    
+    print(f"\n📊 BULLISH ALERT STATISTICS:")
+    print(f"   Total Bullish Alerts: {len(all_alerts)}")
+    print(f"   Alerts that turned into Long Trades: {len([a for a in all_alerts if a.get('converted_to_trade', False)])}")
+    if all_alerts:
+        conversion_rate = (len([a for a in all_alerts if a.get('converted_to_trade', False)]) / len(all_alerts)) * 100
+        print(f"   Alert to Trade Conversion Rate: {conversion_rate:.1f}%")
+    
+    save_equity_curve()
+    save_session_summary()
+    
+    print(f"\n💾 Logs saved to: {RESULTS_DIR}")
+    print(f"   📄 Long Trades: {TRADES_CSV}")
+    print(f"   📄 Bullish Alerts: {ALERTS_CSV}")
+    print(f"   📄 Session Summary: {SESSION_SUMMARY_CSV}")
+    
+    return df
+
+# ================= MAIN EXECUTION =================
+if __name__ == "__main__":
+    print("=" * 80)
+    print("🚀 LONG ONLY TRADING SYSTEM - BULLISH PATTERN STRATEGY")
+    print("=" * 80)
+    print(f"📅 Backtesting ONLY on: {BACKTEST_DATE}")
+    print(f"🔧 Using hardcoded instrument: {INSTRUMENT_KEY}")
+    print(f"⏰ Market Hours: 9:30 AM to 3:00 PM IST")
+    print(f"🟢 LONG POSITIONS ONLY - No SHORT trades")
+    print(f"🔵 {'PAPER TRADING' if PAPER_TRADING else 'REAL TRADING'} MODE")
+    print("=" * 80)
+    print("\n🟢 BULLISH PATTERN RULES (LONG ONLY):")
+    print("   1. Alert Candle: GREEN candle completely BELOW EMA5 (high < EMA5)")
+    print("   2. Entry: When NEXT candle's HIGH breaks alert candle's HIGH")
+    print("   3. Entry Price: Breakout level (Alert HIGH + 0.05 buffer)")
+    print("   4. Stop Loss: Alert candle LOW")
+    print(f"   5. Target: Entry + (Risk × {RISK_REWARD_RATIO}) [1:{RISK_REWARD_RATIO} Risk-Reward]")
+    print("=" * 80)
+    
+    run_backtest()
+    
+    print("\n" + "=" * 80)
+    print("✅ LONG ONLY BACKTEST COMPLETED")
+    print("=" * 80)
