@@ -1,0 +1,19 @@
+Algorithm:
+step1: Detect alert candle
+For bullish case:
+Look for last candle in data set if its  green candle which is lying below the 5 EMA line and  its high not touching 5 EMA line
+For bearish case:
+Look for last candle in data set if its red candle which is lying above the 5 EMA line and  its low not touching 5 EMA line
+
+step2: Check for low/high break
+For bullish case:
+When the high of the candle next to the alert green candle breaks the high of the alert candle ,take long position keep the low of the alert candle as Stoploss
+For bearish case:
+When the low of the candle next to the alert red candle breaks the low of the alert candle ,take short position keep the high of the alert candle as Stoploss
+
+Keep Risk : Reward = 1:3
+
+
+Return me complete code with existing order placement logic
+Lot size is 65 ,please utilize all of the 1 lakh balance in transaction
+Also keep a flag to indicate its paper trade or real order placement
