@@ -1,108 +1,128 @@
-import pandas as pd
-import datetime
-from datetime import timedelta
+import os
+import sys
 import time
 import math
-import json
-import sys
+import datetime
 import traceback
 from collections import deque
-import threading
-import requests
-import os
+from zoneinfo import ZoneInfo
 
-# ================= FYERS WEBSOCKET IMPORTS =================
+import pandas as pd
 from fyers_apiv3.FyersWebsocket import data_ws
 from fyers_apiv3 import fyersModel
 
-# ================= FYERS CONFIG =================
+# ================= CONFIG =================
 FYERS_CLIENT_ID = "IWVRS44JXD-100"
-FYERS_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIl0sImF0X2hhc2giOiJnQUFBQUFCcTRMWEpLWjdpbWVLVnFwMlBaNjd6bDRCMWlzUFJrNGdiM1F4MnNydXpqODM2MkJ4Vnc2OEp2a184Rms2UUItRXNuNllycGJwUWd5eGFiOTF6cmUzQjZyOEpxeVJ6SGFmRDBNcDgwY25aM2N1UjRxbz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiI0OTQwMDZlZjc0ZmZmNjdlNGI3YzVkNGU4NDRhODUyZjg1YzY2MTYxYjg0MTk0YmFlODFjMGQxMyIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWUMwMzM4MyIsImFwcFR5cGUiOjEwMCwiZXhwIjoxNzkzMTQ3NDAwLCJpYXQiOjE3OTMxMTE0OTcsImlzcyI6ImFwaS5meWVycy5pbiIsIm5iZiI6MTc5MzExMTQ5Nywic3ViIjoiYWNjZXNzX3Rva2VuIn0.OJEOh4olrKl5CPZGEWOQfNSFDXr4L2fysIQtzNMXkhc"  # <-- put your full token here
+FYERS_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIl0sImF0X2hhc2giOiJnQUFBQUFCckE3NEF0MGJPYUtNZmsxWFlhUWVTbmVuM0NQMklYaTJCTmttSGpNOHQzZVM1eG9PLWxkbGswalQzSU1oSTFLOXg0VDJIdVRRR3ZmN2d3QmJFZHlkRWxnenNtWllJZzlsTFRQZk9qNlVWM0V4VlBGVT0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiI2ZTM0ZjJhOGNmOTBkNmI2MGIzNmM5MDk3MmYyNGU5NGIzOTFiZWVmMjI0MGVmMWQ2Nzc0ZTdkMSIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWUMwMzM4MyIsImFwcFR5cGUiOjEwMCwiZXhwIjoxNzk1NDgwMjAwLCJpYXQiOjE3OTU0MDczNjAsImlzcyI6ImFwaS5meWVycy5pbiIsIm5iZiI6MTc5NTQwNzM2MCwic3ViIjoiYWNjZXNzX3Rva2VuIn0.32RljaLBI0TnIfi1SVNr6cciu7p4a5XBBrxbrCC-YFY"  # <-- put your full token here
 
-# ================= TRADING MODE FLAG =================
-PAPER_TRADING = True  # Set False for real trading
 
-# ================= INSTRUMENT CONFIGURATION =================
-INSTRUMENT_KEY = "MCX:CRUDEOILM26NOV9750CE"
+PAPER_TRADING = True             # True = simulated orders, False = REAL orders
 
-# ================= TRADING CONFIG =================
+INSTRUMENT_KEY = "NSE:NIFTY26NOV25700PE"
 INITIAL_CAPITAL = 100000
-BASE_LOT_SIZE = 10
-MAX_CAPITAL_UTILIZATION = 1.0
+BASE_LOT_SIZE = 65
+MAX_CAPITAL_UTILIZATION = 1.0    # 1.0 = use 100% of current balance
+RR_RATIO = 3.0                   # Risk : Reward = 1 : 3
+EMA_PERIOD = 5
+TIMEFRAME_MINUTES = 1            # candle size in minutes: 1, 2, 3, 5, 10, 15, 20, 30, 60
+MIN_CANDLES_FOR_EMA = 20         # warm-up candles needed before alerts are valid
+ORDER_TYPE = "MARKET"            # "MARKET" or "LIMIT" (LIMIT uses LTP as price)
+PRODUCT_TYPE = "INTRADAY"
 
-# ---- STRATEGY PARAMETERS (per your rules) ----
-RR_RATIO = 3.0          # Risk : Reward = 1 : 3
-# NOTE: SL is NOT percentage-based anymore.
-#       SL = alert candle LOW (bullish)
-#       Target = entry + RR_RATIO * (entry - SL)
-TIMEFRAME = "5"         # minutes per candle
+VALID_TIMEFRAMES = (1, 2, 3, 5, 10, 15, 20, 30, 60)   # supported by Fyers history API
+SESSION_START = datetime.time(9, 15)    # NSE candles are aligned to 9:15
 
-# ================= MARKET HOURS (IST) =================
-MARKET_OPEN_HOUR = 9
-MARKET_OPEN_MINUTE = 20
-MARKET_CLOSE_HOUR = 20
-MARKET_CLOSE_MINUTE = 0
+IST = ZoneInfo("Asia/Kolkata")
+ENTRY_START = datetime.time(9, 20)
+ENTRY_END = datetime.time(15, 15)     # no new entries after this
+SQUARE_OFF = datetime.time(15, 20)    # force exit open position
+SESSION_END = datetime.time(15, 30)   # script finishes after this
 
-# ================= WEBSOCKET GLOBALS =================
-completed_candles = deque(maxlen=200)
-closed_trades = []                 # NEW: persistent closed-trade history
+# ================= STATE =================
+completed_candles = deque(maxlen=500)
 current_candle = None
-alert_candle = None
-alert_candle_timeframe = None      # NEW: timeframe of the alert candle
-position_taken = False
-current_position = None
-entry_price = None
+alert_candle = None          # bullish alert, valid only for the very next candle
+position = None              # the single open trade (or None)
+closed_trades = []
 current_balance = INITIAL_CAPITAL
-active_trades = []
-last_complete_timeframe = None
 fyers_ws = None
 fyers_auth = None
-breakout_triggered = False
+last_price = None
+finished = False
 
 
-# ================= TIMESTAMP HELPERS =================
-def timestamp_to_datetime(timestamp_str):
-    if not timestamp_str:
-        return None
+def now_ist():
+    return datetime.datetime.now(IST).replace(tzinfo=None)
+
+
+def candle_start(dt):
+    """Start time of the TIMEFRAME_MINUTES candle containing dt (aligned to 9:15, like the chart)."""
+    base = dt.replace(hour=SESSION_START.hour, minute=SESSION_START.minute,
+                      second=0, microsecond=0)
+    mins = int((dt - base).total_seconds() // 60)
+    return base + datetime.timedelta(minutes=(mins // TIMEFRAME_MINUTES) * TIMEFRAME_MINUTES)
+
+
+# ================= HISTORY (EMA WARM-UP) =================
+def load_history():
+    """Preload recent candles (TIMEFRAME_MINUTES) so EMA5 matches the chart from the start."""
+    if fyers_auth is None:
+        print("⚠️  No Fyers auth; EMA will warm up from live candles only.")
+        return
     try:
-        return datetime.datetime.fromtimestamp(int(timestamp_str))
-    except (ValueError, TypeError):
+        today = now_ist().date()
+        data = {
+            "symbol": INSTRUMENT_KEY,
+            "resolution": str(TIMEFRAME_MINUTES),
+            "date_format": "1",
+            "range_from": (today - datetime.timedelta(days=5)).strftime("%Y-%m-%d"),
+            "range_to": today.strftime("%Y-%m-%d"),
+            "cont_flag": "1",
+        }
+        resp = fyers_auth.history(data=data)
+        if resp.get("s") != "ok":
+            print(f"⚠️  History fetch failed: {resp}")
+            return
+        this_candle = candle_start(now_ist())
+        n = 0
+        for ts, o, h, l, c, v in resp.get("candles", []):
+            t = datetime.datetime.fromtimestamp(ts, IST).replace(tzinfo=None)
+            if t >= this_candle:      # skip the still-forming candle
+                continue
+            completed_candles.append(
+                {"timestamp": t, "open": o, "high": h, "low": l, "close": c, "volume": v}
+            )
+            n += 1
+        print(f"✅ Loaded {n} historical candles for EMA warm-up")
+    except Exception as e:
+        print(f"⚠️  History error: {e}")
+
+
+# ================= EMA =================
+def compute_ema5():
+    """EMA5 including the latest completed candle (same as the chart)."""
+    closes = [c["close"] for c in completed_candles]
+    if len(closes) < MIN_CANDLES_FOR_EMA:
         return None
-
-
-def convert_to_ist(utc_datetime):
-    if utc_datetime is None:
-        return None
-    return utc_datetime + timedelta(hours=5, minutes=30)
-
-
-def is_within_market_hours_ist(timestamp_ist):
-    if timestamp_ist is None:
-        return False
-    market_open = datetime.time(MARKET_OPEN_HOUR, MARKET_OPEN_MINUTE)
-    market_close = datetime.time(MARKET_CLOSE_HOUR, MARKET_CLOSE_MINUTE)
-    return market_open <= timestamp_ist.time() <= market_close
+    return pd.Series(closes).ewm(span=EMA_PERIOD, adjust=False).mean().iloc[-1]
 
 
 # ================= POSITION SIZING =================
-def calculate_position_size(entry_price):
-    capital_per_lot = entry_price * BASE_LOT_SIZE
-    if capital_per_lot <= 0:
+def calculate_lots(price):
+    """Use as much of the current balance as possible (whole lots only)."""
+    budget = current_balance * MAX_CAPITAL_UTILIZATION
+    cost_per_lot = price * BASE_LOT_SIZE
+    if cost_per_lot <= 0:
         return 0
-    max_lots = math.floor(INITIAL_CAPITAL / capital_per_lot)
-    if max_lots == 0 and INITIAL_CAPITAL >= capital_per_lot:
-        max_lots = 1
-    return max_lots
+    return math.floor(budget / cost_per_lot)
 
 
 # ================= ORDER PLACEMENT =================
 def place_order(symbol, qty, side, order_type="LIMIT", price=0, product_type="INTRADAY"):
-    global PAPER_TRADING
     side_str = "BUY" if side == 1 else "SELL"
 
     if PAPER_TRADING:
         print(f"📝 [PAPER] {side_str} {qty} @ ₹{price:.2f}")
-        time.sleep(0.2)
         order_id = f"PAPER_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S_%f')}"
         print(f"✅ [PAPER] Order ID: {order_id}")
         return order_id
@@ -114,8 +134,8 @@ def place_order(symbol, qty, side, order_type="LIMIT", price=0, product_type="IN
         order_data = {
             "symbol": symbol,
             "qty": qty,
-            "type": order_type,
-            "side": side_str,
+            "type": 2 if order_type == "MARKET" else 1,   # Fyers: 1=Limit, 2=Market
+            "side": side,                                  # 1=Buy, -1=Sell
             "productType": product_type,
             "limitPrice": price if order_type == "LIMIT" else 0,
             "stopPrice": 0,
@@ -136,257 +156,156 @@ def place_order(symbol, qty, side, order_type="LIMIT", price=0, product_type="IN
         return None
 
 
-# ================= PATTERN DETECTION (BULLISH ONLY) =================
+# ================= STEP 1: ALERT DETECTION =================
 def check_pattern_on_candle(candle):
     """
-    BULLISH FLYING CANDLE:
-      - GREEN candle (close > open)
-      - Entirely BELOW EMA5, i.e. high < EMA5 (high not touching EMA5)
-      - Applies only to the LAST COMPLETED candle
-    EMA5 is computed from candles BEFORE the alert candle (no look-ahead).
+    BULLISH alert on the LAST completed candle:
+      - GREEN (close > open)
+      - lying below EMA5 and high NOT touching EMA5 (high < EMA5)
+    EMA5 includes this candle's close, as on a chart.
     """
-    global alert_candle, alert_candle_timeframe, completed_candles
+    global alert_candle
 
-    # Need at least 10 prior candles for a stable EMA5
-    if len(completed_candles) < 11:
+    if position is not None:
         return False
 
-    # Candles BEFORE the one being checked (the alert candle is the last
-    # element we just appended).
-    prior_closes = [c["close"] for c in list(completed_candles)[:-1]]
-    if len(prior_closes) < 10:
+    ema5 = compute_ema5()
+    if ema5 is None:
         return False
 
-    ema_5 = pd.Series(prior_closes).ewm(span=5, adjust=False).mean().iloc[-1]
-
-    # BULLISH pattern: green candle, high strictly below EMA5
-    if candle["close"] > candle["open"] and candle["high"] < ema_5:
-        # Don't overwrite an active, un-broken alert
-        if alert_candle is not None and not position_taken:
-            print("\nℹ️  Active alert exists; ignoring new alert candle.")
-            return False
-
+    if candle["close"] > candle["open"] and candle["high"] < ema5:
         alert_candle = {
-            "type": "BULLISH",
             "timestamp": candle["timestamp"],
             "open": candle["open"],
             "high": candle["high"],
             "low": candle["low"],
             "close": candle["close"],
-            "ema_5": ema_5,
+            "ema_5": ema5,
         }
-        alert_candle_timeframe = candle["timestamp"]
-
-        print("\n\n🟢 BULLISH FLYING CANDLE DETECTED!")
-        print(f"   Time:     {candle['timestamp'].strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"   Green:    O={candle['open']:.2f}  C={candle['close']:.2f}")
-        print(f"   High={candle['high']:.2f}  Low={candle['low']:.2f}")
-        print(f"   EMA5:     {ema_5:.2f}  (gap = {ema_5 - candle['high']:.2f})")
-        print(f"   ⏰ Waiting for NEXT candle to break above {candle['high']:.2f}")
-        print(f"   🛑 SL will be alert LOW = {candle['low']:.2f}")
+        print("\n\n🟢 BULLISH FLYING CANDLE DETECTED")
+        print(f"   Time: {candle['timestamp'].strftime('%Y-%m-%d %H:%M')}")
+        print(f"   O={candle['open']:.2f} H={candle['high']:.2f} "
+              f"L={candle['low']:.2f} C={candle['close']:.2f}")
+        print(f"   EMA5={ema5:.2f} (gap to high = {ema5 - candle['high']:.2f})")
+        print(f"   ⏰ Only the NEXT candle may break {candle['high']:.2f}")
+        print(f"   🛑 SL = alert low {candle['low']:.2f}")
         return True
-
     return False
 
 
-# ================= ENTRY LOGIC =================
-def monitor_entry_on_price(current_price, current_time, current_timeframe):
-    """
-    Enter LONG when:
-      - a valid bullish alert exists,
-      - we are on a candle STRICTLY AFTER the alert candle,
-      - current price > alert candle HIGH,
-      - no position already taken.
-    """
-    global alert_candle, alert_candle_timeframe, position_taken
-    global current_position, entry_price, breakout_triggered
-
-    if alert_candle is None or position_taken or breakout_triggered:
-        return False
-
-    # Must be on the NEXT candle (or later) — not the alert candle itself
-    if alert_candle_timeframe is None or current_timeframe <= alert_candle_timeframe:
-        return False
-
-    if current_price > alert_candle["high"]:
-        entry_price = alert_candle["high"]
-        sl_price = alert_candle["low"]                     # SL = alert candle LOW
-        risk_points = entry_price - sl_price
-        if risk_points <= 0:
-            print("⚠️  Invalid SL (risk<=0); skipping trade.")
-            return False
-        target_price = entry_price + RR_RATIO * risk_points  # R:R = 1:3
-
-        current_position = "LONG"
-        position_taken = True
-        breakout_triggered = True
-
-        print("\n🎯 BREAKOUT — LONG ENTRY")
-        print(f"   Alert High (entry): {entry_price:.2f}")
-        print(f"   Current Price:      {current_price:.2f}")
-        print(f"   SL (alert LOW):     {sl_price:.2f}  (risk = {risk_points:.2f})")
-        print(f"   Target (3R):        {target_price:.2f}  (reward = {RR_RATIO*risk_points:.2f})")
-        print(f"   Risk:Reward = 1:{RR_RATIO:g}")
-
-        create_and_execute_trade("LONG", entry_price, sl_price, target_price)
-        return True
-
-    return False
+def alert_next_candle():
+    return alert_candle["timestamp"] + datetime.timedelta(minutes=TIMEFRAME_MINUTES)
 
 
-def create_and_execute_trade(trade_type, entry_price, sl_price, target_price):
-    global current_balance, active_trades, INSTRUMENT_KEY
-    global position_taken, current_position, PAPER_TRADING, alert_candle
+# ================= STEP 2: ENTRY =================
+def monitor_entry(price, now, candle_ts):
+    """LONG only if the candle immediately after the alert candle breaks the alert high."""
+    global alert_candle, position, current_balance
 
-    lot_size = calculate_position_size(entry_price)
-    if lot_size < 1:
-        print(f"⚠️  Insufficient capital for 1 lot (₹{entry_price*BASE_LOT_SIZE:,.2f}).")
-        position_taken = False
-        current_position = None
-        return False
+    if alert_candle is None or position is not None:
+        return
+    if candle_ts != alert_next_candle():      # must be the immediate next candle
+        return
+    if not (ENTRY_START <= now.time() <= ENTRY_END):
+        return
+    if price <= alert_candle["high"]:
+        return
 
-    shares_to_trade = lot_size * BASE_LOT_SIZE
-    capital_required = entry_price * shares_to_trade
-    risk_points = entry_price - sl_price
-    reward_points = target_price - entry_price
-
-    print("\n💰 POSITION SIZING")
-    print(f"   Lots: {lot_size}   Shares: {shares_to_trade}")
-    print(f"   Capital Required: ₹{capital_required:,.2f} "
-          f"({capital_required/INITIAL_CAPITAL*100:.1f}% of capital)")
-    print(f"   Risk Amount:   ₹{risk_points*shares_to_trade:,.2f}")
-    print(f"   Reward Amount: ₹{reward_points*shares_to_trade:,.2f}")
-
-    if trade_type == "LONG":
-        print(f"\n📈 BUY {shares_to_trade} @ ₹{entry_price:.2f}")
-        if PAPER_TRADING:
-            print("🔵 [PAPER] No real money")
-        order_id = place_order(
-            symbol=INSTRUMENT_KEY,
-            qty=shares_to_trade,
-            side=1,
-            order_type="LIMIT",
-            price=entry_price,
-            product_type="INTRADAY",
-        )
-        if order_id:
-            trade = {
-                "type": trade_type,
-                "entry_price": entry_price,
-                "sl_price": sl_price,
-                "target_price": target_price,
-                "lot_size": lot_size,
-                "shares": shares_to_trade,
-                "capital_used": capital_required,
-                "entry_time": datetime.datetime.now(),
-                "risk_points": risk_points,
-                "reward_points": reward_points,
-                "status": "ACTIVE",
-                "order_id": order_id,
-                "paper_trading": PAPER_TRADING,
-                "alert_candle_high": alert_candle["high"],
-                "alert_candle_low": alert_candle["low"],
-                "alert_candle_time": alert_candle["timestamp"],
-                "rr_ratio": RR_RATIO,
-            }
-            active_trades.append(trade)
-            print(f"✅ {trade_type} position created.")
-            return True
-        else:
-            print("❌ Entry order failed.")
-            position_taken = False
-            current_position = None
-            return False
-    return False
-
-
-# ================= EXIT LOGIC =================
-def _close_trade(trade, exit_price, exit_reason, exit_time):
-    """Close trade, update balance, move to closed_trades."""
-    global current_balance, closed_trades, active_trades
-    global current_position, position_taken, alert_candle, alert_candle_timeframe, breakout_triggered
-
-    print(f"\n📉 SELL {trade['shares']} @ ₹{exit_price:.2f}  ({exit_reason})")
-    if PAPER_TRADING:
-        print("🔵 [PAPER] Simulating exit")
-    order_id = place_order(
-        symbol=INSTRUMENT_KEY,
-        qty=trade["shares"],
-        side=-1,
-        order_type="LIMIT",
-        price=exit_price,
-        product_type="INTRADAY",
-    )
-    if not order_id:
-        print("❌ Exit order failed — manual intervention needed.")
-        return False
-
-    pnl = (exit_price - trade["entry_price"]) * trade["shares"]  # LONG
-    current_balance += pnl
-
-    trade["status"] = "CLOSED"
-    trade["exit_price"] = exit_price
-    trade["exit_reason"] = exit_reason
-    trade["exit_time"] = exit_time
-    trade["PnL"] = pnl
-    trade["return_percentage"] = (pnl / trade["capital_used"]) * 100
-    trade["exit_order_id"] = order_id
-
-    closed_trades.append(trade)
-    if trade in active_trades:
-        active_trades.remove(trade)
-
-    print(f"\n📊 TRADE CLOSED — {trade['type']}")
-    print(f"   Entry ₹{trade['entry_price']:.2f} → Exit ₹{exit_price:.2f} ({exit_reason})")
-    print(f"   P&L ₹{pnl:+,.2f}  ({trade['return_percentage']:+.2f}%)")
-    print(f"   Balance ₹{current_balance:,.2f}")
-
-    if trade["type"] == current_position:
-        current_position = None
-        position_taken = False
+    entry = price                      # actual fill reference = LTP at breakout
+    sl = alert_candle["low"]
+    risk = entry - sl
+    if risk <= 0:
+        print("⚠️  Invalid risk (<=0); skipping trade.")
         alert_candle = None
-        alert_candle_timeframe = None
-        breakout_triggered = False
+        return
+    target = entry + RR_RATIO * risk
+
+    lots = calculate_lots(entry)
+    if lots < 1:
+        print(f"⚠️  Insufficient capital for 1 lot (need ₹{entry * BASE_LOT_SIZE:,.2f}, "
+              f"have ₹{current_balance:,.2f}).")
+        alert_candle = None
+        return
+    qty = lots * BASE_LOT_SIZE
+    capital_used = entry * qty
+
+    print("\n🎯 BREAKOUT — LONG ENTRY")
+    print(f"   Alert High: {alert_candle['high']:.2f} | Entry (LTP): {entry:.2f}")
+    print(f"   SL: {sl:.2f} (risk {risk:.2f}) | Target: {target:.2f} (1:{RR_RATIO:g})")
+    print(f"   Lots: {lots} | Qty: {qty} | Capital: ₹{capital_used:,.2f} "
+          f"({capital_used / current_balance * 100:.1f}% of balance)")
+    print(f"   Max risk ₹{risk * qty:,.2f} | Max reward ₹{RR_RATIO * risk * qty:,.2f}")
+
+    order_id = place_order(INSTRUMENT_KEY, qty, 1, ORDER_TYPE, entry, PRODUCT_TYPE)
+    if not order_id:
+        print("❌ Entry order failed.")
+        alert_candle = None
+        return
+
+    position = {
+        "type": "LONG",
+        "entry_price": entry,
+        "sl_price": sl,
+        "target_price": target,
+        "lots": lots,
+        "shares": qty,
+        "capital_used": capital_used,
+        "entry_time": now,
+        "order_id": order_id,
+        "paper_trading": PAPER_TRADING,
+        "alert_time": alert_candle["timestamp"],
+        "alert_high": alert_candle["high"],
+        "alert_low": alert_candle["low"],
+        "rr_ratio": RR_RATIO,
+    }
+    alert_candle = None
+    print("✅ LONG position created.")
+
+
+# ================= EXIT =================
+def close_position(exit_price, reason, now):
+    global position, current_balance
+
+    t = position
+    print(f"\n📉 SELL {t['shares']} @ ₹{exit_price:.2f} ({reason})")
+    order_id = place_order(INSTRUMENT_KEY, t["shares"], -1, ORDER_TYPE, exit_price, PRODUCT_TYPE)
+    if not order_id:
+        print("❌ Exit order failed — MANUAL INTERVENTION NEEDED.")
+        return False
+
+    pnl = (exit_price - t["entry_price"]) * t["shares"]
+    current_balance += pnl
+    t.update({
+        "exit_price": exit_price,
+        "exit_reason": reason,
+        "exit_time": now,
+        "PnL": pnl,
+        "return_percentage": pnl / t["capital_used"] * 100,
+        "exit_order_id": order_id,
+    })
+    closed_trades.append(t)
+    position = None
+
+    print(f"📊 TRADE CLOSED: ₹{t['entry_price']:.2f} → ₹{exit_price:.2f} | "
+          f"P&L ₹{pnl:+,.2f} ({t['return_percentage']:+.2f}%) | Balance ₹{current_balance:,.2f}")
     return True
 
 
-def monitor_exit_conditions(current_price, current_time, completed_candle=None):
-    """
-    Check exits for active LONG trades.
-    Priority (conservative): if both SL and target hit in same tick/candle,
-    assume SL hit first.
-    """
-    if not active_trades:
+def monitor_exit(price, now):
+    """Tick-based exit only (so ticks before entry can never trigger a stop). SL first."""
+    if position is None:
         return
-
-    for trade in list(active_trades):
-        if trade["status"] != "ACTIVE":
-            continue
-
-        # 1) Tick-based check (worst-case ordering: SL first)
-        if current_price <= trade["sl_price"]:
-            _close_trade(trade, trade["sl_price"], "SL_HIT (alert LOW)", current_time)
-            continue
-        if current_price >= trade["target_price"]:
-            _close_trade(trade, trade["target_price"], f"TARGET_HIT ({RR_RATIO:g}R)", current_time)
-            continue
-
-        # 2) Completed-candle check (also SL first)
-        if completed_candle is not None:
-            if completed_candle["low"] <= trade["sl_price"]:
-                _close_trade(trade, trade["sl_price"], "SL_HIT (alert LOW)", current_time)
-                continue
-            if completed_candle["high"] >= trade["target_price"]:
-                _close_trade(trade, trade["target_price"], f"TARGET_HIT ({RR_RATIO:g}R)", current_time)
-                continue
+    if price <= position["sl_price"]:
+        close_position(price, "SL_HIT (alert LOW)", now)
+    elif price >= position["target_price"]:
+        close_position(price, f"TARGET_HIT ({RR_RATIO:g}R)", now)
+    elif now.time() >= SQUARE_OFF:
+        close_position(price, "INTRADAY_SQUARE_OFF", now)
 
 
 # ================= WEBSOCKET CALLBACKS =================
 def onopen():
     print("✅ WebSocket opened")
-    if INSTRUMENT_KEY is None:
-        print("❌ No instrument key")
-        return
     try:
         fyers_ws.subscribe(symbols=[INSTRUMENT_KEY], data_type="SymbolUpdate")
         print("✅ Subscribed")
@@ -395,92 +314,74 @@ def onopen():
 
 
 def onmessage(message):
-    global completed_candles, current_candle, last_complete_timeframe
-    global alert_candle, alert_candle_timeframe, position_taken, current_position
-    global entry_price, breakout_triggered
+    global current_candle, alert_candle, last_price
 
     try:
         if isinstance(message, dict):
-            msg_type = message.get("type")
-
-            if msg_type == "sub":
+            if message.get("type") == "sub":
                 print("✅ Subscription OK" if message.get("s") == "ok"
                       else f"❌ Subscription failed: {message.get('message')}")
                 return
 
-            if msg_type == "sf" or "ltp" in message:
-                ltp = message.get("ltp", 0)
-                if ltp == 0:
-                    return
+            ltp = message.get("ltp", 0)
+            if not ltp:
+                return
 
-                current_price = float(ltp)
-                current_time = datetime.datetime.now()
-                current_timeframe = current_time.replace(second=0, microsecond=0)
+            price = float(ltp)
+            last_price = price
+            now = now_ist()
+            candle_ts = candle_start(now)
 
-                # ---------- NEW CANDLE BOUNDARY ----------
-                if last_complete_timeframe is None or current_timeframe != last_complete_timeframe:
+            # ---------- NEW CANDLE BOUNDARY ----------
+            if current_candle is None or candle_ts != current_candle["timestamp"]:
+                if current_candle is not None:
+                    done = {k: current_candle[k] for k in
+                            ("timestamp", "open", "high", "low", "close", "volume")}
+                    completed_candles.append(done)
+                    print(f"\n📊 Candle {done['timestamp'].strftime('%H:%M')} "
+                          f"O:{done['open']:.2f} H:{done['high']:.2f} "
+                          f"L:{done['low']:.2f} C:{done['close']:.2f}")
 
-                    # Finalize previous candle
-                    if current_candle is not None:
-                        completed = {
-                            "timestamp": current_candle["timestamp"],
-                            "open": current_candle["open"],
-                            "high": current_candle["high"],
-                            "low": current_candle["low"],
-                            "close": current_candle["close"],
-                            "volume": current_candle["volume"],
-                        }
-                        completed_candles.append(completed)
-                        print(f"\n📊 Candle closed {completed['timestamp'].strftime('%H:%M')} "
-                              f"O:{completed['open']:.2f} H:{completed['high']:.2f} "
-                              f"L:{completed['low']:.2f} C:{completed['close']:.2f}")
+                    # the candle right after the alert has closed w/o breakout -> expire
+                    if alert_candle is not None and alert_candle["timestamp"] < done["timestamp"]:
+                        print("   ⌛ Alert expired (next candle did not break).")
+                        alert_candle = None
 
-                        # STEP 1 — detect alert on the just-completed candle
-                        check_pattern_on_candle(completed)
+                    check_pattern_on_candle(done)
 
-                        # exit check on completed candle (also done on ticks)
-                        monitor_exit_conditions(current_price, current_time, completed)
+                current_candle = {
+                    "timestamp": candle_ts, "open": price, "high": price,
+                    "low": price, "close": price, "volume": 0,
+                }
 
-                    # start new candle
-                    current_candle = {
-                        "timestamp": current_timeframe,
-                        "open": current_price,
-                        "high": current_price,
-                        "low": current_price,
-                        "close": current_price,
-                        "volume": 0,
-                        "is_complete": False,
-                    }
-                    last_complete_timeframe = current_timeframe
-                    breakout_triggered = False   # new candle → breakout allowed
+                # a gap (no candle in the minute right after alert) also expires it
+                if alert_candle is not None and candle_ts != alert_next_candle():
+                    print("   ⌛ Alert expired (no immediate next candle).")
+                    alert_candle = None
+            else:
+                current_candle["high"] = max(current_candle["high"], price)
+                current_candle["low"] = min(current_candle["low"], price)
+                current_candle["close"] = price
+                current_candle["volume"] += 1
 
-                else:
-                    # update running candle
-                    if current_candle is not None:
-                        current_candle["high"] = max(current_candle["high"], current_price)
-                        current_candle["low"] = min(current_candle["low"], current_price)
-                        current_candle["close"] = current_price
-                        current_candle["volume"] += 1
+            # ---------- ENTRY (checked on every tick, incl. first of new candle) ----------
+            monitor_entry(price, now, candle_ts)
 
-                    # STEP 2 — breakout entry (only on candle after alert)
-                    if alert_candle is not None and not position_taken:
-                        monitor_entry_on_price(current_price, current_time, current_timeframe)
+            # ---------- EXIT ----------
+            monitor_exit(price, now)
 
-                # ---------- EXIT CHECK ON EVERY TICK ----------
-                if active_trades:
-                    monitor_exit_conditions(current_price, current_time)
-
-                # ---------- STATUS LINE ----------
-                status = f"Price: {current_price:.2f}"
-                if alert_candle:
-                    status += f" | Alert @ {alert_candle['timestamp'].strftime('%H:%M')} H:{alert_candle['high']:.2f} L:{alert_candle['low']:.2f}"
-                if current_position:
-                    status += f" | {current_position} @ {entry_price:.2f}"
-                status += f" | Bal ₹{current_balance:,.0f} | Active {len(active_trades)}"
-                if PAPER_TRADING:
-                    status += " | [PAPER]"
-                sys.stdout.write(f"\r{status}")
-                sys.stdout.flush()
+            # ---------- STATUS ----------
+            status = f"{now.strftime('%H:%M:%S')} Price: {price:.2f}"
+            if alert_candle:
+                status += f" | Alert H:{alert_candle['high']:.2f} L:{alert_candle['low']:.2f}"
+            if position:
+                status += (f" | LONG @ {position['entry_price']:.2f} "
+                           f"SL {position['sl_price']:.2f} TP {position['target_price']:.2f}")
+            status += f" | Bal ₹{current_balance:,.0f}"
+            if PAPER_TRADING:
+                status += " | [PAPER]"
+            sys.stdout.write(f"\r{status}   ")
+            sys.stdout.flush()
 
         elif isinstance(message, str) and "pong" not in message:
             print(f"\n📨 {message}")
@@ -498,50 +399,92 @@ def onclose(message):
     print(f"\n🔌 WS Closed: {message}")
 
 
+# ================= RESULTS =================
+def display_results():
+    print("\n" + "=" * 80)
+    print("📊 RESULTS — BULLISH ONLY")
+    print("=" * 80)
+    print("🔵 [PAPER]" if PAPER_TRADING else "🔴 [REAL]")
+    print(f"Balance: ₹{current_balance:,.2f}")
+    print(f"P&L:     ₹{current_balance - INITIAL_CAPITAL:+,.2f} "
+          f"({(current_balance - INITIAL_CAPITAL) / INITIAL_CAPITAL * 100:+.2f}%)")
+
+    for i, t in enumerate(closed_trades, 1):
+        print(f"  {i}. entry ₹{t['entry_price']:.2f} exit ₹{t['exit_price']:.2f} "
+              f"→ ₹{t['PnL']:+,.2f} ({t['exit_reason']})")
+
+    if position:
+        print(f"⚠️  OPEN position still active: entry ₹{position['entry_price']:.2f} "
+              f"SL ₹{position['sl_price']:.2f} TP ₹{position['target_price']:.2f}")
+
+    if closed_trades:
+        wins = sum(1 for t in closed_trades if t["PnL"] > 0)
+        losses = sum(1 for t in closed_trades if t["PnL"] < 0)
+        print(f"Trades: {len(closed_trades)} | Wins: {wins} | Losses: {losses} | "
+              f"Win rate: {wins / len(closed_trades) * 100:.1f}%")
+    save_results()
+
+
+def save_results():
+    ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    out = "live_trading_results"
+    os.makedirs(out, exist_ok=True)
+    mode = "PAPER" if PAPER_TRADING else "REAL"
+
+    if closed_trades:
+        path = os.path.join(out, f"trades_{mode}_{ts}.csv")
+        pd.DataFrame(closed_trades).to_csv(path, index=False)
+        print(f"💾 Trades saved: {path}")
+
+    summary = {
+        "Mode": mode,
+        "Strategy": "BULLISH_ONLY_FLYING_CANDLE",
+        "Timeframe": f"{TIMEFRAME_MINUTES}m",
+        "RR_Ratio": f"1:{RR_RATIO:g}",
+        "Initial_Capital": INITIAL_CAPITAL,
+        "Final_Balance": current_balance,
+        "Total_PnL": current_balance - INITIAL_CAPITAL,
+        "Closed_Trades": len(closed_trades),
+        "Instrument": INSTRUMENT_KEY,
+        "Lot_Size": BASE_LOT_SIZE,
+        "Timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    }
+    path = os.path.join(out, f"summary_{mode}_{ts}.csv")
+    pd.DataFrame([summary]).to_csv(path, index=False)
+    print(f"💾 Summary saved: {path}")
+
+
 # ================= START =================
 def start_live_trading():
-    global completed_candles, current_candle, alert_candle, alert_candle_timeframe
-    global position_taken, current_position, entry_price, current_balance
-    global active_trades, closed_trades, last_complete_timeframe, fyers_ws, fyers_auth
-    global breakout_triggered, PAPER_TRADING
+    global fyers_ws, fyers_auth
 
-    completed_candles.clear()
-    closed_trades = []
-    current_candle = None
-    alert_candle = None
-    alert_candle_timeframe = None
-    position_taken = False
-    current_position = None
-    entry_price = None
-    current_balance = INITIAL_CAPITAL
-    active_trades = []
-    last_complete_timeframe = None
-    breakout_triggered = False
+    if not FYERS_ACCESS_TOKEN:
+        print("❌ FYERS_ACCESS_TOKEN env variable is not set.")
+        return
 
-    if not PAPER_TRADING:
-        fyers_auth = fyersModel.FyersModel(
-            client_id=FYERS_CLIENT_ID,
-            token=FYERS_ACCESS_TOKEN,
-            is_async=False,
-            log_path="./logs",
-        )
+    # Auth is created in both modes: needed for history (paper) and orders (real)
+    fyers_auth = fyersModel.FyersModel(
+        client_id=FYERS_CLIENT_ID, token=FYERS_ACCESS_TOKEN,
+        is_async=False, log_path="./logs",
+    )
 
     print("\n" + "=" * 80)
-    print("📊 FLYING CANDLE STRATEGY — LONG ONLY")
-    print("=" * 80)
+    print("📊 FLYING CANDLE STRATEGY — BULLISH ONLY")
     print("🔵 PAPER TRADING" if PAPER_TRADING else "🔴 REAL TRADING")
     print("=" * 80)
-    print("RULES")
-    print("  1) Alert: GREEN candle fully BELOW EMA5 (high < EMA5)")
-    print("  2) Entry: next candle breaks alert HIGH → LONG at alert HIGH")
-    print("  3) SL  : alert candle LOW")
-    print(f"  4) Target: entry + {RR_RATIO:g} × risk   (R:R = 1:{RR_RATIO:g})")
-    print(f"  5) Capital: ₹{INITIAL_CAPITAL:,} | Lot: {BASE_LOT_SIZE}")
+    print(f"  Timeframe: {TIMEFRAME_MINUTES}-minute candles")
+    print("  1) Alert: last candle GREEN, fully below EMA5 (high < EMA5)")
+    print("  2) Entry: immediate next candle breaks alert HIGH → LONG")
+    print("  3) SL   : alert candle LOW")
+    print(f"  4) Target: entry + {RR_RATIO:g} x risk (1:{RR_RATIO:g})")
+    print(f"  5) Capital ₹{INITIAL_CAPITAL:,} | Lot size {BASE_LOT_SIZE} | whole lots only")
     print("=" * 80)
+
+    load_history()
 
     try:
         fyers_ws = data_ws.FyersDataSocket(
-            access_token=FYERS_ACCESS_TOKEN,
+            access_token=f"{FYERS_CLIENT_ID}:{FYERS_ACCESS_TOKEN}",   # required format
             log_path="./logs",
             litemode=False,
             write_to_file=False,
@@ -557,102 +500,42 @@ def start_live_trading():
 
         while True:
             time.sleep(1)
+            # safety square-off even if no tick arrives
+            if position is not None and now_ist().time() >= SQUARE_OFF and last_price:
+                close_position(last_price, "INTRADAY_SQUARE_OFF", now_ist())
+            if now_ist().time() >= SESSION_END and position is None:
+                print("\n🔔 Session ended.")
+                break
 
     except KeyboardInterrupt:
         print("\n\n⏹️  Stopped by user")
-        display_live_results()
-        if fyers_ws:
-            fyers_ws.close()
     except Exception as e:
         print(f"\n❌ WS setup failed: {e}")
         traceback.print_exc()
-
-
-# ================= RESULTS =================
-def display_live_results():
-    global current_balance, active_trades, closed_trades, PAPER_TRADING
-
-    print("\n" + "=" * 80)
-    print("📊 LIVE RESULTS — LONG ONLY")
-    print("=" * 80)
-    if PAPER_TRADING:
-        print("🔵 [PAPER]")
-    print(f"Balance: ₹{current_balance:,.2f}")
-    print(f"P&L:     ₹{current_balance - INITIAL_CAPITAL:+,.2f} "
-          f"({(current_balance-INITIAL_CAPITAL)/INITIAL_CAPITAL*100:+.2f}%)")
-
-    if closed_trades:
-        print(f"\nClosed trades: {len(closed_trades)}")
-        for i, t in enumerate(closed_trades, 1):
-            print(f"  {i}. {t['type']} entry ₹{t['entry_price']:.2f} "
-                  f"exit ₹{t['exit_price']:.2f} → ₹{t['PnL']:+,.2f} ({t['exit_reason']})")
-
-    if active_trades:
-        print(f"\n⚠️  Active trades: {len(active_trades)} (open)")
-        for t in active_trades:
-            print(f"  {t['type']} @ ₹{t['entry_price']:.2f} SL ₹{t['sl_price']:.2f} TP ₹{t['target_price']:.2f}")
-
-    if closed_trades:
-        wins = len([t for t in closed_trades if t["PnL"] > 0])
-        losses = len([t for t in closed_trades if t["PnL"] < 0])
-        total_pnl = sum(t["PnL"] for t in closed_trades)
-        print("\nStatistics")
-        print(f"  Total: {len(closed_trades)}  Wins: {wins}  Losses: {losses}")
-        if closed_trades:
-            print(f"  Win rate: {wins/len(closed_trades)*100:.1f}%")
-        print(f"  Total P&L: ₹{total_pnl:+,.2f}")
-
-    save_live_results()
-
-
-def save_live_results():
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    results_dir = "live_trading_results"
-    os.makedirs(results_dir, exist_ok=True)
-    mode = "PAPER" if PAPER_TRADING else "REAL"
-
-    if closed_trades:
-        pd.DataFrame(closed_trades).to_csv(
-            os.path.join(results_dir, f"trades_{mode}_{timestamp}.csv"), index=False
-        )
-        print(f"\n💾 Trades saved: {results_dir}/trades_{mode}_{timestamp}.csv")
-
-    summary = {
-        "Mode": mode,
-        "Strategy": "LONG_ONLY_FLYING_CANDLE",
-        "RR_Ratio": f"1:{RR_RATIO:g}",
-        "Initial_Capital": INITIAL_CAPITAL,
-        "Final_Balance": current_balance,
-        "Total_PnL": current_balance - INITIAL_CAPITAL,
-        "Return_%": (current_balance - INITIAL_CAPITAL) / INITIAL_CAPITAL * 100,
-        "Closed_Trades": len(closed_trades),
-        "Winning_Trades": len([t for t in closed_trades if t["PnL"] > 0]),
-        "Losing_Trades": len([t for t in closed_trades if t["PnL"] < 0]),
-        "Active_Trades": len(active_trades),
-        "Instrument": INSTRUMENT_KEY,
-        "Lot_Size": BASE_LOT_SIZE,
-        "Timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    }
-    pd.DataFrame([summary]).to_csv(
-        os.path.join(results_dir, f"summary_{mode}_{timestamp}.csv"), index=False
-    )
-    print(f"💾 Summary saved: {results_dir}/summary_{mode}_{timestamp}.csv")
+    finally:
+        display_results()
+        if fyers_ws:
+            try:
+                fyers_ws.close_connection()
+            except Exception:
+                pass
 
 
 # ================= MAIN =================
 if __name__ == "__main__":
     print("=" * 80)
-    print("🚀 FLYING CANDLE — LONG ONLY")
-    print("=" * 80)
+    print("🚀 FLYING CANDLE — BULLISH ONLY")
     print("🔵 PAPER TRADING" if PAPER_TRADING else "🔴 REAL TRADING — REAL MONEY")
     print("=" * 80)
     print(f"Balance ₹{INITIAL_CAPITAL:,} | Lot {BASE_LOT_SIZE} | R:R 1:{RR_RATIO:g}")
-    print(f"TF {TIMEFRAME}m | Instrument {INSTRUMENT_KEY}")
+    print(f"Instrument {INSTRUMENT_KEY} | Timeframe {TIMEFRAME_MINUTES}m")
     print("=" * 80)
 
-    confirm = input("\nStart? (yes/no): ").strip().lower()
-    if confirm in ("yes", "y"):
+    if TIMEFRAME_MINUTES not in VALID_TIMEFRAMES:
+        print(f"❌ TIMEFRAME_MINUTES must be one of {VALID_TIMEFRAMES}")
+        sys.exit(1)
+
+    if input("\nStart? (yes/no): ").strip().lower() in ("yes", "y"):
         start_live_trading()
     else:
         print("Cancelled.")
-        sys.exit(0)
