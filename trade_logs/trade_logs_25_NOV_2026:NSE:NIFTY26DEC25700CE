@@ -1,0 +1,81 @@
+================================================================================
+🚀 FLYING CANDLE — LONG ONLY
+================================================================================
+🔵 PAPER TRADING
+================================================================================
+Balance ₹100,000 | Lot 65 | R:R 1:3
+TF 5m | Instrument NSE:NIFTY26DEC25700CE
+================================================================================
+
+Start? (yes/no):  yes
+
+================================================================================
+📊 FLYING CANDLE STRATEGY — LONG ONLY
+================================================================================
+🔵 PAPER TRADING
+================================================================================
+RULES
+  1) Alert: GREEN candle fully BELOW EMA5 (high < EMA5)
+  2) Entry: next candle breaks alert HIGH → LONG at alert HIGH
+  3) SL  : alert candle LOW
+  4) Target: entry + 3 × risk   (R:R = 1:3)
+  5) Capital: ₹100,000 | Lot: 65
+================================================================================
+
+🔌 Connecting...
+✅ WebSocket opened
+✅ Subscribed
+✅ Subscription OK
+Price: 578.10 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 10:22 O:586.55 H:586.60 L:577.50 C:578.10
+Price: 591.00 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 10:28 O:591.95 H:592.00 L:590.00 C:591.00
+Price: 632.00 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 10:47 O:628.00 H:632.90 L:628.00 C:632.00
+Price: 636.50 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 10:51 O:639.05 H:639.05 L:630.25 C:636.50
+Price: 651.00 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 10:57 O:658.20 H:659.70 L:648.55 C:648.55
+Price: 658.50 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 10:59 O:655.85 H:661.90 L:653.00 C:660.60
+Price: 691.40 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 11:06 O:678.70 H:695.50 L:678.70 C:692.95
+Price: 701.50 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 11:30 O:694.30 H:702.20 L:691.40 C:702.20
+Price: 689.60 | Bal ₹100,000 | Active 0 | [PAPER]
+📊 Candle closed 11:32 O:701.10 H:702.00 L:689.60 C:692.00
+Price: 699.60 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]tive 1 | [PAPER]
+📊 Candle closed 11:53 O:702.00 H:702.00 L:698.50 C:699.60
+Price: 683.75 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 12:06 O:686.45 H:686.55 L:683.75 C:683.75
+Price: 679.70 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 12:16 O:682.60 H:692.00 L:672.15 C:672.15
+Price: 591.35 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 12:44 O:593.85 H:593.85 L:588.50 C:591.35
+Price: 560.75 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 13:38 O:552.95 H:560.75 L:550.00 C:556.65
+Price: 560.00 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 13:41 O:557.60 H:568.15 L:555.60 C:567.55
+Price: 575.00 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 13:42 O:567.55 H:578.00 L:567.55 C:577.60
+Price: 567.20 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 13:50 O:579.80 H:579.80 L:567.20 C:567.20
+Price: 579.00 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 13:59 O:564.20 H:582.00 L:564.20 C:582.00
+Price: 597.00 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 14:16 O:604.00 H:604.00 L:597.00 C:597.00
+Price: 591.35 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 14:20 O:594.25 H:596.55 L:587.50 C:591.35
+Price: 575.00 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 14:22 O:592.80 H:592.80 L:574.75 C:574.75
+Price: 591.35 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 14:36 O:597.45 H:597.45 L:589.30 C:591.35
+Price: 605.05 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 15:15 O:597.60 H:606.15 L:597.60 C:605.05
+Price: 601.00 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 15:19 O:595.15 H:602.00 L:595.15 C:601.50
+Price: 601.55 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 15:31 O:600.15 H:603.25 L:600.15 C:601.55
+Price: 602.00 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
+📊 Candle closed 15:34 O:600.30 H:602.00 L:600.30 C:601.35
+Price: 599.15 | Alert @ 11:49 H:715.35 L:709.05 | Bal ₹103,081 | Active 0 | [PAPER]
